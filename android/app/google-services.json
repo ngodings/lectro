@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "814827271497",
+    "project_id": "lectroess",
+    "storage_bucket": "lectroess.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:814827271497:android:eb54fa2c371e63bd9d5698",
+        "android_client_info": {
+          "package_name": "com.example.lectro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "814827271497-grogbv83ph35kq77roaa6rr9uci2iflg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByxuI-uVlVWjotZ3_olerAA-YZRpQeQ40"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "814827271497-grogbv83ph35kq77roaa6rr9uci2iflg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
