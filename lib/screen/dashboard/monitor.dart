@@ -352,8 +352,8 @@ class Monitor extends HookWidget {
     var energyP = _storage.read(lastEnergyPriority) ?? '0';
     var energyNP = _storage.read(lastEnergyNonPriority) ?? '0';
     return DraggableScrollableSheet(
-        initialChildSize: .34.h,
-        minChildSize: .30.h,
+        initialChildSize: .33.h,
+        minChildSize: .32.h,
         maxChildSize: 1,
         snap: true,
         builder: (BuildContext context, ScrollController scrollController) {
@@ -426,7 +426,7 @@ class Monitor extends HookWidget {
                           },
                         ),
                         SizedBox(
-                          width: 70.w,
+                          width: 60.w,
                         ),
                         BlocConsumer<DeviceCubit, DeviceState>(
                           listener: (context, state) {

@@ -27,7 +27,8 @@ void main() async {
     color: Colors.green,
     location: BannerLocation.topStart,
     variables: {
-      "baseUrl": "https://ems.service.lectro.id",
+      "baseUrl":
+          "https://dev.kreatora.id", //https://dev.kreatora.id https://ems.service.lectro.id
       "username": "",
       "password": "",
     },

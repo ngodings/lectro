@@ -53,6 +53,15 @@ android {
         multiDexEnabled true
     }
 
+    signingConfigs {
+        debug {
+            keyAlias 'lectro_draft'
+            keyPassword '123456'
+            storeFile file('lectro_draft.jks')
+            storePassword '123456'
+        }
+    }
+
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.

@@ -40,6 +40,7 @@ class Login extends HookWidget {
     final _showCubit = context.read<ShowPasswordCubit>();
     // ignore: no_leading_underscores_for_local_identifiers
     final _loginCubit = context.read<LoginCubit>();
+
     final usernameC = TextEditingController();
     final passwordC = TextEditingController();
 
@@ -212,8 +213,29 @@ class Login extends HookWidget {
                         ),
                       ),
                     ),
+                    BlocListener<LoginCubit, LoginState>(
+                      listener: (context, state) {
+                        if (state is LoginLoading) {
+                          CustomDialog.showLoadingDialog(context);
+                        }
+                        if (state is LoginFailed) {
+                          GetIt.I<NavigationServiceMain>().pop();
+                          GetIt.I<NavigationServiceMain>().pushNamed('/login');
+                        }
+                        if (state is LoginSuccess) {
+                          GetIt.I<NavigationServiceMain>().pop();
+                          GetIt.I<NavigationServiceMain>()
+                              .pushNamed('/monitor');
+                        }
+                      },
+                      child: IconButton(
+                          onPressed: () async {
+                            _loginCubit.loginGoogle();
+                          },
+                          icon: const Icon(Icons.login)),
+                    ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 150.0),
+                      padding: const EdgeInsets.only(top: 130.0),
                       child:
                           Image.asset('assets/icons/slogan.png', height: 100.w),
                     )

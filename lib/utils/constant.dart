@@ -43,6 +43,7 @@ const String lastEnergyNonPriority = 'last_energy_non_priority';
 const String lastEnergyGrid = 'last_grid';
 const String lastEnergyBattery = 'last_battery';
 const String clientTokenLearningToolCode = 'learning_tool_code';
+const String clientGoogleKey = 'user_key';
 
 //=================Error Messages==================
 const String kErrorCantReachServer = "Can't reach to the http server";
