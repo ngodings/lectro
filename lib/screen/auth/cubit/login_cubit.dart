@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:lectro/repositories/auth_repository.dart';
+import 'package:lectro/repositories/facebook_repository.dart';
 import 'package:lectro/repositories/google_repository.dart';
 import 'package:meta/meta.dart';
 
@@ -10,6 +11,7 @@ class LoginCubit extends Cubit<LoginState> {
 
   final _repo = AuthRepository();
   final _google = GoogleRepository();
+  final _fb = FacebookRepository();
 
   Future<void> login(String username, String password) async {
     emit(LoginLoading());
@@ -27,6 +29,20 @@ class LoginCubit extends Cubit<LoginState> {
   Future<void> loginGoogle() async {
     emit(LoginLoading());
     final res = await _google.loginWithGoogle();
+    print(res);
+
+    if (res.statusCode == 200) {
+      emit(LoginSuccess());
+    } else {
+      emit(LoginFailed(
+        res.message,
+      ));
+    }
+  }
+
+  Future<void> loginFB() async {
+    emit(LoginLoading());
+    final res = await _fb.loginWithFacebook();
     print(res);
 
     if (res.statusCode == 200) {

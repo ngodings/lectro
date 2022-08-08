@@ -188,4 +188,30 @@ class BaseRepository {
     }
     return '1'; //success
   }
+
+  Future getFb(
+    String token, {
+    Map<String, dynamic>? queryParams,
+  }) async {
+    try {
+      final res = await retry(
+        () => dio.get(
+          'https://graph.facebook.com/v2.12/me?',
+          queryParameters: queryParams,
+          options: Options(
+            responseType: ResponseType.json,
+          ),
+        ),
+        retryIf: (e) => e is SocketException || e is TimeoutException,
+      );
+      Map<String, dynamic> response = json.decode(res.data);
+
+      if (res.statusCode == 200) {
+        return response;
+      }
+      return response;
+    } on DioError catch (e) {
+      return ExceptionHelper(e).catchException();
+    }
+  }
 }

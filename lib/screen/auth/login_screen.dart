@@ -230,7 +230,7 @@ class Login extends HookWidget {
                       },
                       child: IconButton(
                           onPressed: () async {
-                            _loginCubit.loginGoogle();
+                            _loginCubit.loginFB();
                           },
                           icon: const Icon(Icons.login)),
                     ),

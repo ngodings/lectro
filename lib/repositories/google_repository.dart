@@ -9,12 +9,17 @@ import '../utils/api.dart';
 
 class GoogleRepository extends BaseRepository {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final GoogleSignIn _googleSignIn = GoogleSignIn(
+    scopes: [
+      'email',
+    ],
+  );
   // ignore: unused_field
   late final User _user;
 
   Future<BaseResponse> loginWithGoogle() async {
     GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
+    print(googleSignInAccount);
     GoogleSignInAuthentication googleSignInAuthentication =
         await googleSignInAccount!.authentication;
     AuthCredential credential = GoogleAuthProvider.credential(
