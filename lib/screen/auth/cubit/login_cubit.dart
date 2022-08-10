@@ -45,11 +45,11 @@ class LoginCubit extends Cubit<LoginState> {
     final res = await _fb.loginWithFacebook();
     print(res);
 
-    if (res.statusCode == 200) {
+    if (res != null) {
       emit(LoginSuccess());
     } else {
       emit(LoginFailed(
-        res.message,
+        'salah',
       ));
     }
   }

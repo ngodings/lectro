@@ -32,11 +32,10 @@ class GoogleRepository extends BaseRepository {
     final res = await login(
       loginGoogle,
       data: {
-        'access_token': googleSignInAuthentication.accessToken,
+        'id_token': googleSignInAuthentication.idToken,
       },
     );
 
-    print(res);
     if (res.statusCode == 200) {
       //final user = User.fromJson(res.data);
 
