@@ -9,6 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../utils/constant.dart';
 import '../components/button/small_button.dart';
+import '../components/title/logo_title.dart';
 
 class NewPasswordScreen extends StatelessWidget {
   const NewPasswordScreen({Key? key}) : super(key: key);
@@ -47,10 +48,10 @@ class NewPassword extends HookWidget {
                 child: Column(
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(right: 65, left: 65, top: 20.w),
-                      child: Center(
-                        child: Image.asset('assets/icons/splash.png',
-                            height: 200.w),
+                      padding: EdgeInsets.only(
+                          right: 65.w, left: 65.w, top: 40.w, bottom: 40.h),
+                      child: const Center(
+                        child: Logo(),
                       ),
                     ),
                     Text(

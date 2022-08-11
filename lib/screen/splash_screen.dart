@@ -37,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
               children: [
                 Padding(
                   padding: EdgeInsets.only(
-                      right: 50.w, left: 50.w, top: 220.w, bottom: 200.w),
+                      right: 50.w, left: 50.w, top: 220.w, bottom: 230.w),
                   child: Center(
                     child: Column(
                       children: [
@@ -98,10 +98,20 @@ class __SplashBodyState extends State<_SplashBody>
               children: [
                 Padding(
                   padding: EdgeInsets.only(
-                      right: 50.w, left: 50.w, top: 220.w, bottom: 180.w),
+                      right: 50.w, left: 50.w, top: 220.w, bottom: 230.w),
                   child: Center(
-                    child:
-                        Image.asset('assets/icons/splash.png', height: 200.w),
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          'assets/icons/matador.png',
+                          //height: 200.w,
+                        ),
+                        Image.asset(
+                          'assets/icons/lectro.png',
+                          //height: 100.w,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],

@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lectro/screen/auth/cubit/login_cubit.dart';
 import 'package:lectro/screen/components/button/small_button.dart';
+import 'package:lectro/screen/components/title/logo_title.dart';
 import 'package:lectro/services/navigation.dart';
 import 'package:lectro/utils/constant.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -58,11 +59,10 @@ class Login extends HookWidget {
                 child: Column(
                   children: [
                     Padding(
-                      padding:
-                          const EdgeInsets.only(right: 65, left: 65, top: 40),
-                      child: Center(
-                        child: Image.asset('assets/icons/splash.png',
-                            height: 200.w),
+                      padding: EdgeInsets.only(
+                          right: 65.w, left: 65.w, top: 40.w, bottom: 50.h),
+                      child: const Center(
+                        child: Logo(),
                       ),
                     ),
                     Padding(
