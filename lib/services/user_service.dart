@@ -1,10 +1,10 @@
 import '../models/user.dart';
 
 class UserService {
-  User? _user;
-  User? get getUser => _user;
+  DataUser? _user;
+  DataUser? get getUser => _user;
 
-  set setUser(User value) {
+  set setUser(DataUser value) {
     _user = value;
   }
 }

@@ -18,7 +18,7 @@ class AuthRepository extends BaseRepository {
     );
 
     if (res.statusCode == 200) {
-      final user = User.fromJson(res.data);
+      final user = DataUser.fromJson(res.data);
 
       GetIt.I<UserService>().setUser = user;
       GetIt.I<NavigationServiceMain>().pushReplacementNamed('/monitor');

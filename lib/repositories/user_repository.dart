@@ -8,7 +8,7 @@ class UserRepository extends BaseRepository {
     final res = await fetch(profilUrl);
 
     if (res.statusCode == 200) {
-      final profile = User.fromJson(res.data['user']);
+      final profile = DataUser.fromJson(res.data['user']);
 
       return BaseResponse(statusCode: res.statusCode, data: profile);
     }

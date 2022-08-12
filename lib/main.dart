@@ -28,7 +28,7 @@ void main() async {
     location: BannerLocation.topStart,
     variables: {
       "baseUrl":
-          "https://dev.kreatora.id", //https://dev.kreatora.id https://ems.service.lectro.id
+          "https://ems.service.lectro.id", //https://dev.kreatora.id https://ems.service.lectro.id
       "username": "",
       "password": "",
     },

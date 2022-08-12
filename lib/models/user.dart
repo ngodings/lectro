@@ -1,4 +1,4 @@
-class User {
+class DataUser {
   int? id;
   String? username;
   String? email;
@@ -9,7 +9,7 @@ class User {
   String? createdAt;
   String? updatedAt;
 
-  User(
+  DataUser(
       {this.id,
       this.username,
       this.email,
@@ -20,7 +20,7 @@ class User {
       this.createdAt,
       this.updatedAt});
 
-  User.fromJson(Map<String, dynamic> json) {
+  DataUser.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     username = json['username'];
     email = json['email'];

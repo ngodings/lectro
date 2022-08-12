@@ -23,7 +23,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     }
   }
 
-  Future<void> getProfile(User? user) async {
+  Future<void> getProfile(DataUser? user) async {
     if (user == null) {
       emit(ProfileLoading());
       final res = await _user.getUserData();

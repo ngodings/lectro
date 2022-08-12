@@ -2,7 +2,7 @@ const String mainUrl = 'https://ems.service.lectro.id';
 
 // endpoint Auth
 const String registerUrl = '/v1/user/join';
-const String loginUrl = '/v1/user/login';
+const String loginUrl = '/v1/auth/signin';
 const String apiFCMToken = '';
 const String loginGoogle = '/api/auth/google';
 
