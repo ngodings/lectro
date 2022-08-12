@@ -2,6 +2,7 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lectro/screen/auth/new_password_screen.dart';
+import 'package:lectro/screen/auth/register_screen.dart';
 import 'package:lectro/screen/dashboard/monitor.dart';
 import 'package:lectro/screen/profile/profil_screen.dart';
 
@@ -21,6 +22,14 @@ void configureRoutes() {
     handler: Handler(
       handlerFunc: (BuildContext? context, Map<String, List<String>> params) =>
           const LoginScreen(),
+    ),
+    transitionType: TransitionType.none,
+  );
+  router.define(
+    '/register',
+    handler: Handler(
+      handlerFunc: (BuildContext? context, Map<String, List<String>> params) =>
+          const RegisterScreen(),
     ),
     transitionType: TransitionType.none,
   );

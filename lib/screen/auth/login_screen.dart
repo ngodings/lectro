@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lectro/screen/auth/cubit/login_cubit.dart';
 import 'package:lectro/screen/components/button/small_button.dart';
-import 'package:lectro/screen/components/title/logo_title.dart';
 import 'package:lectro/services/navigation.dart';
 import 'package:lectro/utils/constant.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -221,25 +220,27 @@ class Login extends HookWidget {
                     SizedBox(
                       height: 10.h,
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(right: 145.w),
-                      child: InkWell(
-                        onTap: () async {
-                          GetIt.I<NavigationServiceMain>()
-                              .pushNamed('/forget-password');
-                        },
-                        child: Text(
-                          'Masuk dengan akun demo',
-                          textAlign: TextAlign.left,
-                          style: GoogleFonts.poppins(
-                            textStyle: const TextStyle(
-                              decoration: TextDecoration.underline,
-                              color: button,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w700,
+                    InkWell(
+                      onTap: () async {
+                        GetIt.I<NavigationServiceMain>()
+                            .pushNamed('/forget-password');
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Masuk dengan akun demo',
+                            textAlign: TextAlign.left,
+                            style: GoogleFonts.poppins(
+                              textStyle: const TextStyle(
+                                decoration: TextDecoration.underline,
+                                color: button,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
                           ),
-                        ),
+                        ],
                       ),
                     ),
                     SizedBox(
@@ -277,14 +278,19 @@ class Login extends HookWidget {
                     SizedBox(
                       height: 12.h,
                     ),
-                    Text(
-                      'Belum mempunyai akun? daftar disini',
-                      textAlign: TextAlign.left,
-                      style: GoogleFonts.poppins(
-                        textStyle: const TextStyle(
-                          color: button,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
+                    InkWell(
+                      onTap: () {
+                        GetIt.I<NavigationServiceMain>().pushNamed('/register');
+                      },
+                      child: Text(
+                        'Belum mempunyai akun? daftar disini',
+                        textAlign: TextAlign.left,
+                        style: GoogleFonts.poppins(
+                          textStyle: const TextStyle(
+                            color: button,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ),
                     ),
