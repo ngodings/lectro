@@ -60,9 +60,15 @@ class Login extends HookWidget {
                   children: [
                     Padding(
                       padding: EdgeInsets.only(
-                          right: 65.w, left: 65.w, top: 40.w, bottom: 50.h),
-                      child: const Center(
-                        child: Logo(),
+                        right: 65.w,
+                        left: 65.w,
+                        // top: 40.w,
+                      ),
+                      child: Center(
+                        child: Image.asset(
+                          'assets/icons/matador-lectro.png',
+                          height: 200.h,
+                        ),
                       ),
                     ),
                     Padding(
@@ -166,50 +172,22 @@ class Login extends HookWidget {
                     ),
                     const SizedBox(height: 10),
                     Padding(
-                        padding: const EdgeInsets.only(left: 210),
-                        child: InkWell(
-                          onTap: () async {
-                            GetIt.I<NavigationServiceMain>()
-                                .pushNamed('/forget-password');
-                          },
-                          child: Text(
-                            'Forget Password',
-                            textAlign: TextAlign.left,
-                            style: GoogleFonts.poppins(
-                              textStyle: const TextStyle(
-                                color: button,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w700,
-                              ),
+                      padding: const EdgeInsets.only(left: 210),
+                      child: InkWell(
+                        onTap: () async {
+                          GetIt.I<NavigationServiceMain>()
+                              .pushNamed('/forget-password');
+                        },
+                        child: Text(
+                          'Forget Password',
+                          textAlign: TextAlign.left,
+                          style: GoogleFonts.poppins(
+                            textStyle: const TextStyle(
+                              color: button,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
                             ),
                           ),
-                        )),
-                    BlocListener<LoginCubit, LoginState>(
-                      listener: (context, state) {
-                        if (state is LoginLoading) {
-                          CustomDialog.showLoadingDialog(context);
-                          // const CustomLoadingDialogWidget();
-                          // GetIt.I<NavigationServiceMain>().pop();
-                        }
-                        if (state is LoginFailed) {
-                          GetIt.I<NavigationServiceMain>().pop();
-                          GetIt.I<NavigationServiceMain>().pushNamed('/login');
-                        }
-                        if (state is LoginSuccess) {
-                          GetIt.I<NavigationServiceMain>().pop();
-                          GetIt.I<NavigationServiceMain>()
-                              .pushNamed('/monitor');
-                        }
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 210),
-                        child: SmallButton(
-                          buttonText: 'Login',
-                          color: button,
-                          textColor: Colors.white,
-                          press: () async {
-                            _loginCubit.login(usernameC.text, passwordC.text);
-                          },
                         ),
                       ),
                     ),
@@ -228,14 +206,112 @@ class Login extends HookWidget {
                               .pushNamed('/monitor');
                         }
                       },
-                      child: IconButton(
-                          onPressed: () async {
-                            _loginCubit.loginFB();
+                      child: Padding(
+                        padding: EdgeInsets.only(right: 210.w),
+                        child: SmallButton(
+                          buttonText: 'Login',
+                          color: button,
+                          textColor: Colors.white,
+                          press: () async {
+                            _loginCubit.login(usernameC.text, passwordC.text);
                           },
-                          icon: const Icon(Icons.login)),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10.h,
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 130.0),
+                      padding: EdgeInsets.only(right: 145.w),
+                      child: InkWell(
+                        onTap: () async {
+                          GetIt.I<NavigationServiceMain>()
+                              .pushNamed('/forget-password');
+                        },
+                        child: Text(
+                          'Masuk dengan akun demo',
+                          textAlign: TextAlign.left,
+                          style: GoogleFonts.poppins(
+                            textStyle: const TextStyle(
+                              decoration: TextDecoration.underline,
+                              color: button,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30.h,
+                    ),
+                    Text(
+                      'Masuk menggunakan',
+                      textAlign: TextAlign.left,
+                      style: GoogleFonts.poppins(
+                        textStyle: const TextStyle(
+                          color: button,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 12.h,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/icons/facebook-icon.png',
+                        ),
+                        SizedBox(
+                          width: 8.w,
+                        ),
+                        Image.asset(
+                          'assets/icons/google-icon.png',
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 12.h,
+                    ),
+                    Text(
+                      'Belum mempunyai akun? daftar disini',
+                      textAlign: TextAlign.left,
+                      style: GoogleFonts.poppins(
+                        textStyle: const TextStyle(
+                          color: button,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+
+                    // BlocListener<LoginCubit, LoginState>(
+                    //   listener: (context, state) {
+                    //     if (state is LoginLoading) {
+                    //       CustomDialog.showLoadingDialog(context);
+                    //     }
+                    //     if (state is LoginFailed) {
+                    //       GetIt.I<NavigationServiceMain>().pop();
+                    //       GetIt.I<NavigationServiceMain>().pushNamed('/login');
+                    //     }
+                    //     if (state is LoginSuccess) {
+                    //       GetIt.I<NavigationServiceMain>().pop();
+                    //       GetIt.I<NavigationServiceMain>()
+                    //           .pushNamed('/monitor');
+                    //     }
+                    //   },
+                    //   child: IconButton(
+                    //       onPressed: () async {
+                    //         _loginCubit.loginFB();
+                    //       },
+                    //       icon: const Icon(Icons.login)),
+                    // ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 30.h),
                       child:
                           Image.asset('assets/icons/slogan.png', height: 100.w),
                     )
