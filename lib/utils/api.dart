@@ -1,25 +1,28 @@
 const String mainUrl = 'https://ems.service.lectro.id';
 
-// endpoint Auth
+/// Auth
 const String registerUrl = '/v1/user/join';
 const String loginUrl = '/v1/auth/signin';
 const String apiFCMToken = '';
-const String loginGoogle = '/api/auth/google';
+const String loginGoogle = '/v1/auth/signin-oauth';
+const String signUpSocmed = '/v1/auth/signup-oauth';
+const String signInSocmed = '/v1/auth/signin-oauth';
 
-//endpoint Profil
+// Profil
 const String profilUrl = '/v1/user/profile';
+const String updateProfile = '/v1/user/update-profile';
 
-//endpoint Sensor Priority Load
+// Sensor Priority Load
 const String lastPriorityData = '/v1/sensor-priority-load/view-last-record';
 
-//endpoint Sensor Non Priority
+// Sensor Non Priority
 const String lastNonPriorityData =
     '/v1/sensor-non-priority-load/view-last-record';
 
-//endpoint Sensor Grid
+// Sensor Grid
 const String lastGridData = '/v1/sensor-grid/view-last-record';
 
-//endpoint Sensor Battery
+// Sensor Battery
 const String lastBatteryData = '/v1/bms-sensor/view-last-record';
 
 //Device User

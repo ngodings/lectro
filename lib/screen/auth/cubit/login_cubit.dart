@@ -26,6 +26,19 @@ class LoginCubit extends Cubit<LoginState> {
     }
   }
 
+  Future<void> signInGoogle() async {
+    emit(LoginLoading());
+    final res = await _google.signInGoogle();
+
+    if (res.statusCode == 200) {
+      emit(LoginSuccess());
+    } else {
+      emit(LoginFailed(
+        res.message,
+      ));
+    }
+  }
+
   Future<void> loginGoogle() async {
     emit(LoginLoading());
     final res = await _google.loginWithGoogle();

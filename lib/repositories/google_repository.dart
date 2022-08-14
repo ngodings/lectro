@@ -1,10 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'dart:math';
 
 import '../helper/base_repository.dart';
 import '../models/base_response.dart';
+import '../models/user.dart';
 import '../services/navigation.dart';
+import '../services/user_service.dart';
 import '../utils/api.dart';
 
 class GoogleRepository extends BaseRepository {
@@ -40,6 +43,78 @@ class GoogleRepository extends BaseRepository {
       //final user = User.fromJson(res.data);
 
       // GetIt.I<UserService>().setUser = ;
+      GetIt.I<NavigationServiceMain>().pushReplacementNamed('/monitor');
+      return BaseResponse(
+        statusCode: res.statusCode,
+        data: res,
+      );
+    }
+    return res;
+  }
+
+  Future<BaseResponse> signUpGoogle() async {
+    Random random = Random();
+
+    final randomNumber = (random.nextInt(90) + 10).toString();
+    GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
+    GoogleSignInAuthentication googleSignInAuthentication =
+        await googleSignInAccount!.authentication;
+    AuthCredential credential = GoogleAuthProvider.credential(
+        idToken: googleSignInAuthentication.idToken,
+        accessToken: googleSignInAuthentication.accessToken);
+
+    UserCredential authResult = await _auth.signInWithCredential(credential);
+    _user = authResult.user!;
+    final response = await signup(
+      signUpSocmed,
+      data: {
+        'source': 'google',
+        'id': googleSignInAccount.id,
+        'email': googleSignInAccount.email,
+        'username': 'user$randomNumber',
+        'full_name': googleSignInAccount.displayName,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      GetIt.I<NavigationServiceMain>().pushReplacementNamed('/login');
+      return BaseResponse(
+        statusCode: response.statusCode,
+        data: response,
+        message: response.message,
+      );
+    } else {
+      GetIt.I<NavigationServiceMain>().pushReplacementNamed('/register');
+      return BaseResponse(
+        statusCode: response.statusCode,
+        data: response,
+        message: response.message,
+      );
+    }
+  }
+
+  Future<BaseResponse> signInGoogle() async {
+    GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
+    GoogleSignInAuthentication googleSignInAuthentication =
+        await googleSignInAccount!.authentication;
+    AuthCredential credential = GoogleAuthProvider.credential(
+        idToken: googleSignInAuthentication.idToken,
+        accessToken: googleSignInAuthentication.accessToken);
+    UserCredential authResult = await _auth.signInWithCredential(credential);
+    _user = authResult.user!;
+    final res = await login(
+      loginGoogle,
+      data: {
+        'source': 'google',
+        'id': googleSignInAccount.id,
+        'email': googleSignInAccount.email,
+      },
+    );
+
+    if (res.statusCode == 200) {
+      final user = DataUser.fromJson(res.data);
+
+      GetIt.I<UserService>().setUser = user;
       GetIt.I<NavigationServiceMain>().pushReplacementNamed('/monitor');
       return BaseResponse(
         statusCode: res.statusCode,

@@ -48,6 +48,38 @@ class BaseRepository {
     }
   }
 
+  Future<BaseResponse> put(
+    String api, {
+    Map<String, dynamic>? data,
+    Map<String, dynamic>? queryParameters,
+    String jsonHead = 'data',
+  }) async {
+    try {
+      final token = await secureStorage.read(key: clientToken);
+
+      final Map<String, dynamic> headers = {};
+      if (token != null) headers['Authorization'] = 'Bearer $token';
+
+      final response = await retry(
+        () => dio.put(
+          api,
+          data: json.encode(data),
+          queryParameters: queryParameters,
+          options: Options(headers: headers),
+        ),
+        retryIf: (e) => e is SocketException || e is TimeoutException,
+      );
+
+      return BaseResponse(
+        statusCode: response.statusCode,
+        data: response.data,
+        message: response.data['message'],
+      );
+    } on DioError catch (e) {
+      return ExceptionHelper(e).catchException();
+    }
+  }
+
   Future<BaseResponse> login(
     String api, {
     Map<String, dynamic>? data,
@@ -70,6 +102,38 @@ class BaseRepository {
         GetIt.I<FlutterSecureStorage>().write(
             key: clientTokenUserId,
             value: response.data['data']['user']['id'].toString());
+      }
+
+      return BaseResponse(
+        statusCode: response.statusCode,
+        data: response.data['data'],
+        message: response.data['message'],
+      );
+    } on DioError catch (e) {
+      return ExceptionHelper(e).catchException();
+    }
+  }
+
+  Future<BaseResponse> signup(
+    String api, {
+    Map<String, dynamic>? data,
+    Map<String, dynamic>? queryParameters,
+  }) async {
+    try {
+      final response = await retry(
+        () => dio.post(
+          api,
+          data: json.encode(data),
+          queryParameters: queryParameters,
+          options: Options(responseType: ResponseType.json),
+        ),
+        retryIf: (e) => e is SocketException || e is TimeoutException,
+      );
+
+      if (response.data['data']['data']['user']['id'] != null) {
+        GetIt.I<FlutterSecureStorage>().write(
+            key: clientTokenUserId,
+            value: response.data['data']['data']['user']['id'].toString());
       }
 
       return BaseResponse(

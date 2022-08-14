@@ -4,12 +4,12 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lectro/screen/auth/cubit/register_cubit.dart';
 
 import '../../services/navigation.dart';
 import '../../utils/constant.dart';
 import '../../utils/custom.dart';
 import '../components/button/small_button.dart';
-import 'cubit/login_cubit.dart';
 import 'cubit/show_password_cubit.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -20,7 +20,7 @@ class RegisterScreen extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => LoginCubit(),
+          create: (context) => RegisterCubit(),
         ),
         BlocProvider(
           create: (context) => ShowPasswordCubit(),
@@ -36,6 +36,7 @@ class _RegisterScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final registerCubit = context.read<RegisterCubit>();
     final showCubit = context.read<ShowPasswordCubit>();
     final fullNameC = TextEditingController();
     final usernameC = TextEditingController();
@@ -407,16 +408,16 @@ class _RegisterScreen extends HookWidget {
                     SizedBox(
                       height: 10.h,
                     ),
-                    BlocListener<LoginCubit, LoginState>(
+                    BlocListener<RegisterCubit, RegisterState>(
                       listener: (context, state) {
-                        if (state is LoginLoading) {
+                        if (state is RegisterLoading) {
                           CustomDialog.showLoadingDialog(context);
                         }
-                        if (state is LoginFailed) {
+                        if (state is RegisterFailed) {
                           GetIt.I<NavigationServiceMain>().pop();
                           GetIt.I<NavigationServiceMain>().pushNamed('/login');
                         }
-                        if (state is LoginSuccess) {
+                        if (state is RegisterSuccess) {
                           GetIt.I<NavigationServiceMain>().pop();
                           GetIt.I<NavigationServiceMain>()
                               .pushNamed('/monitor');
@@ -484,8 +485,30 @@ class _RegisterScreen extends HookWidget {
                         SizedBox(
                           width: 8.w,
                         ),
-                        Image.asset(
-                          'assets/icons/google-icon.png',
+                        BlocListener<RegisterCubit, RegisterState>(
+                          listener: (context, state) {
+                            if (state is RegisterLoading) {
+                              CustomDialog.showLoadingDialog(context);
+                            }
+                            if (state is RegisterFailed) {
+                              GetIt.I<NavigationServiceMain>().pop();
+                              GetIt.I<NavigationServiceMain>()
+                                  .pushNamed('/register');
+                            }
+                            if (state is RegisterSuccess) {
+                              GetIt.I<NavigationServiceMain>().pop();
+                              GetIt.I<NavigationServiceMain>()
+                                  .pushNamed('/login');
+                            }
+                          },
+                          child: InkWell(
+                            onTap: () {
+                              registerCubit.signUpWithGoogle();
+                            },
+                            child: Image.asset(
+                              'assets/icons/google-icon.png',
+                            ),
+                          ),
                         ),
                       ],
                     ),
