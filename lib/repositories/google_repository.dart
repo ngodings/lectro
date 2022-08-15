@@ -71,13 +71,16 @@ class GoogleRepository extends BaseRepository {
         'source': 'google',
         'id': googleSignInAccount.id,
         'email': googleSignInAccount.email,
-        'username': 'user$randomNumber',
+        'username': 'userltr$randomNumber',
         'full_name': googleSignInAccount.displayName,
       },
     );
 
     if (response.statusCode == 200) {
-      GetIt.I<NavigationServiceMain>().pushReplacementNamed('/login');
+      final user = DataUser.fromJson(response.data);
+
+      GetIt.I<UserService>().setUser = user;
+      GetIt.I<NavigationServiceMain>().pushReplacementNamed('/monitor');
       return BaseResponse(
         statusCode: response.statusCode,
         data: response,

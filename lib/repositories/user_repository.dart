@@ -14,4 +14,24 @@ class UserRepository extends BaseRepository {
     }
     return res;
   }
+
+  Future<BaseResponse> completeProfile(String username, address, phone) async {
+    final res = await put(
+      updateProfile,
+      data: {
+        'username': username,
+        'address': address,
+        'phone': phone,
+      },
+    );
+
+    if (res.statusCode == 200) {
+      return BaseResponse(
+        statusCode: res.statusCode,
+        data: res,
+        message: res.message,
+      );
+    }
+    return res;
+  }
 }

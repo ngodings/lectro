@@ -72,6 +72,9 @@ class CustomColor {
   static Color primaryContainer = themes.colorScheme.primaryContainer;
   static Color onPrimaryContainer = themes.colorScheme.onPrimaryContainer;
 
+  static Color background = themes.colorScheme.background;
+  static Color onBackground = themes.colorScheme.onBackground;
+
   static Color secondary = themes.colorScheme.secondary;
   static Color onSecondary = themes.colorScheme.onSecondary;
   static Color secondaryContainer = themes.colorScheme.secondaryContainer;

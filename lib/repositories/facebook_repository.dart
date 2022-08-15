@@ -33,14 +33,7 @@ class FacebookRepository extends BaseRepository {
       print(userData);
       return userData;
     } else {}
-    final res = await getFb(
-      token.toString(),
-      queryParams: {
-        'fields': 'name,first_name,last_name,email',
-        'access_token': token
-      },
-    );
-    print(res);
+
     return userData;
   }
 

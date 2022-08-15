@@ -61,7 +61,6 @@ class Login extends HookWidget {
                       padding: EdgeInsets.only(
                         right: 65.w,
                         left: 65.w,
-                        // top: 40.w,
                       ),
                       child: Center(
                         child: Image.asset(

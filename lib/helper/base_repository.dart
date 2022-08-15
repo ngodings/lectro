@@ -130,16 +130,17 @@ class BaseRepository {
         retryIf: (e) => e is SocketException || e is TimeoutException,
       );
 
-      if (response.data['data']['data']['user']['id'] != null) {
+      if (response.data['data']['token'] != null) {
+        GetIt.I<FlutterSecureStorage>()
+            .write(key: clientToken, value: response.data['data']['token']);
         GetIt.I<FlutterSecureStorage>().write(
             key: clientTokenUserId,
-            value: response.data['data']['data']['user']['id'].toString());
+            value: response.data['data']['user']['id'].toString());
       }
-
       return BaseResponse(
         statusCode: response.statusCode,
         data: response.data['data'],
-        message: response.data['message'],
+        message: response.data['data']['notice'],
       );
     } on DioError catch (e) {
       return ExceptionHelper(e).catchException();
@@ -200,70 +201,6 @@ class BaseRepository {
           options: Options(
             responseType: ResponseType.json,
             headers: headers,
-          ),
-        ),
-        retryIf: (e) => e is SocketException || e is TimeoutException,
-      );
-      Map<String, dynamic> response = json.decode(res.data);
-
-      if (res.statusCode == 200) {
-        return response;
-      }
-      return response;
-    } on DioError catch (e) {
-      return ExceptionHelper(e).catchException();
-    }
-  }
-
-  Future<String> fetchSomething(
-    String something,
-    String keySomething,
-    String api, {
-    Map<String, dynamic>? queryParams,
-  }) async {
-    try {
-      final token = await secureStorage.read(key: clientToken);
-      final Map<String, dynamic> headers = {};
-
-      if (token != null) headers['Authorization'] = 'Bearer $token';
-
-      final res = await retry(
-        () => dio.get(
-          api,
-          queryParameters: queryParams,
-          options: Options(
-            responseType: ResponseType.json,
-            headers: headers,
-          ),
-        ),
-        retryIf: (e) => e is SocketException || e is TimeoutException,
-      );
-
-      if (res.data['data']['records'].length != null) {
-        String dataSomething = res.data['records'][0][something].toString();
-        GetIt.I<FlutterSecureStorage>()
-            .write(key: keySomething, value: dataSomething);
-      }
-      return res.data['data']['records'][0][something].toString();
-    } on DioError catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
-    }
-    return '1'; //success
-  }
-
-  Future getFb(
-    String token, {
-    Map<String, dynamic>? queryParams,
-  }) async {
-    try {
-      final res = await retry(
-        () => dio.get(
-          'https://graph.facebook.com/v2.12/me?',
-          queryParameters: queryParams,
-          options: Options(
-            responseType: ResponseType.json,
           ),
         ),
         retryIf: (e) => e is SocketException || e is TimeoutException,

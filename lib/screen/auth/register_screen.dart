@@ -86,7 +86,7 @@ class _RegisterScreen extends HookWidget {
                               ),
                             ),
                           ),
-                          hintText: "Enter your fullname!",
+                          hintText: "Enter your fullname",
                           hintStyle: const TextStyle(color: Colors.grey),
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           suffixIcon: const Icon(
@@ -498,7 +498,7 @@ class _RegisterScreen extends HookWidget {
                             if (state is RegisterSuccess) {
                               GetIt.I<NavigationServiceMain>().pop();
                               GetIt.I<NavigationServiceMain>()
-                                  .pushNamed('/login');
+                                  .pushNamed('/complete-profile');
                             }
                           },
                           child: InkWell(
