@@ -10,7 +10,7 @@ class RegisterLoading extends RegisterState {}
 class RegisterSuccess extends RegisterState {}
 
 class RegisterFailed extends RegisterState {
-  final String errors;
+  final String? errors;
 
   RegisterFailed(this.errors);
 }

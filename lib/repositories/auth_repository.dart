@@ -25,6 +25,13 @@ class AuthRepository extends BaseRepository {
       return BaseResponse(
         statusCode: res.statusCode,
         data: user,
+        message: res.message,
+      );
+    } else {
+      return BaseResponse(
+        statusCode: res.statusCode,
+        data: res,
+        message: res.message,
       );
     }
     return res;

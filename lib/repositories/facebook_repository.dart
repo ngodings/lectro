@@ -1,6 +1,15 @@
+import 'package:get_it/get_it.dart';
+
 import '../helper/base_repository.dart';
 
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+
+import '../models/base_response.dart';
+import '../models/user.dart';
+import '../services/navigation.dart';
+import '../services/user_service.dart';
+import '../utils/api.dart';
+import '../utils/constant.dart';
 
 class FacebookRepository extends BaseRepository {
   final facebook = FacebookAuth.instance;
@@ -23,31 +32,55 @@ class FacebookRepository extends BaseRepository {
     }
   }
 
-  Future<Map<String, dynamic>> loginWithFacebook() async {
+  Future<BaseResponse> signUpFacebook() async {
+    final LoginResult result = await FacebookAuth.instance.login();
     token = await FacebookAuth.instance.accessToken;
+    token = result.accessToken;
 
-    print(token!.toJson());
-    _login();
+    Map<String, dynamic> userData = await FacebookAuth.instance.getUserData();
+    if (token != null) {
+      final response = await signup(
+        signUpSocmed,
+        data: {
+          'source': 'facebook',
+          'id': userData['id'],
+          'email': userData['email'],
+          'username': 'userltr$randomNumber',
+          'full_name': userData['name'],
+        },
+      );
+      if (response.statusCode == 200) {
+        final user = DataUser.fromJson(response.data);
+
+        GetIt.I<UserService>().setUser = user;
+        GetIt.I<NavigationServiceMain>().pushReplacementNamed('/monitor');
+        return BaseResponse(
+          statusCode: response.statusCode,
+          data: response,
+          message: response.message,
+        );
+      } else {
+        GetIt.I<NavigationServiceMain>().pushReplacementNamed('/register');
+        return BaseResponse(
+          statusCode: response.statusCode,
+          data: response,
+          message: response.message,
+        );
+      }
+    }
+    return userData['email'];
+  }
+
+  Future<BaseResponse> loginWithFacebook() async {
+    final LoginResult result = await FacebookAuth.instance.login();
+    token = await FacebookAuth.instance.accessToken;
+    token = result.accessToken;
+
     Map<String, dynamic> userData = await FacebookAuth.instance.getUserData();
     if (token != null) {
       print(userData);
-      return userData;
-    } else {}
-
-    return userData;
-  }
-
-  _login() async {
-    final LoginResult result = await FacebookAuth.instance.login();
-
-    if (result.status == LoginStatus.success) {
-      token = result.accessToken;
-
-      final userData = await FacebookAuth.instance.getUserData();
-      print(userData);
-    } else {
-      print(result.status);
-      print(result.message);
+      return userData['email'];
     }
+    return userData['name'];
   }
 }

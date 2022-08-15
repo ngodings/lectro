@@ -193,6 +193,7 @@ class Login extends HookWidget {
                       listener: (context, state) {
                         if (state is LoginLoading) {
                           CustomDialog.showLoadingDialog(context);
+                          GetIt.I<NavigationServiceMain>().pop();
                         }
                         if (state is LoginFailed) {
                           GetIt.I<NavigationServiceMain>().pop();
@@ -315,28 +316,6 @@ class Login extends HookWidget {
                         ),
                       ),
                     ),
-
-                    // BlocListener<LoginCubit, LoginState>(
-                    //   listener: (context, state) {
-                    //     if (state is LoginLoading) {
-                    //       CustomDialog.showLoadingDialog(context);
-                    //     }
-                    //     if (state is LoginFailed) {
-                    //       GetIt.I<NavigationServiceMain>().pop();
-                    //       GetIt.I<NavigationServiceMain>().pushNamed('/login');
-                    //     }
-                    //     if (state is LoginSuccess) {
-                    //       GetIt.I<NavigationServiceMain>().pop();
-                    //       GetIt.I<NavigationServiceMain>()
-                    //           .pushNamed('/monitor');
-                    //     }
-                    //   },
-                    //   child: IconButton(
-                    //       onPressed: () async {
-                    //         _loginCubit.loginFB();
-                    //       },
-                    //       icon: const Icon(Icons.login)),
-                    // ),
                     Padding(
                       padding: EdgeInsets.only(top: 30.h),
                       child:

@@ -37,197 +37,203 @@ class _CompleteProfileScreen extends HookWidget {
     final addressC = TextEditingController();
     final phoneC = TextEditingController();
     final usernameC = TextEditingController();
-    return Container(
-      height: MediaQuery.of(context).size.height,
-      color: CustomColor.background,
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                    right: 65.w,
-                    left: 65.w,
-                  ),
-                  child: Center(
-                    child: Image.asset(
-                      'assets/icons/matador-lectro.png',
-                      height: 200.h,
+    return Scaffold(
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        color: CustomColor.background,
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                      right: 65.w,
+                      left: 65.w,
                     ),
-                  ),
-                ),
-                Center(
-                  child: Text(
-                    'Complete your profile before!',
-                    style: GoogleFonts.poppins(
-                      textStyle: const TextStyle(
-                        color: title,
-                        fontSize: 22,
-                        fontWeight: FontWeight.w500,
+                    child: Center(
+                      child: Image.asset(
+                        'assets/icons/matador-lectro.png',
+                        height: 200.h,
                       ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(3.0),
-                  child: TextFormField(
-                    controller: usernameC,
-                    decoration: InputDecoration(
-                      label: Text(
-                        'Username',
-                        style: GoogleFonts.poppins(
-                          textStyle: const TextStyle(
-                            color: title,
-                            fontSize: 22,
-                            fontWeight: FontWeight.w500,
+                  Center(
+                    child: Text(
+                      'Complete your profile before!',
+                      style: GoogleFonts.poppins(
+                        textStyle: const TextStyle(
+                          color: title,
+                          fontSize: 22,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 12.h,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(3.0),
+                    child: TextFormField(
+                      controller: usernameC,
+                      decoration: InputDecoration(
+                        label: Text(
+                          'Username',
+                          style: GoogleFonts.poppins(
+                            textStyle: const TextStyle(
+                              color: title,
+                              fontSize: 22,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
-                      ),
-                      hintText: "Enter your username.",
-                      hintStyle: const TextStyle(color: Colors.grey),
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      suffixIcon: const Icon(
-                        Icons.person,
-                        color: Colors.grey,
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: Color(0xFF7E68D4),
-                          width: 1.5,
+                        hintText: "Enter your username.",
+                        hintStyle: const TextStyle(color: Colors.grey),
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        suffixIcon: const Icon(
+                          Icons.person,
+                          color: Colors.grey,
                         ),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: Color(0xFF95D1A9),
-                          width: 1.5,
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Color(0xFF7E68D4),
+                            width: 1.5,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                        borderRadius: BorderRadius.circular(10),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Color(0xFF95D1A9),
+                            width: 1.5,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                       ),
+                      keyboardType: TextInputType.text,
                     ),
-                    keyboardType: TextInputType.text,
                   ),
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(3.0),
-                  child: TextFormField(
-                    controller: addressC,
-                    decoration: InputDecoration(
-                      label: Text(
-                        'Address',
-                        style: GoogleFonts.poppins(
-                          textStyle: const TextStyle(
-                            color: title,
-                            fontSize: 22,
-                            fontWeight: FontWeight.w500,
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(3.0),
+                    child: TextFormField(
+                      controller: addressC,
+                      decoration: InputDecoration(
+                        label: Text(
+                          'Address',
+                          style: GoogleFonts.poppins(
+                            textStyle: const TextStyle(
+                              color: title,
+                              fontSize: 22,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
-                      ),
-                      hintText: "Enter your address.",
-                      hintStyle: const TextStyle(color: Colors.grey),
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      suffixIcon: const Icon(
-                        Icons.person,
-                        color: Colors.grey,
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: Color(0xFF7E68D4),
-                          width: 1.5,
+                        hintText: "Enter your address.",
+                        hintStyle: const TextStyle(color: Colors.grey),
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        suffixIcon: const Icon(
+                          Icons.person,
+                          color: Colors.grey,
                         ),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: Color(0xFF95D1A9),
-                          width: 1.5,
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Color(0xFF7E68D4),
+                            width: 1.5,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                        borderRadius: BorderRadius.circular(10),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Color(0xFF95D1A9),
+                            width: 1.5,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                       ),
+                      keyboardType: TextInputType.text,
                     ),
-                    keyboardType: TextInputType.text,
                   ),
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(3.0),
-                  child: TextFormField(
-                    controller: phoneC,
-                    decoration: InputDecoration(
-                      label: Text(
-                        'Phone Number',
-                        style: GoogleFonts.poppins(
-                          textStyle: const TextStyle(
-                            color: title,
-                            fontSize: 22,
-                            fontWeight: FontWeight.w500,
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(3.0),
+                    child: TextFormField(
+                      controller: phoneC,
+                      decoration: InputDecoration(
+                        label: Text(
+                          'Phone Number',
+                          style: GoogleFonts.poppins(
+                            textStyle: const TextStyle(
+                              color: title,
+                              fontSize: 22,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
-                      ),
-                      hintText: "(+62877xxxx)",
-                      hintStyle: const TextStyle(color: Colors.grey),
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      suffixIcon: const Icon(
-                        Icons.person,
-                        color: Colors.grey,
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: Color(0xFF7E68D4),
-                          width: 1.5,
+                        hintText: "(+62877xxxx)",
+                        hintStyle: const TextStyle(color: Colors.grey),
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        suffixIcon: const Icon(
+                          Icons.person,
+                          color: Colors.grey,
                         ),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: Color(0xFF95D1A9),
-                          width: 1.5,
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Color(0xFF7E68D4),
+                            width: 1.5,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                        borderRadius: BorderRadius.circular(10),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            color: Color(0xFF95D1A9),
+                            width: 1.5,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                       ),
+                      keyboardType: TextInputType.text,
                     ),
-                    keyboardType: TextInputType.text,
                   ),
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(right: 210.w),
-                  child: BlocListener<ProfileCubit, ProfileState>(
-                    listener: (context, state) {
-                      if (state is ProfileLoading) {
-                        CustomDialog.showLoadingDialog(context);
-                      }
-                      if (state is ProfileFailed) {
-                        GetIt.I<NavigationServiceMain>().pop();
-                        GetIt.I<NavigationServiceMain>()
-                            .pushNamed('/complete-profile');
-                      }
-                      if (state is ProfileSuccess) {
-                        GetIt.I<NavigationServiceMain>().pop();
-                        GetIt.I<NavigationServiceMain>().pushNamed('/monitor');
-                      }
-                    },
-                    child: SmallButton(
-                      buttonText: 'Submit',
-                      color: button,
-                      textColor: Colors.white,
-                      press: () async {
-                        cubit.updateCompleteProfile(
-                            usernameC.text, addressC.text, phoneC.text);
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(right: 210.w),
+                    child: BlocListener<ProfileCubit, ProfileState>(
+                      listener: (context, state) {
+                        if (state is ProfileLoading) {
+                          CustomDialog.showLoadingDialog(context);
+                        }
+                        if (state is ProfileFailed) {
+                          GetIt.I<NavigationServiceMain>().pop();
+                          GetIt.I<NavigationServiceMain>()
+                              .pushNamed('/complete-profile');
+                        }
+                        if (state is ProfileSuccess) {
+                          GetIt.I<NavigationServiceMain>().pop();
+                          GetIt.I<NavigationServiceMain>()
+                              .pushNamed('/monitor');
+                        }
                       },
+                      child: SmallButton(
+                        buttonText: 'Submit',
+                        color: button,
+                        textColor: Colors.white,
+                        press: () async {
+                          cubit.updateCompleteProfile(
+                              usernameC.text, addressC.text, phoneC.text);
+                        },
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

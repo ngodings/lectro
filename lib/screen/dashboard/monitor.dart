@@ -13,6 +13,7 @@ import 'package:lectro/screen/dashboard/cubit/battery_cubit.dart';
 import 'package:lectro/screen/dashboard/cubit/device_cubit.dart';
 import 'package:lectro/screen/dashboard/cubit/price_packet_cubit.dart';
 import 'package:lectro/utils/extensions.dart';
+import 'package:lectro/utils/theme_data.dart';
 
 import '../../services/navigation.dart';
 import '../../utils/constant.dart';
@@ -122,10 +123,10 @@ class Monitor extends HookWidget {
               SizedBox(
                 height: 65.w,
               ),
-              const Center(
+              Center(
                 child: MainTitle(
                   title: 'LECTRO - ENERGY SMART SYSTEM',
-                  color: Colors.black,
+                  color: CustomColor.onBackground,
                 ),
               ),
               SizedBox(
@@ -391,7 +392,7 @@ class Monitor extends HookWidget {
                         top: 1.w, bottom: 5.w, left: 16.w, right: 16.w),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         InkWell(
                           onTap: () async {
@@ -415,6 +416,7 @@ class Monitor extends HookWidget {
                           builder: (context, state) {
                             return Text(
                               fullName,
+                              overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.montserrat(
                                 textStyle: TextStyle(
                                   color: Colors.white,
@@ -426,7 +428,7 @@ class Monitor extends HookWidget {
                           },
                         ),
                         SizedBox(
-                          width: 60.w,
+                          width: 50.w,
                         ),
                         BlocConsumer<DeviceCubit, DeviceState>(
                           listener: (context, state) {

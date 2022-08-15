@@ -1,5 +1,7 @@
 // ignore_for_file: unnecessary_const
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 const ColorScheme colorScheme = const ColorScheme(
@@ -52,3 +54,7 @@ const String kConnectionTimeout = "Connection Timeout";
 const String kNoInternetConnection = "No Internet Connection";
 const String kLoginUsernamePasswordWrongMessage =
     "Email atau password salah. Coba kembali";
+
+Random random = Random();
+
+final randomNumber = (random.nextInt(1000) + 10).toString();

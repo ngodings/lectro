@@ -479,8 +479,30 @@ class _RegisterScreen extends HookWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset(
-                          'assets/icons/facebook-icon.png',
+                        BlocListener<RegisterCubit, RegisterState>(
+                          listener: (context, state) {
+                            if (state is RegisterLoading) {
+                              CustomDialog.showLoadingDialog(context);
+                            }
+                            if (state is RegisterFailed) {
+                              GetIt.I<NavigationServiceMain>().pop();
+                              GetIt.I<NavigationServiceMain>()
+                                  .pushNamed('/register');
+                            }
+                            if (state is RegisterSuccess) {
+                              GetIt.I<NavigationServiceMain>().pop();
+                              GetIt.I<NavigationServiceMain>()
+                                  .pushNamed('/complete-profile');
+                            }
+                          },
+                          child: InkWell(
+                            onTap: () {
+                              registerCubit.signUpWithFacebook();
+                            },
+                            child: Image.asset(
+                              'assets/icons/facebook-icon.png',
+                            ),
+                          ),
                         ),
                         SizedBox(
                           width: 8.w,

@@ -9,6 +9,7 @@ import '../models/user.dart';
 import '../services/navigation.dart';
 import '../services/user_service.dart';
 import '../utils/api.dart';
+import '../utils/constant.dart';
 
 class GoogleRepository extends BaseRepository {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -53,9 +54,6 @@ class GoogleRepository extends BaseRepository {
   }
 
   Future<BaseResponse> signUpGoogle() async {
-    Random random = Random();
-
-    final randomNumber = (random.nextInt(90) + 10).toString();
     GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
     GoogleSignInAuthentication googleSignInAuthentication =
         await googleSignInAccount!.authentication;

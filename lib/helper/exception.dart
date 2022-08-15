@@ -6,6 +6,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../models/base_response.dart';
 import '../utils/alert_toast.dart';
+import '../utils/api.dart';
 
 class ExceptionHelper<T> {
   final DioError e;
@@ -42,15 +43,14 @@ class ExceptionHelper<T> {
 
         final eResponse = e.response!;
         final statusCode = e.response!.statusCode;
-        message = eResponse.data['message'].first ?? kErrorException;
+        message = eResponse.data['message'] ?? kErrorException;
 
         if (statusCode == 422) {
-          Map<String, dynamic> errors = eResponse.data['errors'];
+          // Map<String, dynamic> errors = eResponse.data[0]['message'];
 
-          message = eResponse.data['errors'][errors.keys.first][0] ??
-              eResponse.data['message'];
+          message = eResponse.data['message'] ?? eResponse.data['message'];
         } else if (statusCode == 400) {
-          if (eResponse.requestOptions.path == '/api/v1/auth/register') {
+          if (eResponse.requestOptions.path == registerUrl) {
             return BaseResponse(
               message: message,
               statusCode: statusCode,
@@ -90,7 +90,7 @@ class ExceptionHelper<T> {
     return BaseResponse(
         message: message,
         statusCode: statusCode,
-        data: e.response?.data['errors'],
+        data: e.response?.data['message'],
         redirectTo: e.response?.data['redirect_to']);
   }
 }
