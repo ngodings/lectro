@@ -140,7 +140,7 @@ class BaseRepository {
       return BaseResponse(
         statusCode: response.statusCode,
         data: response.data['data'],
-        message: response.data['data']['notice'],
+        message: response.data['message'],
       );
     } on DioError catch (e) {
       return ExceptionHelper(e).catchException();
@@ -173,11 +173,38 @@ class BaseRepository {
       return BaseResponse(
         statusCode: res.statusCode,
         data: withHead ? res.data[jsonHead] ?? res.data : res.data,
+        message: res.data['message'],
         meta: withHead
             ? res.data['meta'] != null
                 ? Meta.fromJson(res.data['meta'])
                 : null
             : null,
+      );
+    } on DioError catch (e) {
+      return ExceptionHelper(e).catchException();
+    }
+  }
+
+  Future<BaseResponse> register(
+    String api, {
+    Map<String, dynamic>? data,
+    Map<String, dynamic>? queryParameters,
+  }) async {
+    try {
+      final response = await retry(
+        () => dio.post(
+          api,
+          data: json.encode(data),
+          queryParameters: queryParameters,
+          options: Options(responseType: ResponseType.json),
+        ),
+        retryIf: (e) => e is SocketException || e is TimeoutException,
+      );
+
+      return BaseResponse(
+        statusCode: response.statusCode,
+        data: response.data['data'],
+        message: response.data['message'],
       );
     } on DioError catch (e) {
       return ExceptionHelper(e).catchException();

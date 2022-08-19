@@ -34,7 +34,44 @@ class AuthRepository extends BaseRepository {
         message: res.message,
       );
     }
-    return res;
+  }
+
+  Future<BaseResponse> registerBasic(
+    String fullname,
+    username,
+    email,
+    password,
+    rePassword,
+    address,
+    phone,
+  ) async {
+    final response = await register(
+      registerUrl,
+      data: {
+        'full_name': fullname,
+        'email': email,
+        'password': password,
+        'repeat_password': rePassword,
+        'address': address,
+        'phone': phone,
+      },
+    );
+    if (response.statusCode == 200) {
+      final user = DataUser.fromJson(response.data);
+
+      GetIt.I<UserService>().setUser = user;
+      return BaseResponse(
+        statusCode: response.statusCode,
+        data: response,
+        message: response.message,
+      );
+    } else {
+      return BaseResponse(
+        statusCode: response.statusCode,
+        data: response,
+        message: response.message,
+      );
+    }
   }
 
   Future<BaseResponse> setFCM() async {

@@ -223,7 +223,11 @@ class Login extends HookWidget {
                     InkWell(
                       onTap: () async {
                         GetIt.I<NavigationServiceMain>()
-                            .pushNamed('/forget-password');
+                            .pushNamed('/register-code', args: {
+                          'email': 'lala@gmail.com',
+                          'isEmail': true,
+                          'newCode': false
+                        });
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,

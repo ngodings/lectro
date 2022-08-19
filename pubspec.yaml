@@ -67,6 +67,8 @@ dependencies:
   flex_color_picker: ^2.4.0
   google_sign_in: ^5.4.0
   flutter_facebook_auth: ^4.4.0+1
+  pin_code_fields: ^7.4.0
+  flutter_countdown_timer: ^4.1.0
 
   
   

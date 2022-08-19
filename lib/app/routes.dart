@@ -8,6 +8,7 @@ import 'package:lectro/screen/dashboard/monitor.dart';
 import 'package:lectro/screen/profile/profil_screen.dart';
 
 import '../screen/auth/login_screen.dart';
+import '../screen/auth/register_code_screen.dart';
 
 void configureRoutes() {
   final router = GetIt.I<FluroRouter>();
@@ -32,6 +33,19 @@ void configureRoutes() {
       handlerFunc: (BuildContext? context, Map<String, List<String>> params) =>
           const RegisterScreen(),
     ),
+    transitionType: TransitionType.none,
+  );
+  router.define(
+    '/register-code',
+    handler: Handler(
+        handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+      final args = context!.arguments as Map<String, dynamic>;
+      return RegisterCodeScreen(
+        email: args['email'],
+        isEmail: args['isEmail'],
+        newCode: args['newCode'],
+      );
+    }),
     transitionType: TransitionType.none,
   );
   router.define(
