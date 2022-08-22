@@ -268,8 +268,30 @@ class Login extends HookWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset(
-                          'assets/icons/facebook-icon.png',
+                        BlocListener<LoginCubit, LoginState>(
+                          listener: (context, state) {
+                            if (state is LoginLoading) {
+                              CustomDialog.showLoadingDialog(context);
+                            }
+                            if (state is LoginFailed) {
+                              GetIt.I<NavigationServiceMain>().pop();
+                              GetIt.I<NavigationServiceMain>()
+                                  .pushNamed('/login');
+                            }
+                            if (state is LoginSuccess) {
+                              GetIt.I<NavigationServiceMain>().pop();
+                              GetIt.I<NavigationServiceMain>()
+                                  .pushNamed('/monitor');
+                            }
+                          },
+                          child: InkWell(
+                            onTap: () {
+                              _loginCubit.signInFB();
+                            },
+                            child: Image.asset(
+                              'assets/icons/facebook-icon.png',
+                            ),
+                          ),
                         ),
                         SizedBox(
                           width: 8.w,

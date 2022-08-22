@@ -39,30 +39,15 @@ class LoginCubit extends Cubit<LoginState> {
     }
   }
 
-  Future<void> loginGoogle() async {
+  Future<void> signInFB() async {
     emit(LoginLoading());
-    final res = await _google.loginWithGoogle();
-    print(res);
+    final res = await _fb.signInFacebook();
 
     if (res.statusCode == 200) {
       emit(LoginSuccess());
     } else {
       emit(LoginFailed(
         res.message,
-      ));
-    }
-  }
-
-  Future<void> loginFB() async {
-    emit(LoginLoading());
-    final res = await _fb.loginWithFacebook();
-    print(res);
-
-    if (res != null) {
-      emit(LoginSuccess());
-    } else {
-      emit(LoginFailed(
-        'salah',
       ));
     }
   }

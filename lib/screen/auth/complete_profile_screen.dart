@@ -215,7 +215,7 @@ class _CompleteProfileScreen extends HookWidget {
                           GetIt.I<NavigationServiceMain>()
                               .pushNamed('/complete-profile');
                         }
-                        if (state is ProfileSuccess) {
+                        if (state is CompleteProfileSuccess) {
                           GetIt.I<NavigationServiceMain>().pop();
                           GetIt.I<NavigationServiceMain>()
                               .pushNamed('/monitor');

@@ -17,3 +17,5 @@ class ProfileFailed extends ProfileState {
 
   ProfileFailed(this.errors);
 }
+
+class CompleteProfileSuccess extends ProfileState {}

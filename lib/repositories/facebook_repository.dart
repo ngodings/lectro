@@ -32,6 +32,40 @@ class FacebookRepository extends BaseRepository {
     }
   }
 
+  Future<BaseResponse> signInFacebook() async {
+    final LoginResult result = await FacebookAuth.instance.login();
+    token = await FacebookAuth.instance.accessToken;
+    token = result.accessToken;
+    Map<String, dynamic> userData = await FacebookAuth.instance.getUserData();
+    if (token != null) {
+      final response = await login(signInSocmed, data: {
+        'source': 'facebook',
+        'id': userData['id'],
+        'email': userData['email'],
+      });
+
+      if (response.statusCode == 200) {
+        final user = DataUser.fromJson(response.data);
+
+        GetIt.I<UserService>().setUser = user;
+        GetIt.I<NavigationServiceMain>().pushReplacementNamed('/monitor');
+        return BaseResponse(
+          statusCode: response.statusCode,
+          data: response,
+          message: response.message,
+        );
+      } else {
+        GetIt.I<NavigationServiceMain>().pushReplacementNamed('/register');
+        return BaseResponse(
+          statusCode: response.statusCode,
+          data: response,
+          message: response.message,
+        );
+      }
+    }
+    return userData['email'];
+  }
+
   Future<BaseResponse> signUpFacebook() async {
     final LoginResult result = await FacebookAuth.instance.login();
     token = await FacebookAuth.instance.accessToken;

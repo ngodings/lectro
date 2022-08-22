@@ -42,7 +42,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     emit(ProfileLoading());
     final res = await _user.completeProfile(username, address, phone);
     if (res.statusCode == 200) {
-      emit(ProfileSuccess(res.data));
+      emit(CompleteProfileSuccess());
     } else {
       emit(ProfileFailed(res.message ?? ''));
     }

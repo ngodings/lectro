@@ -5,11 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
-// ignore: depend_on_referenced_packages
-import 'package:get/get.dart';
+
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-import '../../utils/constant.dart';
 import '../../utils/theme_data.dart';
 import 'cubit/register_code_cubit.dart';
 
