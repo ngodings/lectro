@@ -1,8 +1,14 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lectro/screen/auth/cubit/register_cubit.dart';
+import 'package:lectro/utils/constant.dart';
+import 'package:lectro/utils/custom.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 
@@ -12,15 +18,19 @@ import '../../utils/theme_data.dart';
 import 'cubit/register_code_cubit.dart';
 
 class RegisterCodeScreen extends StatelessWidget {
-  const RegisterCodeScreen(
-      {Key? key,
-      required this.email,
-      required this.isEmail,
-      required this.newCode})
-      : super(key: key);
+  const RegisterCodeScreen({
+    Key? key,
+    required this.email,
+    required this.isEmail,
+    required this.newCode,
+    required this.timestamp,
+    this.username,
+  }) : super(key: key);
   final String email;
+  final String? username;
   final bool isEmail;
   final bool newCode;
+  final int timestamp;
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -28,30 +38,41 @@ class RegisterCodeScreen extends StatelessWidget {
         BlocProvider(
           create: (context) => RegisterCodeCubit(),
         ),
+        BlocProvider(
+          create: (context) => RegisterCubit(),
+        ),
       ],
-      child:
-          _RegisterCodeScreen(email: email, isEmail: isEmail, newCode: newCode),
+      child: _RegisterCodeScreen(
+          email: email,
+          isEmail: isEmail,
+          newCode: newCode,
+          timestamp: timestamp,
+          username: username),
     );
   }
 }
 
 class _RegisterCodeScreen extends HookWidget {
-  const _RegisterCodeScreen(
-      {Key? key,
-      required this.email,
-      required this.isEmail,
-      required this.newCode})
-      : super(key: key);
+  const _RegisterCodeScreen({
+    Key? key,
+    required this.email,
+    required this.isEmail,
+    required this.newCode,
+    required this.timestamp,
+    this.username,
+  }) : super(key: key);
+  final String? username;
   final String email;
   final bool isEmail;
   final bool newCode;
+  final int timestamp;
 
   @override
   Widget build(BuildContext context) {
     bool first = true;
     final codeC = useTextEditingController();
     final cubit = context.read<RegisterCodeCubit>();
-    // final reqCubit = context.read<RequestCodeCubit>();
+    final registerC = context.read<RegisterCubit>();
     int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 60;
     return Scaffold(
       backgroundColor: CustomColor.background,
@@ -112,7 +133,7 @@ class _RegisterCodeScreen extends HookWidget {
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: PinCodeTextField(
-                    length: 4,
+                    length: 6,
                     obscureText: false,
                     animationType: AnimationType.fade,
                     keyboardType: TextInputType.number,
@@ -131,14 +152,26 @@ class _RegisterCodeScreen extends HookWidget {
                     animationDuration: const Duration(milliseconds: 300),
                     enableActiveFill: true,
                     controller: codeC,
-                    onCompleted: (v) {
-                      //  cubit.registerAuthCode(v, email);
+                    onCompleted: (v) async {
+                      final getTimestamp = await GetIt.I<FlutterSecureStorage>()
+                          .read(key: clientTimestamp);
+                      final timestamps = int.parse(getTimestamp!);
+                      print(timestamps);
+                      if (timestamps == 0) {
+                        registerC.registerCodeEmail(v, timestamp);
+                      } else {
+                        registerC.registerCodeEmail(v, timestamps);
+                      }
                     },
                     onChanged: (v) {
-                      print(v);
+                      if (kDebugMode) {
+                        print(v);
+                      }
                     },
                     beforeTextPaste: (text) {
-                      print("Allowing to paste $text");
+                      if (kDebugMode) {
+                        print("Allowing to paste $text");
+                      }
 
                       return true;
                     },
@@ -152,7 +185,11 @@ class _RegisterCodeScreen extends HookWidget {
                       if (state is RegisterCodeTimersEnd) {
                         return GestureDetector(
                           onTap: () {
-                            //  reqCubit.requestCodeAuthCode(email);
+                            registerC.requestCodeEmail(username!);
+                            CustomAwesomeDialog.showWarningDailog(
+                                context,
+                                'Congratulation!',
+                                'Congratulations, your verification has been successfully created. Check your email to activate it.');
                           },
                           child: Text(
                             "Kirim ulang code",
@@ -215,8 +252,15 @@ class _RegisterCodeScreen extends HookWidget {
                   height: 30.h,
                 ),
                 GestureDetector(
-                  onTap: () {
-                    // cubit.registerAuthCode(codeC.text, email);
+                  onTap: () async {
+                    final getTimestamp = await GetIt.I<FlutterSecureStorage>()
+                        .read(key: clientTimestamp);
+                    final timestamps = int.parse(getTimestamp!);
+                    if (timestamps == 0) {
+                      registerC.registerCodeEmail(codeC.text, timestamp);
+                    } else {
+                      registerC.registerCodeEmail(codeC.text, timestamps);
+                    }
                   },
                   child: Container(
                     height: 36,

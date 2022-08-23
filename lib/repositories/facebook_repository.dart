@@ -15,23 +15,6 @@ class FacebookRepository extends BaseRepository {
   final facebook = FacebookAuth.instance;
   AccessToken? token;
 
-  Future loginWithFB() async {
-    bool isLogged = await facebook.accessToken != null;
-    AccessToken? token = await facebook.accessToken;
-    final userData = await FacebookAuth.instance.getUserData();
-    print(facebook.accessToken);
-    if (!isLogged) {
-      LoginResult result = await facebook.login();
-      if (result.status == LoginStatus.success) {
-        return userData;
-      }
-    } else {
-      Map<String, dynamic> user = await FacebookAuth.instance.getUserData();
-
-      return user;
-    }
-  }
-
   Future<BaseResponse> signInFacebook() async {
     final LoginResult result = await FacebookAuth.instance.login();
     token = await FacebookAuth.instance.accessToken;

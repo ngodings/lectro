@@ -7,6 +7,8 @@ const String apiFCMToken = '';
 const String loginGoogle = '/v1/auth/signin-oauth';
 const String signUpSocmed = '/v1/auth/signup-oauth';
 const String signInSocmed = '/v1/auth/signin-oauth';
+const String verifyEmail = '/v1/auth/verify-email';
+const String resendVerifEmail = '/v1/auth/resend-verification-email';
 
 // Profil
 const String profilUrl = '/v1/user/profile';

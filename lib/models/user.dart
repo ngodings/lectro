@@ -46,3 +46,25 @@ class DataUser {
     return data;
   }
 }
+
+class ResponseSignUp {
+  String? notice;
+  int? timestamp;
+
+  ResponseSignUp({
+    this.notice,
+    this.timestamp,
+  });
+
+  ResponseSignUp.fromJson(Map<String, dynamic> json) {
+    notice = json['notice'];
+    timestamp = json['timestamp'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['notice'] = notice;
+    data['timestamp'] = timestamp;
+    return data;
+  }
+}

@@ -41,6 +41,8 @@ void configureRoutes() {
         handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
       final args = context!.arguments as Map<String, dynamic>;
       return RegisterCodeScreen(
+        username: args['username'],
+        timestamp: args['timestamp'],
         email: args['email'],
         isEmail: args['isEmail'],
         newCode: args['newCode'],

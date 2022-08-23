@@ -417,10 +417,15 @@ class _RegisterScreen extends HookWidget {
                           GetIt.I<NavigationServiceMain>().pop();
                           GetIt.I<NavigationServiceMain>().pushNamed('/login');
                         }
-                        if (state is RegisterSuccess) {
-                          GetIt.I<NavigationServiceMain>().pop();
+                        if (state is RegisterResponseSuccess) {
                           GetIt.I<NavigationServiceMain>()
-                              .pushNamed('/monitor');
+                              .pushNamed('/register-code', args: {
+                            'username': usernameC.text,
+                            'timestamp': state.response.timestamp,
+                            'email': emailC.text,
+                            'isEmail': true,
+                            'newCode': false
+                          });
                         }
                       },
                       child: Padding(
@@ -429,7 +434,17 @@ class _RegisterScreen extends HookWidget {
                           buttonText: 'Register',
                           color: button,
                           textColor: Colors.white,
-                          press: () async {},
+                          press: () async {
+                            registerCubit.registerBasic(
+                              fullNameC.text,
+                              usernameC.text,
+                              emailC.text,
+                              passwordC.text,
+                              rePasswordC.text,
+                              addressC.text,
+                              phoneC.text,
+                            );
+                          },
                         ),
                       ),
                     ),

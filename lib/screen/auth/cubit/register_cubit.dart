@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:lectro/models/user.dart';
 import 'package:lectro/repositories/auth_repository.dart';
 import 'package:lectro/repositories/facebook_repository.dart';
 import 'package:lectro/repositories/google_repository.dart';
@@ -25,6 +26,26 @@ class RegisterCubit extends Cubit<RegisterState> {
     emit(RegisterLoading());
     final res = await _auth.registerBasic(
         fullname, username, email, password, rePassword, address, phone);
+    if (res.statusCode == 200) {
+      emit(RegisterResponseSuccess(res.data));
+    } else {
+      emit(RegisterFailed(res.message));
+    }
+  }
+
+  Future<void> registerCodeEmail(String code, int timestamp) async {
+    emit(RegisterLoading());
+    final res = await _auth.registerCodeEmail(code, timestamp);
+    if (res.statusCode == 200) {
+      emit(RegisterResponseSuccess(res.data));
+    } else {
+      emit(RegisterFailed(res.message));
+    }
+  }
+
+  Future<void> requestCodeEmail(String username) async {
+    emit(RegisterLoading());
+    final res = await _auth.requestCode(username);
     if (res.statusCode == 200) {
       emit(RegisterSuccess());
     } else {

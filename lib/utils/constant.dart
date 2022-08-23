@@ -46,6 +46,7 @@ const String lastEnergyGrid = 'last_grid';
 const String lastEnergyBattery = 'last_battery';
 const String clientTokenLearningToolCode = 'learning_tool_code';
 const String clientGoogleKey = 'user_key';
+const String clientTimestamp = 'client_timestamp';
 
 //=================Error Messages==================
 const String kErrorCantReachServer = "Can't reach to the http server";

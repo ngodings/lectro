@@ -195,6 +195,7 @@ class Login extends HookWidget {
                           CustomDialog.showLoadingDialog(context);
                           GetIt.I<NavigationServiceMain>().pop();
                         }
+
                         if (state is LoginFailed) {
                           GetIt.I<NavigationServiceMain>().pop();
                           GetIt.I<NavigationServiceMain>().pushNamed('/login');

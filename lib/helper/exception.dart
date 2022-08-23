@@ -43,12 +43,11 @@ class ExceptionHelper<T> {
 
         final eResponse = e.response!;
         final statusCode = e.response!.statusCode;
-        message = eResponse.data['message'] ?? kErrorException;
+        // message = eResponse.data['data'][0]['message'] ?? kErrorException;
 
         if (statusCode == 422) {
-          // Map<String, dynamic> errors = eResponse.data[0]['message'];
-
-          message = eResponse.data['message'] ?? eResponse.data['message'];
+          message =
+              eResponse.data['data'][0]['message'] ?? eResponse.data['message'];
         } else if (statusCode == 400) {
           if (eResponse.requestOptions.path == registerUrl) {
             return BaseResponse(
@@ -67,6 +66,8 @@ class ExceptionHelper<T> {
           } else if (eResponse.data['message'] != null) {
             message = eResponse.data['message'].first;
           }
+        } else {
+          message = eResponse.data['message'] ?? eResponse.data['message'];
         }
 
         break;

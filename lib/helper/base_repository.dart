@@ -79,6 +79,41 @@ class BaseRepository {
     }
   }
 
+  Future<BaseResponse> fetchSignUp(
+    String api, {
+    Map<String, dynamic>? queryParams,
+    String jsonHead = 'data',
+    bool withHead = true,
+  }) async {
+    try {
+      final response = await retry(
+        () => dio.get(
+          api,
+          queryParameters: queryParams,
+          options: Options(
+            responseType: ResponseType.json,
+          ),
+        ),
+        retryIf: (e) => e is SocketException || e is TimeoutException,
+      );
+      if (response.data['data']['token'] != null) {
+        GetIt.I<FlutterSecureStorage>()
+            .write(key: clientToken, value: response.data['data']['token']);
+        GetIt.I<FlutterSecureStorage>().write(
+            key: clientTokenUserId,
+            value: response.data['data']['user']['id'].toString());
+      }
+
+      return BaseResponse(
+        statusCode: response.statusCode,
+        data: response.data['data'],
+        message: response.data['notice'],
+      );
+    } on DioError catch (e) {
+      return ExceptionHelper(e).catchException();
+    }
+  }
+
   Future<BaseResponse> login(
     String api, {
     Map<String, dynamic>? data,

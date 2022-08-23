@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:lectro/models/notice_handler.dart';
 import 'package:lectro/repositories/auth_repository.dart';
 import 'package:lectro/repositories/facebook_repository.dart';
 import 'package:lectro/repositories/google_repository.dart';
