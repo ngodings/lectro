@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // ignore: must_be_immutable
 class BasicButton extends StatelessWidget {
@@ -25,6 +26,41 @@ class BasicButton extends StatelessWidget {
           style: const TextStyle(
             fontSize: 18,
             color: Colors.white,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class LongButton extends StatelessWidget {
+  const LongButton(
+      {Key? key,
+      required this.colorBox,
+      required this.color,
+      required this.txtButton,
+      this.onTap})
+      : super(key: key);
+  final Color colorBox, color;
+  final String txtButton;
+  final Function()? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        height: 36.w,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12.w), color: colorBox),
+        child: Center(
+          child: Text(
+            txtButton,
+            style: TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: 12.sp,
+              color: color,
+            ),
           ),
         ),
       ),

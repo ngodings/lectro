@@ -5,10 +5,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lectro/screen/auth/cubit/register_cubit.dart';
+import 'package:lectro/screen/components/button/default_button.dart';
+import 'package:lectro/screen/components/form/custom_field.dart';
 
 import '../../services/navigation.dart';
 import '../../utils/constant.dart';
 import '../../utils/custom.dart';
+import '../../utils/theme_data.dart';
 import '../components/button/small_button.dart';
 import 'cubit/show_password_cubit.dart';
 
@@ -50,14 +53,16 @@ class _RegisterScreen extends HookWidget {
     return Scaffold(
       body: Container(
         height: 1200,
-        color: Colors.white10,
+        color: CustomColor.background,
         child: SafeArea(
           child: SizedBox(
             width: double.infinity,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 35.w),
               child: SingleChildScrollView(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Padding(
                       padding: EdgeInsets.only(
@@ -67,135 +72,59 @@ class _RegisterScreen extends HookWidget {
                       child: Center(
                         child: Image.asset(
                           'assets/icons/matador-lectro.png',
-                          height: 200.h,
+                          height: 180.h,
                         ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(3.0),
-                      child: TextFormField(
-                        controller: fullNameC,
-                        decoration: InputDecoration(
-                          label: Text(
-                            'Full Name',
-                            style: GoogleFonts.poppins(
-                              textStyle: const TextStyle(
-                                color: title,
-                                fontSize: 22,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                          hintText: "Enter your fullname",
-                          hintStyle: const TextStyle(color: Colors.grey),
-                          floatingLabelBehavior: FloatingLabelBehavior.always,
-                          suffixIcon: const Icon(
-                            Icons.person,
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Register',
+                        style: GoogleFonts.poppins(
+                          textStyle: TextStyle(
                             color: Colors.grey,
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color(0xFF7E68D4),
-                              width: 1.5,
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color(0xFF95D1A9),
-                              width: 1.5,
-                            ),
-                            borderRadius: BorderRadius.circular(10),
+                            fontSize: 20.sp,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
-                        keyboardType: TextInputType.text,
                       ),
                     ),
                     SizedBox(
-                      height: 10.h,
+                      height: 5.h,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(3.0),
-                      child: TextFormField(
-                        controller: usernameC,
-                        decoration: InputDecoration(
-                          label: Text(
-                            'Username',
-                            style: GoogleFonts.poppins(
-                              textStyle: const TextStyle(
-                                color: title,
-                                fontSize: 22,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                          hintText: "Enter your username",
-                          hintStyle: const TextStyle(color: Colors.grey),
-                          floatingLabelBehavior: FloatingLabelBehavior.always,
-                          suffixIcon: const Icon(
-                            Icons.person,
-                            color: Colors.grey,
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color(0xFF7E68D4),
-                              width: 1.5,
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color(0xFF95D1A9),
-                              width: 1.5,
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        keyboardType: TextInputType.emailAddress,
-                      ),
+                    BasicTextField(
+                      controller: usernameC,
+                      label: 'Username',
+                      hintText: 'Enter your username',
+                      keyboardType: TextInputType.text,
                     ),
-                    SizedBox(
-                      height: 10.h,
+                    SizedBox(height: 10.h),
+                    BasicTextField(
+                      controller: fullNameC,
+                      label: 'Fullname',
+                      hintText: 'Enter your fullname',
+                      keyboardType: TextInputType.text,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(3.0),
-                      child: TextFormField(
-                        controller: emailC,
-                        decoration: InputDecoration(
-                          label: Text(
-                            'Email',
-                            style: GoogleFonts.poppins(
-                              textStyle: const TextStyle(
-                                color: title,
-                                fontSize: 22,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                          hintText: "Enter your email.",
-                          hintStyle: const TextStyle(color: Colors.grey),
-                          floatingLabelBehavior: FloatingLabelBehavior.always,
-                          suffixIcon: const Icon(
-                            Icons.person,
-                            color: Colors.grey,
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color(0xFF7E68D4),
-                              width: 1.5,
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color(0xFF95D1A9),
-                              width: 1.5,
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        keyboardType: TextInputType.text,
-                      ),
+                    SizedBox(height: 10.h),
+                    BasicTextField(
+                      controller: emailC,
+                      label: 'Email',
+                      hintText: 'Enter your email',
+                      keyboardType: TextInputType.emailAddress,
+                    ),
+                    SizedBox(height: 10.h),
+                    BasicTextField(
+                      controller: addressC,
+                      label: 'Address',
+                      hintText: 'Enter your adress',
+                      keyboardType: TextInputType.text,
+                    ),
+                    SizedBox(height: 10.h),
+                    BasicTextField(
+                      controller: addressC,
+                      label: 'Phone Number',
+                      hintText: '(+62877xxxxxxxxx)',
+                      keyboardType: TextInputType.phone,
                     ),
                     SizedBox(
                       height: 10.h,
@@ -213,11 +142,13 @@ class _RegisterScreen extends HookWidget {
                             controller: passwordC,
                             obscureText: obscure,
                             decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 15.w, horizontal: 12.w),
                               label: Text(
                                 'Password',
                                 style: GoogleFonts.poppins(
-                                  textStyle: const TextStyle(
-                                    color: title,
+                                  textStyle: TextStyle(
+                                    color: CustomColor.onSurfaceVariant,
                                     fontSize: 22,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -239,18 +170,18 @@ class _RegisterScreen extends HookWidget {
                                 },
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0xFF7E68D4),
-                                  width: 1.5,
+                                borderSide: BorderSide(
+                                  color: CustomColor.primary,
+                                  width: 3,
                                 ),
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: BorderRadius.circular(12),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderSide: const BorderSide(
-                                  color: Color(0xFF95D1A9),
-                                  width: 1.5,
+                                  color: Colors.grey,
+                                  width: 3,
                                 ),
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: BorderRadius.circular(12),
                               ),
                             ),
                             keyboardType: TextInputType.visiblePassword,
@@ -274,11 +205,13 @@ class _RegisterScreen extends HookWidget {
                             controller: rePasswordC,
                             obscureText: obscure,
                             decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 15.w, horizontal: 12.w),
                               label: Text(
                                 'Repeat Password',
                                 style: GoogleFonts.poppins(
-                                  textStyle: const TextStyle(
-                                    color: title,
+                                  textStyle: TextStyle(
+                                    color: CustomColor.onSurfaceVariant,
                                     fontSize: 22,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -300,18 +233,18 @@ class _RegisterScreen extends HookWidget {
                                 },
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0xFF7E68D4),
-                                  width: 1.5,
+                                borderSide: BorderSide(
+                                  color: CustomColor.primary,
+                                  width: 3,
                                 ),
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: BorderRadius.circular(12),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderSide: const BorderSide(
-                                  color: Color(0xFF95D1A9),
-                                  width: 1.5,
+                                  color: Colors.grey,
+                                  width: 3,
                                 ),
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: BorderRadius.circular(12),
                               ),
                             ),
                             keyboardType: TextInputType.visiblePassword,
@@ -320,94 +253,42 @@ class _RegisterScreen extends HookWidget {
                       },
                     ),
                     SizedBox(
-                      height: 10.h,
+                      height: 12.h,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(3.0),
-                      child: TextFormField(
-                        controller: addressC,
-                        decoration: InputDecoration(
-                          label: Text(
-                            'Address',
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Have account? ",
+                          textAlign: TextAlign.left,
+                          style: GoogleFonts.poppins(
+                            textStyle: const TextStyle(
+                              color: Colors.grey,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            GetIt.I<NavigationServiceMain>()
+                                .pushNamed('/login');
+                          },
+                          child: Text(
+                            'login',
+                            textAlign: TextAlign.left,
                             style: GoogleFonts.poppins(
-                              textStyle: const TextStyle(
-                                color: title,
-                                fontSize: 22,
-                                fontWeight: FontWeight.w500,
+                              textStyle: TextStyle(
+                                color: CustomColor.primary,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
                           ),
-                          hintText: "Enter your address.",
-                          hintStyle: const TextStyle(color: Colors.grey),
-                          floatingLabelBehavior: FloatingLabelBehavior.always,
-                          suffixIcon: const Icon(
-                            Icons.person,
-                            color: Colors.grey,
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color(0xFF7E68D4),
-                              width: 1.5,
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color(0xFF95D1A9),
-                              width: 1.5,
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
                         ),
-                        keyboardType: TextInputType.text,
-                      ),
+                      ],
                     ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(3.0),
-                      child: TextFormField(
-                        controller: phoneC,
-                        decoration: InputDecoration(
-                          label: Text(
-                            'Phone Number',
-                            style: GoogleFonts.poppins(
-                              textStyle: const TextStyle(
-                                color: title,
-                                fontSize: 22,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                          hintText: "(+62877xxxx)",
-                          hintStyle: const TextStyle(color: Colors.grey),
-                          floatingLabelBehavior: FloatingLabelBehavior.always,
-                          suffixIcon: const Icon(
-                            Icons.person,
-                            color: Colors.grey,
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color(0xFF7E68D4),
-                              width: 1.5,
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Color(0xFF95D1A9),
-                              width: 1.5,
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        keyboardType: TextInputType.text,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
+                    SizedBox(height: 12.h),
                     BlocListener<RegisterCubit, RegisterState>(
                       listener: (context, state) {
                         if (state is RegisterLoading) {
@@ -429,12 +310,12 @@ class _RegisterScreen extends HookWidget {
                         }
                       },
                       child: Padding(
-                        padding: EdgeInsets.only(right: 210.w),
-                        child: SmallButton(
-                          buttonText: 'Register',
-                          color: button,
-                          textColor: Colors.white,
-                          press: () async {
+                        padding: EdgeInsets.only(left: 4.w, right: 4.w),
+                        child: LongButton(
+                          colorBox: CustomColor.primary,
+                          color: CustomColor.onPrimary,
+                          txtButton: 'Register',
+                          onTap: () {
                             registerCubit.registerBasic(
                               fullNameC.text,
                               usernameC.text,
@@ -451,108 +332,149 @@ class _RegisterScreen extends HookWidget {
                     SizedBox(
                       height: 10.h,
                     ),
-                    InkWell(
-                      onTap: () async {
-                        GetIt.I<NavigationServiceMain>().pushNamed('/login');
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Sudah  mempunyai akun? Masuk disini',
-                            textAlign: TextAlign.left,
-                            style: GoogleFonts.poppins(
-                              textStyle: const TextStyle(
-                                decoration: TextDecoration.underline,
-                                color: button,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 30.h,
-                    ),
-                    Text(
-                      'Daftar menggunakan',
-                      textAlign: TextAlign.left,
-                      style: GoogleFonts.poppins(
-                        textStyle: const TextStyle(
-                          color: button,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 12.h,
-                    ),
                     Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        BlocListener<RegisterCubit, RegisterState>(
-                          listener: (context, state) {
-                            if (state is RegisterLoading) {
-                              CustomDialog.showLoadingDialog(context);
-                            }
-                            if (state is RegisterFailed) {
-                              GetIt.I<NavigationServiceMain>().pop();
-                              GetIt.I<NavigationServiceMain>()
-                                  .pushNamed('/register');
-                            }
-                            if (state is RegisterSuccess) {
-                              GetIt.I<NavigationServiceMain>().pop();
-                              GetIt.I<NavigationServiceMain>()
-                                  .pushNamed('/complete-profile');
-                            }
-                          },
-                          child: InkWell(
-                            onTap: () {
-                              registerCubit.signUpWithFacebook();
-                            },
-                            child: Image.asset(
-                              'assets/icons/facebook-icon.png',
+                        Image.asset('assets/icons/line-1.png'),
+                        Text(
+                          " OR ",
+                          textAlign: TextAlign.left,
+                          style: GoogleFonts.poppins(
+                            textStyle: const TextStyle(
+                              color: Colors.grey,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                         ),
-                        SizedBox(
-                          width: 8.w,
-                        ),
-                        BlocListener<RegisterCubit, RegisterState>(
-                          listener: (context, state) {
-                            if (state is RegisterLoading) {
-                              CustomDialog.showLoadingDialog(context);
-                            }
-                            if (state is RegisterFailed) {
-                              GetIt.I<NavigationServiceMain>().pop();
-                              GetIt.I<NavigationServiceMain>()
-                                  .pushNamed('/register');
-                            }
-                            if (state is RegisterSuccess) {
-                              GetIt.I<NavigationServiceMain>().pop();
-                              GetIt.I<NavigationServiceMain>()
-                                  .pushNamed('/complete-profile');
-                            }
-                          },
-                          child: InkWell(
-                            onTap: () {
-                              registerCubit.signUpWithGoogle();
-                            },
-                            child: Image.asset(
-                              'assets/icons/google-icon.png',
-                            ),
-                          ),
-                        ),
+                        Image.asset('assets/icons/line-1.png'),
                       ],
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 30.h),
-                      child:
-                          Image.asset('assets/icons/slogan.png', height: 100.w),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    BlocListener<RegisterCubit, RegisterState>(
+                      listener: (context, state) {
+                        if (state is RegisterLoading) {
+                          CustomDialog.showLoadingDialog(context);
+                        }
+                        if (state is RegisterFailed) {
+                          GetIt.I<NavigationServiceMain>().pop();
+                          GetIt.I<NavigationServiceMain>()
+                              .pushNamed('/register');
+                        }
+                        if (state is RegisterSuccess) {
+                          GetIt.I<NavigationServiceMain>().pop();
+                          GetIt.I<NavigationServiceMain>()
+                              .pushNamed('/complete-profile');
+                        }
+                      },
+                      child: InkWell(
+                        onTap: () {
+                          registerCubit.signUpWithGoogle();
+                        },
+                        child: Container(
+                          height: 36.w,
+                          decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.grey.withOpacity(0.6),
+                                    blurRadius: 2,
+                                    offset: const Offset(2, 4),
+                                    blurStyle: BlurStyle.inner),
+                              ],
+                              borderRadius: BorderRadius.circular(6.w),
+                              color: CustomColor.onPrimary),
+                          child: Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  width: 10.w,
+                                ),
+                                Image.asset('assets/icons/logo-google.png'),
+                                SizedBox(
+                                  width: 60.w,
+                                ),
+                                Text(
+                                  'Register With Google',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 14.sp,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    // Row(
+                    //   crossAxisAlignment: CrossAxisAlignment.center,
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+                    //     BlocListener<RegisterCubit, RegisterState>(
+                    //       listener: (context, state) {
+                    //         if (state is RegisterLoading) {
+                    //           CustomDialog.showLoadingDialog(context);
+                    //         }
+                    //         if (state is RegisterFailed) {
+                    //           GetIt.I<NavigationServiceMain>().pop();
+                    //           GetIt.I<NavigationServiceMain>()
+                    //               .pushNamed('/register');
+                    //         }
+                    //         if (state is RegisterSuccess) {
+                    //           GetIt.I<NavigationServiceMain>().pop();
+                    //           GetIt.I<NavigationServiceMain>()
+                    //               .pushNamed('/complete-profile');
+                    //         }
+                    //       },
+                    //       child: InkWell(
+                    //         onTap: () {
+                    //           registerCubit.signUpWithFacebook();
+                    //         },
+                    //         child: Image.asset(
+                    //           'assets/icons/facebook-icon.png',
+                    //         ),
+                    //       ),
+                    //     ),
+                    //     SizedBox(
+                    //       width: 8.w,
+                    //     ),
+                    //     BlocListener<RegisterCubit, RegisterState>(
+                    //       listener: (context, state) {
+                    //         if (state is RegisterLoading) {
+                    //           CustomDialog.showLoadingDialog(context);
+                    //         }
+                    //         if (state is RegisterFailed) {
+                    //           GetIt.I<NavigationServiceMain>().pop();
+                    //           GetIt.I<NavigationServiceMain>()
+                    //               .pushNamed('/register');
+                    //         }
+                    //         if (state is RegisterSuccess) {
+                    //           GetIt.I<NavigationServiceMain>().pop();
+                    //           GetIt.I<NavigationServiceMain>()
+                    //               .pushNamed('/complete-profile');
+                    //         }
+                    //       },
+                    //       child: InkWell(
+                    //         onTap: () {
+                    //           registerCubit.signUpWithGoogle();
+                    //         },
+                    //         child: Image.asset(
+                    //           'assets/icons/google-icon.png',
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
+                    Center(
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 30.h),
+                        child: Image.asset('assets/icons/slogan.png',
+                            height: 100.w),
+                      ),
                     )
                   ],
                 ),
