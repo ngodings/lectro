@@ -5,6 +5,7 @@ import 'package:lectro/screen/auth/complete_profile_screen.dart';
 import 'package:lectro/screen/auth/new_password_screen.dart';
 import 'package:lectro/screen/auth/register_screen.dart';
 import 'package:lectro/screen/dashboard/monitor.dart';
+import 'package:lectro/screen/profile/edit_profile.dart';
 import 'package:lectro/screen/profile/profil_screen.dart';
 
 import '../screen/auth/login_screen.dart';
@@ -72,6 +73,20 @@ void configureRoutes() {
       handlerFunc: (BuildContext? context, Map<String, List<String>> params) =>
           const ProfileScreen(),
     ),
+    transitionType: TransitionType.none,
+  );
+  router.define(
+    '/edit-profile',
+    handler: Handler(
+        handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+      final args = context!.arguments as Map<String, dynamic>;
+      return EditProfileScreen(
+          fullName: args['fullName'],
+          phone: args['phone'],
+          address: args['address'],
+          username: args['address'],
+          aboutMe: args['aboutMe']);
+    }),
     transitionType: TransitionType.none,
   );
   router.define(

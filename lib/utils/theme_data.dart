@@ -20,7 +20,7 @@ final ColorScheme lightTheme = ColorScheme.fromSeed(
   onTertiaryContainer: const Color(0xFF001E2C),
   onSurface: const Color(0xFF191C1B),
   surface: const Color(0xFFFBFDFA),
-  background: const Color(0xFFECF1F4),
+  background: const Color(0xFFFBFDFA),
   onBackground: const Color(0xFF191C1B),
   error: const Color(0xFFBA1B1B),
   onErrorContainer: const Color(0xFF410001),

@@ -3,6 +3,8 @@ class DataUser {
   String? username;
   String? email;
   String? fullName;
+  String? about;
+  String? address;
   String? phone;
   String? avatar;
   int? status;
@@ -14,6 +16,8 @@ class DataUser {
       this.username,
       this.email,
       this.fullName,
+      this.about,
+      this.address,
       this.phone,
       this.avatar,
       this.status,
@@ -25,6 +29,8 @@ class DataUser {
     username = json['username'];
     email = json['email'];
     fullName = json['full_name'];
+    about = json['about'];
+    address = json['address'];
     phone = json['phone'];
     avatar = json['avatar'];
     status = json['status'];
@@ -38,6 +44,8 @@ class DataUser {
     data['username'] = username;
     data['email'] = email;
     data['full_name'] = fullName;
+    data['about'] = about;
+    data['address'] = address;
     data['phone'] = phone;
     data['avatar'] = avatar;
     data['status'] = status;

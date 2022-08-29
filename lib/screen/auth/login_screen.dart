@@ -375,7 +375,7 @@ class Login extends HookWidget {
                                     ),
                               ],
                               borderRadius: BorderRadius.circular(6.w),
-                              color: CustomColor.onPrimary),
+                              color: CustomColor.primary),
                           child: Center(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -388,11 +388,11 @@ class Login extends HookWidget {
                                   width: 60.w,
                                 ),
                                 Text(
-                                  'Sign In With Google',
+                                  'Sign In with Google',
                                   style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 14.sp,
-                                    color: Colors.grey,
+                                    color: CustomColor.onPrimary,
                                   ),
                                 ),
                               ],

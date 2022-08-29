@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:lectro/models/user.dart';
+import 'package:lectro/repositories/auth_repository.dart';
 import 'package:lectro/repositories/user_repository.dart';
+import 'package:lectro/utils/alert_toast.dart';
 import 'package:meta/meta.dart';
 
 import '../../../helper/user_device.dart';
@@ -10,6 +12,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   ProfileCubit() : super(ProfileInitial());
 
   final _user = UserRepository();
+  final _auth = AuthRepository();
   Future<void> getUserDeviceID() async {
     emit(ProfileLoading());
     final response = await getUserDevice();
@@ -46,5 +49,10 @@ class ProfileCubit extends Cubit<ProfileState> {
     } else {
       emit(ProfileFailed(res.message ?? ''));
     }
+  }
+
+  void signOut() {
+    _auth.signOut();
+    showToastSuccess('Sign Out');
   }
 }

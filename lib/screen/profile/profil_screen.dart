@@ -5,9 +5,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lectro/screen/auth/cubit/profile_cubit.dart';
+import 'package:lectro/screen/components/form/viewable_field.dart';
+import 'package:lectro/utils/custom.dart';
+import 'package:lectro/utils/theme_data.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 import '../../services/navigation.dart';
-import '../components/form/field_form.dart';
+import '../components/button/default_button.dart';
 import '../components/loading/loading_widget.dart';
 
 class ProfileScreen extends HookWidget {
@@ -38,64 +42,90 @@ class Profile extends HookWidget {
       return;
     }, [dCubit]);
 
+    // ignore: unused_local_variable
     String email = '';
+    String fullName = '';
+    String phone = '';
+    String address = '';
     String username = '';
+    String aboutMe = '';
 
     return Scaffold(
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Container(
-          height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(0.w),
-            gradient: const LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [
-                Color(0xFF9999CB),
-                Color(0xFFa09ab9),
-                Color(0xFF8073a2),
-                Color(0xFF7c6d9e)
-              ],
-            ),
-          ),
+          // height: MediaQuery.of(context).size.height,
+          color: CustomColor.background,
           child: Padding(
             padding: EdgeInsets.only(
-                top: 42.w, bottom: 5.w, left: 12.w, right: 12.w),
+                top: 45.w, bottom: 5.w, left: 15.w, right: 15.w),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 BlocBuilder<ProfileCubit, ProfileState>(
                   builder: (context, state) {
                     if (state is ProfileSuccess) {
-                      email = state.user.email!;
-                      username = state.user.username!;
+                      email = state.user.email ?? 'fill your email here!';
+                      username = state.user.username ?? "Username";
+                      aboutMe = state.user.about ?? "About me";
+                      phone = state.user.phone ?? "Phone";
+                      address = state.user.address ?? "Address";
+                      fullName = state.user.fullName ?? "Full Name";
                       return Column(
                         children: [
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
+                              InkWell(
+                                onTap: () {
+                                  GetIt.I<NavigationServiceMain>().pop();
+                                },
+                                child: Icon(
+                                  Icons.arrow_back,
+                                  size: 21.w,
+                                  color: CustomColor.secondary,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 0,
+                              ),
                               Text(
                                 'Profile',
                                 style: GoogleFonts.montserrat(
                                   textStyle: TextStyle(
-                                    color: Colors.white.withOpacity(0.7),
-                                    fontSize: 20.w,
+                                    color: CustomColor.secondary,
+                                    fontSize: 16.w,
                                     fontWeight: FontWeight.w700,
                                   ),
                                 ),
                               ),
-                              IconButton(
-                                icon: const Icon(Icons.close_sharp),
-                                iconSize: 35.w,
-                                color: Colors.white.withOpacity(0.7),
-                                splashColor: Colors.white.withOpacity(0.7),
-                                onPressed: () {
-                                  GetIt.I<NavigationServiceMain>().pop();
+                              InkWell(
+                                onTap: () {
+                                  CustomAwesomeDialog.showAskedDialog(
+                                      context,
+                                      'Sign out!',
+                                      'Are you sure to logout on this app?',
+                                      () {
+                                    dCubit.signOut();
+                                  });
                                 },
+                                child: Text(
+                                  'Sign Out',
+                                  style: GoogleFonts.montserrat(
+                                    textStyle: TextStyle(
+                                      decoration: TextDecoration.underline,
+                                      color: CustomColor.secondary,
+                                      fontSize: 16.w,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ],
+                          ),
+                          SizedBox(
+                            height: 30.w,
                           ),
                           Center(
                             child: CircleAvatar(
@@ -106,44 +136,174 @@ class Profile extends HookWidget {
                             ),
                           ),
                           SizedBox(
-                            height: 30.w,
+                            height: 15.w,
                           ),
-                          FieldViewable(
-                            title: 'Username',
-                            field: username,
+                          InkWell(
+                            onTap: () {
+                              GetIt.I<NavigationServiceMain>()
+                                  .pushNamed('/edit-profile', args: {
+                                'username': username,
+                                'fullName': fullName,
+                                'phone': phone,
+                                'address': address,
+                                'aboutMe': aboutMe
+                              });
+                            },
+                            child: Text(
+                              'Edit Profile',
+                              style: GoogleFonts.montserrat(
+                                textStyle: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  color: CustomColor.primary,
+                                  fontSize: 16.w,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
                           ),
-                          FieldViewable(
-                            title: 'Email',
-                            field: email,
-                          )
+                          SizedBox(
+                            height: 15.w,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: 30.w, right: 30.w),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'About me',
+                                  style: GoogleFonts.poppins(
+                                    textStyle: TextStyle(
+                                      color: CustomColor.onBackground,
+                                      fontSize: 15.sp,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 8.h,
+                                ),
+                                TextField(
+                                  readOnly: true,
+                                  keyboardType: TextInputType.multiline,
+                                  maxLines: null,
+                                  expands: true,
+                                  textAlignVertical: TextAlignVertical.top,
+                                  decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.symmetric(
+                                        vertical: 14.w, horizontal: 12.w),
+                                    hintText: aboutMe,
+                                    hintStyle: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: CustomColor.secondary,
+                                        width: 3,
+                                      ),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Colors.grey,
+                                        width: 3,
+                                      ),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                ).h(150.h),
+                                SizedBox(
+                                  height: 5.h,
+                                ),
+                                ViewableTextField(
+                                  label: 'Username',
+                                  hintText: username,
+                                  readOnly: true,
+                                ),
+                                SizedBox(
+                                  height: 5.h,
+                                ),
+                                ViewableTextField(
+                                  label: 'Full Name',
+                                  hintText: fullName,
+                                  readOnly: true,
+                                ),
+                                SizedBox(
+                                  height: 5.h,
+                                ),
+                                ViewableTextField(
+                                  label: 'Phone Number',
+                                  hintText: phone,
+                                  readOnly: true,
+                                ),
+                                SizedBox(
+                                  height: 5.h,
+                                ),
+                                ViewableTextField(
+                                  label: 'Address',
+                                  hintText: address,
+                                  readOnly: true,
+                                ),
+                                SizedBox(
+                                  height: 40.h,
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       );
                     }
-
                     return Column(
                       children: [
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            InkWell(
+                              onTap: () {
+                                GetIt.I<NavigationServiceMain>().pop();
+                              },
+                              child: Icon(
+                                Icons.arrow_back,
+                                size: 21.w,
+                                color: CustomColor.secondary,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 8.w,
+                            ),
                             Text(
                               'Profile',
                               style: GoogleFonts.montserrat(
                                 textStyle: TextStyle(
-                                  color: Colors.white.withOpacity(0.7),
-                                  fontSize: 20.w,
+                                  color: CustomColor.secondary,
+                                  fontSize: 16.w,
                                   fontWeight: FontWeight.w700,
                                 ),
                               ),
                             ),
-                            IconButton(
-                              icon: const Icon(Icons.close_sharp),
-                              iconSize: 35.w,
-                              color: Colors.white.withOpacity(0.7),
-                              splashColor: Colors.white.withOpacity(0.7),
-                              onPressed: () {
-                                GetIt.I<NavigationServiceMain>().pop();
+                            InkWell(
+                              onTap: () {
+                                CustomAwesomeDialog.showAskedDialog(
+                                    context,
+                                    'Sign out!',
+                                    'Are you sure to logout on this app?', () {
+                                  dCubit.signOut();
+                                });
                               },
+                              child: Text(
+                                'Sign Out',
+                                style: GoogleFonts.montserrat(
+                                  textStyle: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    color: CustomColor.secondary,
+                                    fontSize: 16.w,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
                             ),
                           ],
                         ),

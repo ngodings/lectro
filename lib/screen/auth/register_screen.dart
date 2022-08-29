@@ -9,10 +9,8 @@ import 'package:lectro/screen/components/button/default_button.dart';
 import 'package:lectro/screen/components/form/custom_field.dart';
 
 import '../../services/navigation.dart';
-import '../../utils/constant.dart';
 import '../../utils/custom.dart';
 import '../../utils/theme_data.dart';
-import '../components/button/small_button.dart';
 import 'cubit/show_password_cubit.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -117,11 +115,11 @@ class _RegisterScreen extends HookWidget {
                       controller: addressC,
                       label: 'Address',
                       hintText: 'Enter your adress',
-                      keyboardType: TextInputType.text,
+                      keyboardType: TextInputType.multiline,
                     ),
                     SizedBox(height: 10.h),
                     BasicTextField(
-                      controller: addressC,
+                      controller: phoneC,
                       label: 'Phone Number',
                       hintText: '(+62877xxxxxxxxx)',
                       keyboardType: TextInputType.phone,
@@ -299,14 +297,24 @@ class _RegisterScreen extends HookWidget {
                           GetIt.I<NavigationServiceMain>().pushNamed('/login');
                         }
                         if (state is RegisterResponseSuccess) {
-                          GetIt.I<NavigationServiceMain>()
-                              .pushNamed('/register-code', args: {
-                            'username': usernameC.text,
-                            'timestamp': state.response.timestamp,
-                            'email': emailC.text,
-                            'isEmail': true,
-                            'newCode': false
-                          });
+                          if (emailC.text == '') {
+                            CustomAwesomeDialog.showSuccessDialog(
+                                context,
+                                'Congratulations, your account has been successfully created!',
+                                'Please login with your account!');
+                            GetIt.I<NavigationServiceMain>()
+                                .pushNamed('/login');
+                          } else {
+                            GetIt.I<NavigationServiceMain>()
+                                .pushNamed('/register-code', args: {
+                              'username': usernameC.text,
+                              'timestamp': state.response.timestamp,
+                              'email': emailC.text,
+                              'isEmail': true,
+                              'newCode': false
+                            });
+                          }
+                          GetIt.I<NavigationServiceMain>().pushNamed('/login');
                         }
                       },
                       child: Padding(

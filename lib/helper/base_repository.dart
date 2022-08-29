@@ -234,6 +234,10 @@ class BaseRepository {
         ),
         retryIf: (e) => e is SocketException || e is TimeoutException,
       );
+      if (response.data['data']['token'] != null) {
+        GetIt.I<FlutterSecureStorage>()
+            .write(key: clientToken, value: response.data['data']['token']);
+      }
 
       return BaseResponse(
         statusCode: response.statusCode,

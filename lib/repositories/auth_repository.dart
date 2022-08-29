@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lectro/helper/base_repository.dart';
 import 'package:lectro/models/base_response.dart';
 import 'package:lectro/models/user.dart';
@@ -138,5 +139,12 @@ class AuthRepository extends BaseRepository {
       data: {'fcm_token': fcmToken},
     );
     return response;
+  }
+
+  void signOut() async {
+    await GoogleSignIn().signOut();
+    //await FacebookAuth.instance.logOut();
+    await GetIt.I<FlutterSecureStorage>().deleteAll();
+    await GetIt.I<NavigationServiceMain>().pushRemoveUntil('/login');
   }
 }
