@@ -41,13 +41,45 @@ class ProfileCubit extends Cubit<ProfileState> {
     }
   }
 
-  Future<void> updateCompleteProfile(String username, address, phone) async {
+  Future<void> updateCompleteProfile(
+    String username,
+    address,
+    phone,
+  ) async {
     emit(ProfileLoading());
-    final res = await _user.completeProfile(username, address, phone);
+    final res = await _user.completeProfile(
+      username,
+      address,
+      phone,
+    );
     if (res.statusCode == 200) {
       emit(CompleteProfileSuccess());
     } else {
       emit(ProfileFailed(res.message ?? ''));
+    }
+  }
+
+  Future<void> updateEditProfile(
+    String username,
+    address,
+    phone,
+    fullName,
+    about,
+  ) async {
+    emit(ProfileLoading());
+    final res = await _user.editProfile(
+      username,
+      address,
+      phone,
+      fullName,
+      about,
+    );
+    if (res.statusCode == 200) {
+      emit(CompleteProfileSuccess());
+      showToastSuccess('Success!');
+    } else {
+      emit(ProfileFailed(res.message ?? ''));
+      showToastError('Try again.');
     }
   }
 

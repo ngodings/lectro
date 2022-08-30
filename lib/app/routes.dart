@@ -84,7 +84,7 @@ void configureRoutes() {
           fullName: args['fullName'],
           phone: args['phone'],
           address: args['address'],
-          username: args['address'],
+          username: args['username'],
           aboutMe: args['aboutMe']);
     }),
     transitionType: TransitionType.none,

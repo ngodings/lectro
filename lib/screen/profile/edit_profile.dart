@@ -8,6 +8,7 @@ import 'package:lectro/utils/theme_data.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../services/navigation.dart';
+import '../../utils/custom.dart';
 import '../auth/cubit/profile_cubit.dart';
 import '../components/button/default_button.dart';
 import '../components/form/viewable_field.dart';
@@ -56,11 +57,19 @@ class _EditProfileScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final fullNameC = TextEditingController();
-    final usernameC = TextEditingController();
-    final aboutC = TextEditingController();
-    final addressC = TextEditingController();
-    final phoneC = TextEditingController();
+    final cubit = context.read<ProfileCubit>();
+
+    final TextEditingController fullNameC = TextEditingController();
+    final TextEditingController usernameC = TextEditingController();
+    final TextEditingController aboutC = TextEditingController();
+    final TextEditingController addressC = TextEditingController();
+    final TextEditingController phoneC = TextEditingController();
+    fullNameC.text = fullName;
+    usernameC.text = username;
+    aboutC.text = aboutMe;
+    addressC.text = address;
+    phoneC.text = phone;
+
     return Scaffold(
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -73,7 +82,6 @@ class _EditProfileScreen extends HookWidget {
               children: [
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     InkWell(
                       onTap: () {
@@ -85,23 +93,23 @@ class _EditProfileScreen extends HookWidget {
                         color: CustomColor.secondary,
                       ),
                     ),
-                    const SizedBox(
-                      width: 0,
+                    SizedBox(
+                      width: 110.w,
                     ),
-                    // Text(
-                    //   'Profile',
-                    //   style: GoogleFonts.montserrat(
-                    //     textStyle: TextStyle(
-                    //       color: CustomColor.secondary,
-                    //       fontSize: 16.w,
-                    //       fontWeight: FontWeight.w700,
-                    //     ),
-                    //   ),
-                    // ),
+                    Text(
+                      'Profile',
+                      style: GoogleFonts.montserrat(
+                        textStyle: TextStyle(
+                          color: CustomColor.secondary,
+                          fontSize: 16.w,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
                 SizedBox(
-                  height: 30.w,
+                  height: 20.w,
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 30.w, right: 30.w),
@@ -194,11 +202,34 @@ class _EditProfileScreen extends HookWidget {
                       ),
                       Padding(
                         padding: EdgeInsets.only(left: 15.w, right: 15.w),
-                        child: LongButton(
-                          colorBox: CustomColor.primary,
-                          color: CustomColor.onPrimary,
-                          txtButton: 'Edit',
-                          onTap: () {},
+                        child: BlocListener<ProfileCubit, ProfileState>(
+                          listener: (context, state) {
+                            if (state is ProfileLoading) {
+                              CustomDialog.showLoadingDialog(context);
+                            }
+                            if (state is ProfileFailed) {
+                              GetIt.I<NavigationServiceMain>().pop();
+                            }
+                            if (state is CompleteProfileSuccess) {
+                              GetIt.I<NavigationServiceMain>().pop();
+                              GetIt.I<NavigationServiceMain>()
+                                  .pushNamed('/profil');
+                            }
+                          },
+                          child: LongButton(
+                            colorBox: CustomColor.primary,
+                            color: CustomColor.onPrimary,
+                            txtButton: 'Edit',
+                            onTap: () {
+                              cubit.updateEditProfile(
+                                usernameC.text,
+                                addressC.text,
+                                phoneC.text,
+                                fullNameC.text,
+                                aboutC.text,
+                              );
+                            },
+                          ),
                         ),
                       ),
                     ],

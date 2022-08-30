@@ -10,6 +10,7 @@ import '../../services/navigation.dart';
 import '../../utils/constant.dart';
 import '../../utils/custom.dart';
 import '../components/button/small_button.dart';
+import '../components/form/custom_field.dart';
 import 'cubit/profile_cubit.dart';
 
 class CompleteProfileScreen extends HookWidget {
@@ -74,132 +75,29 @@ class _CompleteProfileScreen extends HookWidget {
                   SizedBox(
                     height: 12.h,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(3.0),
-                    child: TextFormField(
-                      controller: usernameC,
-                      decoration: InputDecoration(
-                        label: Text(
-                          'Username',
-                          style: GoogleFonts.poppins(
-                            textStyle: const TextStyle(
-                              color: title,
-                              fontSize: 22,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                        hintText: "Enter your username.",
-                        hintStyle: const TextStyle(color: Colors.grey),
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        suffixIcon: const Icon(
-                          Icons.person,
-                          color: Colors.grey,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0xFF7E68D4),
-                            width: 1.5,
-                          ),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0xFF95D1A9),
-                            width: 1.5,
-                          ),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      keyboardType: TextInputType.text,
-                    ),
+                  BasicTextField(
+                    controller: usernameC,
+                    label: 'Username',
+                    hintText: 'Enter your username.',
+                    keyboardType: TextInputType.text,
                   ),
                   SizedBox(
                     height: 10.h,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(3.0),
-                    child: TextFormField(
-                      controller: addressC,
-                      decoration: InputDecoration(
-                        label: Text(
-                          'Address',
-                          style: GoogleFonts.poppins(
-                            textStyle: const TextStyle(
-                              color: title,
-                              fontSize: 22,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                        hintText: "Enter your address.",
-                        hintStyle: const TextStyle(color: Colors.grey),
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        suffixIcon: const Icon(
-                          Icons.person,
-                          color: Colors.grey,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0xFF7E68D4),
-                            width: 1.5,
-                          ),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0xFF95D1A9),
-                            width: 1.5,
-                          ),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      keyboardType: TextInputType.text,
-                    ),
+                  BasicTextField(
+                    controller: addressC,
+                    label: 'Username',
+                    hintText: 'Enter your username.',
+                    keyboardType: TextInputType.text,
                   ),
                   SizedBox(
                     height: 10.h,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(3.0),
-                    child: TextFormField(
+                  BasicTextField(
                       controller: phoneC,
-                      decoration: InputDecoration(
-                        label: Text(
-                          'Phone Number',
-                          style: GoogleFonts.poppins(
-                            textStyle: const TextStyle(
-                              color: title,
-                              fontSize: 22,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                        hintText: "(+62877xxxx)",
-                        hintStyle: const TextStyle(color: Colors.grey),
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        suffixIcon: const Icon(
-                          Icons.person,
-                          color: Colors.grey,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0xFF7E68D4),
-                            width: 1.5,
-                          ),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Color(0xFF95D1A9),
-                            width: 1.5,
-                          ),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      keyboardType: TextInputType.text,
-                    ),
-                  ),
+                      label: 'Phone Number',
+                      hintText: '(+62877xxxxxxxxx)',
+                      keyboardType: TextInputType.phone),
                   SizedBox(
                     height: 10.h,
                   ),

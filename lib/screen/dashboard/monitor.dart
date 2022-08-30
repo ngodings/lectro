@@ -362,18 +362,11 @@ class Monitor extends HookWidget {
             controller: scrollController,
             child: Container(
               height: 800.w,
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(30.0)),
-                gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: [
-                    Color(0xFF9999CB),
-                    Color(0xFFa09ab9),
-                    Color(0xFF8073a2),
-                    Color(0xFF7c6d9e)
-                  ],
-                ),
+              //color: CustomColor.primary,
+              decoration: BoxDecoration(
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(30.0)),
+                color: CustomColor.primary,
               ),
               child: Column(
                 children: [
@@ -392,7 +385,6 @@ class Monitor extends HookWidget {
                         top: 1.w, bottom: 5.w, left: 16.w, right: 16.w),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         InkWell(
                           onTap: () async {
@@ -419,7 +411,7 @@ class Monitor extends HookWidget {
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.montserrat(
                                 textStyle: TextStyle(
-                                  color: Colors.white,
+                                  color: CustomColor.onPrimary,
                                   fontSize: 20.w,
                                   fontWeight: FontWeight.w700,
                                 ),
@@ -442,7 +434,7 @@ class Monitor extends HookWidget {
                                 'offline',
                                 style: GoogleFonts.montserrat(
                                   textStyle: TextStyle(
-                                    color: Colors.white,
+                                    color: CustomColor.onPrimary,
                                     fontSize: 16.w,
                                     fontWeight: FontWeight.w700,
                                   ),
@@ -453,7 +445,7 @@ class Monitor extends HookWidget {
                                 'online',
                                 style: GoogleFonts.montserrat(
                                   textStyle: TextStyle(
-                                    color: Colors.white,
+                                    color: CustomColor.onPrimary,
                                     fontSize: 16.w,
                                     fontWeight: FontWeight.w700,
                                   ),
@@ -476,7 +468,7 @@ class Monitor extends HookWidget {
                           'Renewable Energy Data',
                           style: GoogleFonts.montserrat(
                             textStyle: TextStyle(
-                              color: Colors.white,
+                              color: CustomColor.onPrimary,
                               fontSize: 17.w,
                               fontWeight: FontWeight.w600,
                             ),

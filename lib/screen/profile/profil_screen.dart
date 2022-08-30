@@ -11,7 +11,6 @@ import 'package:lectro/utils/theme_data.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../services/navigation.dart';
-import '../components/button/default_button.dart';
 import '../components/loading/loading_widget.dart';
 
 class ProfileScreen extends HookWidget {
@@ -79,7 +78,8 @@ class Profile extends HookWidget {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  GetIt.I<NavigationServiceMain>().pop();
+                                  GetIt.I<NavigationServiceMain>()
+                                      .pushNamed('/monitor');
                                 },
                                 child: Icon(
                                   Icons.arrow_back,
@@ -320,10 +320,10 @@ class Profile extends HookWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Beta Version',
+                        'Beta Version 1.0.0',
                         style: GoogleFonts.poppins(
                           textStyle: TextStyle(
-                            color: Colors.white.withOpacity(0.4),
+                            color: CustomColor.primary,
                             fontSize: 12.w,
                             fontWeight: FontWeight.w600,
                           ),
@@ -336,8 +336,8 @@ class Profile extends HookWidget {
                           IconButton(
                             icon: const Icon(Icons.headset_mic),
                             iconSize: 35.w,
-                            color: Colors.white.withOpacity(0.7),
-                            splashColor: Colors.white.withOpacity(0.7),
+                            color: CustomColor.primary,
+                            splashColor: CustomColor.primary,
                             onPressed: () {
                               settingModalBottomSheet(context);
                             },
@@ -346,7 +346,7 @@ class Profile extends HookWidget {
                             'Help',
                             style: GoogleFonts.poppins(
                               textStyle: TextStyle(
-                                color: Colors.white.withOpacity(0.8),
+                                color: CustomColor.primary,
                                 fontSize: 13.w,
                                 fontWeight: FontWeight.w600,
                               ),

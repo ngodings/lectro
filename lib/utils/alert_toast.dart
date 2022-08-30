@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lectro/utils/extensions.dart';
+import 'package:lectro/utils/theme_data.dart';
 
 import '../services/navigation.dart';
 
@@ -12,8 +13,8 @@ void showToastError(String message) {
     toastLength: Toast.LENGTH_LONG,
     gravity: ToastGravity.BOTTOM,
     timeInSecForIosWeb: 1,
-    backgroundColor: Colors.red,
-    textColor: Colors.white,
+    backgroundColor: CustomColor.error,
+    textColor: CustomColor.onError,
     fontSize: 14.0,
   );
 }
@@ -24,8 +25,8 @@ void showToastSuccess(String message) {
     toastLength: Toast.LENGTH_LONG,
     gravity: ToastGravity.BOTTOM,
     timeInSecForIosWeb: 1,
-    backgroundColor: const Color.fromARGB(255, 65, 138, 240),
-    textColor: Colors.white,
+    backgroundColor: CustomColor.primary,
+    textColor: CustomColor.onPrimary,
     fontSize: 14.0,
   );
 }
@@ -67,6 +68,6 @@ void showTopError(String message) {
     ),
     duration: const Duration(milliseconds: 1500),
     position: FlashPosition.top,
-    backgroundColor: Theme.of(context).colorScheme.error,
+    backgroundColor: CustomColor.error,
   );
 }
