@@ -96,7 +96,7 @@ class _CompleteProfileScreen extends HookWidget {
                   BasicTextField(
                       controller: phoneC,
                       label: 'Phone Number',
-                      hintText: '(+62877xxxxxxxxx)',
+                      hintText: '+62877xxxxxxxxx',
                       keyboardType: TextInputType.phone),
                   SizedBox(
                     height: 10.h,

@@ -36,16 +36,18 @@ class MonitorCard extends StatelessWidget {
               decoration: BoxDecoration(
                 boxShadow: const [
                   BoxShadow(
-                      blurStyle: BlurStyle.outer,
-                      color: Colors.black26,
-                      spreadRadius: 2.0)
+                    blurStyle: BlurStyle.outer,
+                    color: Colors.black26,
+                    spreadRadius: 2.5,
+                    blurRadius: 2.5,
+                  )
                 ],
                 color: CustomColor.primary,
-                // border: Border.all(
-                //   color: CustomColor.outline,
-                //   width: 1,
-                //   style: BorderStyle.solid,
-                // ),
+                border: Border.all(
+                  color: Colors.white70,
+                  width: 0.5,
+                  style: BorderStyle.solid,
+                ),
                 borderRadius: BorderRadius.all(Radius.circular(15.w)),
               ),
               child: Padding(

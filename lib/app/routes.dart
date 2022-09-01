@@ -10,6 +10,7 @@ import 'package:lectro/screen/profile/profil_screen.dart';
 
 import '../screen/auth/login_screen.dart';
 import '../screen/auth/register_code_screen.dart';
+import '../screen/scan/scan_screen.dart';
 
 void configureRoutes() {
   final router = GetIt.I<FluroRouter>();
@@ -33,6 +34,14 @@ void configureRoutes() {
     handler: Handler(
       handlerFunc: (BuildContext? context, Map<String, List<String>> params) =>
           const RegisterScreen(),
+    ),
+    transitionType: TransitionType.none,
+  );
+  router.define(
+    '/scan-barcode',
+    handler: Handler(
+      handlerFunc: (BuildContext? context, Map<String, List<String>> params) =>
+          const ScanBarcodeScreen(),
     ),
     transitionType: TransitionType.none,
   );

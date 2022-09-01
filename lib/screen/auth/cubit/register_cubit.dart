@@ -3,6 +3,7 @@ import 'package:lectro/models/user.dart';
 import 'package:lectro/repositories/auth_repository.dart';
 import 'package:lectro/repositories/facebook_repository.dart';
 import 'package:lectro/repositories/google_repository.dart';
+import 'package:lectro/utils/alert_toast.dart';
 import 'package:meta/meta.dart';
 
 part 'register_state.dart';
@@ -28,8 +29,10 @@ class RegisterCubit extends Cubit<RegisterState> {
         fullname, username, email, password, rePassword, address, phone);
     if (res.statusCode == 200) {
       emit(RegisterResponseSuccess(res.data));
+      showToastSuccess('Success!');
     } else {
       emit(RegisterFailed(res.message));
+      showToastError('Please Try Again!');
     }
   }
 
@@ -38,8 +41,10 @@ class RegisterCubit extends Cubit<RegisterState> {
     final res = await _auth.registerCodeEmail(code, timestamp);
     if (res.statusCode == 200) {
       emit(RegisterResponseSuccess(res.data));
+      showToastSuccess('Success!');
     } else {
       emit(RegisterFailed(res.message));
+      showToastError('Please Try Again!');
     }
   }
 
@@ -48,8 +53,10 @@ class RegisterCubit extends Cubit<RegisterState> {
     final res = await _auth.requestCode(username);
     if (res.statusCode == 200) {
       emit(RegisterSuccess());
+      showToastSuccess('Success!');
     } else {
       emit(RegisterFailed(res.message));
+      showToastError('Please Try Again!');
     }
   }
 
@@ -59,8 +66,10 @@ class RegisterCubit extends Cubit<RegisterState> {
 
     if (res.statusCode == 200) {
       emit(RegisterSuccess());
+      showToastSuccess('Success!');
     } else {
       emit(RegisterFailed(res.message));
+      showToastError('Please Try Again!');
     }
   }
 
@@ -70,8 +79,10 @@ class RegisterCubit extends Cubit<RegisterState> {
 
     if (res.statusCode == 200) {
       emit(RegisterSuccess());
+      showToastSuccess('Success!');
     } else {
       emit(RegisterFailed(res.message));
+      showToastError('Please Try Again!');
     }
   }
 }

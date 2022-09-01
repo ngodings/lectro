@@ -1,9 +1,10 @@
 import 'package:bloc/bloc.dart';
-import 'package:lectro/models/notice_handler.dart';
 import 'package:lectro/repositories/auth_repository.dart';
 import 'package:lectro/repositories/facebook_repository.dart';
 import 'package:lectro/repositories/google_repository.dart';
 import 'package:meta/meta.dart';
+
+import '../../../utils/alert_toast.dart';
 
 part 'login_state.dart';
 
@@ -20,6 +21,7 @@ class LoginCubit extends Cubit<LoginState> {
 
     if (response.statusCode == 200) {
       emit(LoginSuccess());
+      showToastSuccess('Success!');
     } else {
       emit(LoginFailed(
         response.message,
@@ -33,10 +35,12 @@ class LoginCubit extends Cubit<LoginState> {
 
     if (res.statusCode == 200) {
       emit(LoginSuccess());
+      showToastSuccess('Success!');
     } else {
       emit(LoginFailed(
         res.message,
       ));
+      showToastError('Please Try Again!');
     }
   }
 
@@ -46,10 +50,12 @@ class LoginCubit extends Cubit<LoginState> {
 
     if (res.statusCode == 200) {
       emit(LoginSuccess());
+      showToastSuccess('Success!');
     } else {
       emit(LoginFailed(
         res.message,
       ));
+      showToastError('Please Try Again!');
     }
   }
 }

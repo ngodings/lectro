@@ -121,7 +121,7 @@ class _RegisterScreen extends HookWidget {
                     BasicTextField(
                       controller: phoneC,
                       label: 'Phone Number',
-                      hintText: '(+62877xxxxxxxxx)',
+                      hintText: '+62877xxxxxxxxx',
                       keyboardType: TextInputType.phone,
                     ),
                     SizedBox(
@@ -294,7 +294,6 @@ class _RegisterScreen extends HookWidget {
                         }
                         if (state is RegisterFailed) {
                           GetIt.I<NavigationServiceMain>().pop();
-                          GetIt.I<NavigationServiceMain>().pushNamed('/login');
                         }
                         if (state is RegisterResponseSuccess) {
                           if (emailC.text == '') {
@@ -314,7 +313,7 @@ class _RegisterScreen extends HookWidget {
                               'newCode': false
                             });
                           }
-                          GetIt.I<NavigationServiceMain>().pushNamed('/login');
+                          //GetIt.I<NavigationServiceMain>().pushNamed('/login');
                         }
                       },
                       child: Padding(
