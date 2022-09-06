@@ -41,6 +41,17 @@ class ProfileCubit extends Cubit<ProfileState> {
     }
   }
 
+  Future<void> getDetailProfile() async {
+    emit(ProfileLoading());
+    final res = await _user.getAccessGivenR();
+
+    if (res.statusCode == 200) {
+      emit(AccessGivenProfilSuccess(res.data));
+    } else {
+      emit(ProfileFailed(res.message ?? ''));
+    }
+  }
+
   Future<void> updateCompleteProfile(
     String username,
     address,

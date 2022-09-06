@@ -15,6 +15,19 @@ class UserRepository extends BaseRepository {
     return res;
   }
 
+  Future<BaseResponse> getAccessGivenR() async {
+    final res = await fetch(profilUrl);
+
+    if (res.statusCode == 200) {
+      final accessGiven = AccessGivens.fromJson(res.data['access_givens']);
+      return BaseResponse(
+        statusCode: res.statusCode,
+        data: accessGiven,
+      );
+    }
+    return res;
+  }
+
   Future<BaseResponse> completeProfile(String username, address, phone) async {
     final res = await put(
       updateProfile,

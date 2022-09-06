@@ -12,6 +12,11 @@ class ProfileSuccess extends ProfileState {
   ProfileSuccess(this.user);
 }
 
+class AccessGivenProfilSuccess extends ProfileState {
+  final AccessGivens user;
+  AccessGivenProfilSuccess(this.user);
+}
+
 class ProfileFailed extends ProfileState {
   final String errors;
 

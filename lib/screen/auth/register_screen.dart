@@ -297,10 +297,6 @@ class _RegisterScreen extends HookWidget {
                         }
                         if (state is RegisterResponseSuccess) {
                           if (emailC.text == '') {
-                            CustomAwesomeDialog.showSuccessDialog(
-                                context,
-                                'Congratulations, your account has been successfully created!',
-                                'Please login with your account!');
                             GetIt.I<NavigationServiceMain>()
                                 .pushNamed('/login');
                           } else {

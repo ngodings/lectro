@@ -9,53 +9,58 @@ class CircleMonitorUp extends StatelessWidget {
     required this.img,
     required this.txt,
     required this.numberColor,
+    this.onTap,
   }) : super(key: key);
   final Color circleColor, numberColor;
   final String img, txt;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.transparent,
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                  blurRadius: 0,
-                  color: Colors.grey.withOpacity(0.8),
-                  spreadRadius: 1)
-            ],
-          ),
-          child: CircleAvatar(
-            radius: 51.w,
-            backgroundColor: circleColor,
-            child: Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(img, height: 40.w),
-                  SizedBox(
-                    height: 3.w,
-                  ),
-                  Text(
-                    txt,
-                    style: GoogleFonts.poppins(
-                      textStyle: TextStyle(
-                        color: numberColor,
-                        fontSize: 14.w,
-                        fontWeight: FontWeight.w600,
+    return InkWell(
+      onTap: onTap,
+      child: Column(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                    blurRadius: 0,
+                    color: Colors.grey.withOpacity(0.8),
+                    spreadRadius: 1)
+              ],
+            ),
+            child: CircleAvatar(
+              radius: 51.w,
+              backgroundColor: circleColor,
+              child: Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(img, height: 40.w),
+                    SizedBox(
+                      height: 3.w,
+                    ),
+                    Text(
+                      txt,
+                      style: GoogleFonts.poppins(
+                        textStyle: TextStyle(
+                          color: numberColor,
+                          fontSize: 14.w,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

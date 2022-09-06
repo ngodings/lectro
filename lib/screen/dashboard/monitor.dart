@@ -8,6 +8,7 @@ import 'package:get_it/get_it.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:lectro/screen/components/loading/loading_widget.dart';
 import 'package:lectro/screen/dashboard/change_device.dart';
 import 'package:lectro/screen/dashboard/cubit/battery_cubit.dart';
 import 'package:lectro/screen/dashboard/cubit/device_cubit.dart';
@@ -21,9 +22,11 @@ import '../auth/cubit/profile_cubit.dart';
 import '../components/card/circle_card.dart';
 import '../components/card/monitor_card.dart';
 import '../components/title/main_title.dart';
+import '../scan/scan_screen.dart';
 import 'cubit/grid_cubit.dart';
 import 'cubit/non_priority_cubit.dart';
 import 'cubit/priority_cubit.dart';
+import 'details/home_load_screen.dart.dart';
 import 'grafik_tab.dart';
 
 class MonitorScreen extends HookWidget {
@@ -59,6 +62,37 @@ class MonitorScreen extends HookWidget {
     );
   }
 }
+
+// class CheckDevice extends HookWidget {
+//   const CheckDevice({Key? key}) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     // ignore: unused_local_variable
+//     final prCubit = context.read<ProfileCubit>();
+//     useEffect(() {
+//       prCubit.getDetailProfile();
+//       return;
+//     });
+
+//     return BlocBuilder<ProfileCubit, ProfileState>(
+//       builder: (context, state) {
+//         if (state is AccessGivenProfilSuccess) {
+//           final totalRoutes = state.user.totalRoutes ?? 1;
+
+//           if (totalRoutes != 0) {
+//             return const Monitor();
+//           } else {
+//             return const ScanBarcodeScreen();
+//             // GetIt.I<NavigationServiceMain>().pushNamed('/scan-barcode');
+//           }
+//         } else {
+//           return const CustomLoadingWidget();
+//         }
+//       },
+//     );
+//   }
+// }
 
 class Monitor extends HookWidget {
   const Monitor({Key? key}) : super(key: key);
@@ -241,6 +275,12 @@ class Monitor extends HookWidget {
                               numberColor: Colors.white,
                               img: 'assets/icons/home.png',
                               txt: '$mainLoad kWh',
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) =>
+                                        const MainLoadDialog());
+                              },
                             );
                           } else {
                             return CircleMonitorUp(
@@ -248,6 +288,12 @@ class Monitor extends HookWidget {
                               numberColor: Colors.white,
                               img: 'assets/icons/home.png',
                               txt: '$mainLoad kWh',
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) =>
+                                        const MainLoadDialog());
+                              },
                             );
                           }
                         },

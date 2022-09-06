@@ -1,3 +1,17 @@
+class AccessGivens {
+  int? totalRoutes;
+  AccessGivens(this.totalRoutes);
+  AccessGivens.fromJson(Map<String, dynamic> json) {
+    totalRoutes = json['total_routes'];
+  }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['total_routes'] = totalRoutes;
+
+    return data;
+  }
+}
+
 class DataUser {
   int? id;
   String? username;

@@ -14,6 +14,7 @@ import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 
 import 'package:pin_code_fields/pin_code_fields.dart';
 
+import '../../services/navigation.dart';
 import '../../utils/theme_data.dart';
 import 'cubit/register_code_cubit.dart';
 
@@ -261,6 +262,7 @@ class _RegisterCodeScreen extends HookWidget {
                     } else {
                       registerC.registerCodeEmail(codeC.text, timestamps);
                     }
+                    GetIt.I<NavigationServiceMain>().pushNamed('/scan-barcode');
                   },
                   child: Container(
                     height: 36,

@@ -129,23 +129,12 @@ class __ScanBarcodeScreenState extends State<_ScanBarcodeScreen> {
                 SizedBox(
                   height: 12.sp,
                 ),
-                Text(
-                  "Input serial number instead",
-                  textAlign: TextAlign.left,
-                  style: GoogleFonts.poppins(
-                    textStyle: TextStyle(
-                      color: CustomColor.surfaceVariant,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
                 SizedBox(
                   height: 10.sp,
                 ),
                 NonViewableTextField(
-                  label: 'Serial Number',
-                  hintText: 'Serial Number',
+                  label: 'Input Serial Number',
+                  hintText: 'NYXXXXX',
                   controller: textC,
                 ),
                 Padding(
