@@ -10,6 +10,8 @@ import 'package:lectro/screen/profile/profil_screen.dart';
 
 import '../screen/auth/login_screen.dart';
 import '../screen/auth/register_code_screen.dart';
+import '../screen/dashboard/details/detail_battery_screen.dart';
+import '../screen/dashboard/details/detail_home_screen.dart';
 import '../screen/scan/scan_screen.dart';
 
 void configureRoutes() {
@@ -73,6 +75,22 @@ void configureRoutes() {
     handler: Handler(
       handlerFunc: (BuildContext? context, Map<String, List<String>> params) =>
           const MonitorScreen(),
+    ),
+    transitionType: TransitionType.none,
+  );
+  router.define(
+    '/detail-home',
+    handler: Handler(
+      handlerFunc: (BuildContext? context, Map<String, List<String>> params) =>
+          const DetailHomeScreen(),
+    ),
+    transitionType: TransitionType.none,
+  );
+  router.define(
+    '/detail-bms',
+    handler: Handler(
+      handlerFunc: (BuildContext? context, Map<String, List<String>> params) =>
+          const DetailBatteryScreen(),
     ),
     transitionType: TransitionType.none,
   );

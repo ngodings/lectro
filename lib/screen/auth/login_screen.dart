@@ -401,15 +401,15 @@ class Login extends HookWidget {
                         ),
                       ),
                     ),
-                    InkWell(
-                      onTap: () {
-                        GetIt.I<NavigationServiceMain>()
-                            .pushNamed('/scan-barcode');
-                      },
-                      child: Image.asset(
-                        'assets/icons/facebook-icon.png',
-                      ),
-                    ),
+                    // InkWell(
+                    //   onTap: () {
+                    //     GetIt.I<NavigationServiceMain>()
+                    //         .pushNamed('/scan-barcode');
+                    //   },
+                    //   child: Image.asset(
+                    //     'assets/icons/facebook-icon.png',
+                    //   ),
+                    // ),
 
                     //   crossAxisAlignment: CrossAxisAlignment.center,
                     //   mainAxisAlignment: MainAxisAlignment.center,

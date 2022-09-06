@@ -1,17 +1,16 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lectro/utils/constant.dart';
-import 'package:flutter/material.dart';
+import 'package:lectro/utils/theme_data.dart';
 import 'package:velocity_x/velocity_x.dart';
-import 'package:gap/gap.dart';
 
 import '../../../services/navigation.dart';
-import '../../../utils/theme_data.dart';
 
-class MainLoadDialog extends StatelessWidget {
-  const MainLoadDialog({Key? key}) : super(key: key);
+class BatteryLoadDialog extends StatelessWidget {
+  const BatteryLoadDialog({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +33,7 @@ class MainLoadDialog extends StatelessWidget {
                 top: 0, bottom: 14.sp, left: 10.sp, right: 10.sp),
             margin: EdgeInsets.only(top: 16.sp),
             decoration: BoxDecoration(
-                color: home,
+                color: CustomColor.primary,
                 shape: BoxShape.rectangle,
                 borderRadius: BorderRadius.circular(12.sp),
                 boxShadow: const [
@@ -48,17 +47,17 @@ class MainLoadDialog extends StatelessWidget {
               children: [
                 Padding(
                   padding: EdgeInsets.only(
-                      top: 10.sp, bottom: 10.sp, left: 5.sp, right: 5.sp),
+                      top: 10.sp, bottom: 5.sp, left: 5.sp, right: 5.sp),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Power Load Management',
+                        'Battery Management System',
                         style: GoogleFonts.poppins(
                           textStyle: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.w,
+                            color: CustomColor.onPrimary,
+                            fontSize: 14.w,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -78,79 +77,173 @@ class MainLoadDialog extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Icon(
-                      Icons.home,
-                      color: Colors.white.withOpacity(0.8),
-                      size: 75.w,
+                    Image.asset(
+                      'assets/icons/ess-lectro.png',
+                      height: 100.w,
                     ),
                     Gap(10.sp),
                     HStack([
                       VStack([
                         Text(
-                          'Priority',
+                          'Capacity',
                           style: GoogleFonts.poppins(
                             textStyle: TextStyle(
                               color: Colors.white,
-                              fontSize: 14.w,
+                              fontSize: 12.w,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                         ),
-                        Gap(16.sp),
+                        Gap(4.sp),
                         Text(
-                          'Non Priority',
+                          'Status',
                           style: GoogleFonts.poppins(
                             textStyle: TextStyle(
                               color: Colors.white,
-                              fontSize: 14.w,
+                              fontSize: 12.w,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                        Gap(4.sp),
+                        Text(
+                          'State of Charge',
+                          style: GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12.w,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                        Gap(4.sp),
+                        Text(
+                          'Temperature',
+                          style: GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12.w,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                        Gap(4.sp),
+                        Text(
+                          'Turn on/off',
+                          style: GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12.w,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                         ),
                       ]),
-                      Gap(15.sp),
+                      Gap(10.sp),
                       VStack([
                         Text(
                           ':',
                           style: GoogleFonts.poppins(
                             textStyle: TextStyle(
                               color: Colors.white,
-                              fontSize: 14.w,
+                              fontSize: 12.w,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                         ),
-                        Gap(16.sp),
+                        Gap(4.sp),
                         Text(
                           ':',
                           style: GoogleFonts.poppins(
                             textStyle: TextStyle(
                               color: Colors.white,
-                              fontSize: 14.w,
+                              fontSize: 12.w,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                        Gap(4.sp),
+                        Text(
+                          ':',
+                          style: GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12.w,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                        Gap(4.sp),
+                        Text(
+                          ':',
+                          style: GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12.w,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                        Gap(4.sp),
+                        Text(
+                          ':',
+                          style: GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12.w,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                         ),
                       ]),
+                      Gap(4.sp),
                       VStack([
-                        Transform.scale(
-                          scale: 0.5.sp,
-                          child: CupertinoSwitch(
-                            thumbColor: CustomColor.tertiary,
-                            activeColor: Colors.white,
-                            trackColor: Colors.grey,
-                            value: true,
-                            onChanged: (value) => {value: false},
-                            // onChanged: (bool value) {
-                            //   setState(() {
-                            //     _switchValue = value;
-                            //   });
-
-                            //},
+                        Gap(18.sp),
+                        Text(
+                          '1000 wH',
+                          style: GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12.w,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
-                        // Gap(4.sp),
+                        Gap(4.sp),
+                        Text(
+                          'Good',
+                          style: GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12.w,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                        Gap(4.sp),
+                        Text(
+                          '100%',
+                          style: GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12.w,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                        Gap(4.sp),
+                        Text(
+                          '34 C',
+                          style: GoogleFonts.poppins(
+                            textStyle: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12.w,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
                         Transform.scale(
+                          origin: Offset(-30.0.sp, -12.0.sp),
                           scale: 0.5.sp,
                           child: CupertinoSwitch(
                             thumbColor: CustomColor.tertiary,
@@ -174,7 +267,7 @@ class MainLoadDialog extends StatelessWidget {
                 Gap(5.sp),
                 Padding(
                   padding: EdgeInsets.only(
-                      top: 10.sp, bottom: 10.sp, left: 5.sp, right: 5.sp),
+                      top: 10.sp, bottom: 0.sp, left: 5.sp, right: 5.sp),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -182,7 +275,7 @@ class MainLoadDialog extends StatelessWidget {
                       InkWell(
                         onTap: () {
                           GetIt.I<NavigationServiceMain>()
-                              .pushNamed('/detail-home');
+                              .pushNamed('/detail-bms');
                         },
                         child: Text(
                           'Details',

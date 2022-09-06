@@ -8,7 +8,6 @@ import 'package:get_it/get_it.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:lectro/screen/components/loading/loading_widget.dart';
 import 'package:lectro/screen/dashboard/change_device.dart';
 import 'package:lectro/screen/dashboard/cubit/battery_cubit.dart';
 import 'package:lectro/screen/dashboard/cubit/device_cubit.dart';
@@ -22,10 +21,10 @@ import '../auth/cubit/profile_cubit.dart';
 import '../components/card/circle_card.dart';
 import '../components/card/monitor_card.dart';
 import '../components/title/main_title.dart';
-import '../scan/scan_screen.dart';
 import 'cubit/grid_cubit.dart';
 import 'cubit/non_priority_cubit.dart';
 import 'cubit/priority_cubit.dart';
+import 'details/battery_load_screen.dart';
 import 'details/home_load_screen.dart.dart';
 import 'grafik_tab.dart';
 
@@ -318,11 +317,17 @@ class Monitor extends HookWidget {
                       },
                       builder: (context, state) {
                         if (energyBattery == '0.0') {
-                          return const CircleMonitorUp(
+                          return CircleMonitorUp(
                             circleColor: Colors.grey,
                             numberColor: Colors.white,
                             img: 'assets/icons/ess.png',
                             txt: '0.0 kWh',
+                            onTap: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) =>
+                                      const BatteryLoadDialog());
+                            },
                           );
                         } else {
                           return CircleMonitorUp(
@@ -330,18 +335,17 @@ class Monitor extends HookWidget {
                             numberColor: Colors.white,
                             img: 'assets/icons/ess.png',
                             txt: '$energyBattery kWh',
+                            onTap: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) =>
+                                      const BatteryLoadDialog());
+                            },
                           );
                         }
                       },
                     ),
                     SizedBox(width: 150.w),
-
-                    //Text('changedevice'),
-                    // SizedBox(
-                    //   height: 25.h,
-                    //   width: 120.w,
-                    //   child: const ChangeDevice(),
-                    // ),
                     Row(
                       children: [
                         IconButton(
@@ -360,17 +364,6 @@ class Monitor extends HookWidget {
                                 .show();
                           },
                         ),
-
-                        // Text(
-                        //   'Change Device',
-                        //   style: GoogleFonts.poppins(
-                        //     textStyle: TextStyle(
-                        //       color: title,
-                        //       fontSize: 13.w,
-                        //       fontWeight: FontWeight.w500,
-                        //     ),
-                        //   ),
-                        // ),
                       ],
                     ),
                   ],
