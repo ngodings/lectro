@@ -16,10 +16,16 @@ const String updateProfile = '/v1/user/update-profile';
 
 // Sensor Priority Load
 const String lastPriorityData = '/v1/sensor-priority-load/view-last-record';
+const String viewSettingPriority = '/v1/sensor-priority-load/setting-view';
+const String updateSettingPriority = '/v1/sensor-priority-load/setting-update';
 
 // Sensor Non Priority
 const String lastNonPriorityData =
     '/v1/sensor-non-priority-load/view-last-record';
+const String viewSettingNonPriority =
+    '/v1/sensor-non-priority-load/setting-view';
+const String updateSettingNonPriority =
+    '/v1/sensor-non-priority-load/setting-update';
 
 // Sensor Grid
 const String lastGridData = '/v1/sensor-grid/view-last-record';

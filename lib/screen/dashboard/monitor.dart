@@ -144,6 +144,7 @@ class Monitor extends HookWidget {
       _npCubit,
       _dCubit,
       _bCubit,
+      _ppCubit,
     ]);
 
     return Scaffold(
@@ -374,13 +375,13 @@ class Monitor extends HookWidget {
               ),
             ],
           ),
-          detailMonitoring()
+          detailMonitoring(context)
         ],
       ),
     );
   }
 
-  Widget detailMonitoring() {
+  Widget detailMonitoring(BuildContext context) {
     // ignore: no_leading_underscores_for_local_identifiers
     final _storage = GetStorage();
 
@@ -391,6 +392,20 @@ class Monitor extends HookWidget {
     var energyG = _storage.read(lastEnergyGrid) ?? '0';
     var energyP = _storage.read(lastEnergyPriority) ?? '0';
     var energyNP = _storage.read(lastEnergyNonPriority) ?? '0';
+    final ppCubit = context.read<PricePacketCubit>();
+    useEffect(() {
+      Timer.periodic(
+          const Duration(seconds: 2),
+          (Timer t) => [
+                ppCubit.getkWhPacket(null),
+                energyG,
+                energyP,
+                energyNP,
+              ]);
+
+      return;
+    }, [ppCubit]);
+
     return DraggableScrollableSheet(
         initialChildSize: .33.h,
         minChildSize: .32.h,
@@ -544,18 +559,18 @@ class Monitor extends HookWidget {
                                   double costSaving = (mainLoad * perkWh);
 
                                   var idrCostSaving =
-                                      CurrencyFormat.convertToIdr(costSaving, 0)
+                                      CurrencyFormat.convertToUS(costSaving, 0)
                                           .toString();
                                   return MonitorCard(
                                       title: 'Cost Saving',
-                                      value: ' $idrCostSaving',
+                                      value: idrCostSaving,
                                       txt: 'Rupiah');
                                 } else {
                                   double mainLoad = dEnergyG - dEnergyPNP;
 
                                   double costSaving = (mainLoad * perkWh);
                                   var idrCostSaving =
-                                      CurrencyFormat.convertToIdr(costSaving, 0)
+                                      CurrencyFormat.convertToUS(costSaving, 0)
                                           .toString();
                                   return MonitorCard(
                                       title: 'Cost Saving',

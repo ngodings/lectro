@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,9 +11,30 @@ import 'package:gap/gap.dart';
 
 import '../../../services/navigation.dart';
 import '../../../utils/theme_data.dart';
+import '../cubit/non_priority_cubit.dart';
+import '../cubit/priority_cubit.dart';
 
 class MainLoadDialog extends StatelessWidget {
   const MainLoadDialog({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => PriorityCubit(),
+        ),
+        BlocProvider(
+          create: (context) => NonPriorityCubit(),
+        ),
+      ],
+      child: const _MainLoadDialog(),
+    );
+  }
+}
+
+class _MainLoadDialog extends HookWidget {
+  const _MainLoadDialog({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

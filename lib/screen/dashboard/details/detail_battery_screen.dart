@@ -3,13 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lectro/screen/components/card/field_detail_card.dart';
 import 'package:lectro/screen/dashboard/cubit/priority_cubit.dart';
-import 'package:velocity_x/velocity_x.dart';
-
-import '../../../services/navigation.dart';
 import '../../../utils/theme_data.dart';
 import '../../components/card/monitor_card.dart';
 
@@ -231,7 +227,7 @@ class DetailBattery extends StatelessWidget {
             Gap(14.sp),
             Wrap(
               spacing: 10.sp,
-              runSpacing: 2.sp,
+              runSpacing: 5.sp,
               children: const [
                 MonitorCard(
                   title: 'Status',

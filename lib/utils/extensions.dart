@@ -72,4 +72,13 @@ class CurrencyFormat {
     );
     return currencyFormatter.format(number);
   }
+
+  static String convertToUS(dynamic number, int decimalDigit) {
+    NumberFormat currencyFormatter = NumberFormat.currency(
+      locale: 'en_US',
+      symbol: '',
+      decimalDigits: decimalDigit,
+    );
+    return currencyFormatter.format(number);
+  }
 }

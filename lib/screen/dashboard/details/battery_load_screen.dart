@@ -233,7 +233,7 @@ class BatteryLoadDialog extends StatelessWidget {
                         ),
                         Gap(4.sp),
                         Text(
-                          '34 C',
+                          '34 °C',
                           style: GoogleFonts.poppins(
                             textStyle: TextStyle(
                               color: Colors.white,

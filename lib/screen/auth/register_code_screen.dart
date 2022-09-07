@@ -70,7 +70,7 @@ class _RegisterCodeScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool first = true;
+    // bool first = true;
     final codeC = useTextEditingController();
     final cubit = context.read<RegisterCodeCubit>();
     final registerC = context.read<RegisterCubit>();
@@ -157,7 +157,7 @@ class _RegisterCodeScreen extends HookWidget {
                       final getTimestamp = await GetIt.I<FlutterSecureStorage>()
                           .read(key: clientTimestamp);
                       final timestamps = int.parse(getTimestamp!);
-                      print(timestamps);
+
                       if (timestamps == 0) {
                         registerC.registerCodeEmail(v, timestamp);
                       } else {

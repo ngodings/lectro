@@ -43,11 +43,11 @@ class MonitorCard extends StatelessWidget {
                   )
                 ],
                 color: CustomColor.primary,
-                border: Border.all(
-                  color: Colors.white70,
-                  width: 0.5,
-                  style: BorderStyle.solid,
-                ),
+                // border: Border.all(
+                //   color: Colors.white70,
+                //   width: 0.0,
+                //   style: BorderStyle.solid,
+                // ),
                 borderRadius: BorderRadius.all(Radius.circular(15.w)),
               ),
               child: Padding(
@@ -63,6 +63,8 @@ class MonitorCard extends StatelessWidget {
                   children: [
                     Text(
                       title,
+                      maxLines: 2,
+                      textAlign: TextAlign.center,
                       style: GoogleFonts.poppins(
                         textStyle: TextStyle(
                           color: CustomColor.onPrimary,

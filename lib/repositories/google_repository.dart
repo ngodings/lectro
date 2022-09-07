@@ -22,7 +22,7 @@ class GoogleRepository extends BaseRepository {
 
   Future<BaseResponse> loginWithGoogle() async {
     GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
-    print(googleSignInAccount);
+
     GoogleSignInAuthentication googleSignInAuthentication =
         await googleSignInAccount!.authentication;
     AuthCredential credential = GoogleAuthProvider.credential(
@@ -31,7 +31,6 @@ class GoogleRepository extends BaseRepository {
 
     UserCredential authResult = await _auth.signInWithCredential(credential);
     _user = authResult.user!;
-    print("User Access Token: ${googleSignInAuthentication.accessToken}");
     final res = await login(
       loginGoogle,
       data: {

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 
 import '../helper/base_repository.dart';
@@ -95,7 +96,9 @@ class FacebookRepository extends BaseRepository {
 
     Map<String, dynamic> userData = await FacebookAuth.instance.getUserData();
     if (token != null) {
-      print(userData);
+      if (kDebugMode) {
+        print(userData);
+      }
       return userData['email'];
     }
     return userData['name'];
