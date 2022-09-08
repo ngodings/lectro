@@ -12,6 +12,11 @@ class NonPrioritySuccess extends NonPriorityState {
   NonPrioritySuccess(this.nonPrio);
 }
 
+class SettingNonPrioritySuccess extends NonPriorityState {
+  final SensorSetting nonPrio;
+  SettingNonPrioritySuccess(this.nonPrio);
+}
+
 class NonPrioSuccessMsg extends NonPriorityState {
   final String errors;
   NonPrioSuccessMsg(this.errors);

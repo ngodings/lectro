@@ -12,6 +12,11 @@ class PrioritySuccess extends PriorityState {
   PrioritySuccess(this.priority);
 }
 
+class SettingPrioritySuccess extends PriorityState {
+  final SensorSetting priority;
+  SettingPrioritySuccess(this.priority);
+}
+
 class PrioritySuccessMessage extends PriorityState {
   final String errors;
   PrioritySuccessMessage(this.errors);

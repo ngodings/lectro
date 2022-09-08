@@ -1,9 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:lectro/helper/user_device.dart';
 import 'package:lectro/models/sensor/data_sensor.dart';
+import 'package:lectro/models/sensor/sensor_setting.dart';
 import 'package:lectro/repositories/priority_repository.dart';
 import 'package:lectro/utils/constant.dart';
 import 'package:meta/meta.dart';
+
+import '../../../utils/alert_toast.dart';
 
 part 'priority_state.dart';
 
@@ -25,6 +28,28 @@ class PriorityCubit extends Cubit<PriorityState> {
       }
     } else {
       emit(PrioritySuccess(priority));
+    }
+  }
+
+  Future<void> getViewSettingPriority(SensorSetting? prio) async {
+    emit(PriorityLoading());
+    final res = await _repo.getSettingPriorityR();
+    if (res.statusCode == 200) {
+      emit(SettingPrioritySuccess(res.data));
+    } else {
+      emit(PriorityFailed(res.message ?? ''));
+    }
+  }
+
+  Future<void> updateSettingPriority(String relay) async {
+    emit(PriorityLoading());
+    final res = await _repo.updateSettingPriorityR(relay);
+    if (res.statusCode == 200) {
+      emit(SettingPrioritySuccess(res.data));
+      showToastSuccess('Success!');
+    } else {
+      emit(PriorityFailed(res.message ?? ''));
+      showToastError('Try again.');
     }
   }
 

@@ -44,8 +44,7 @@ class NonPriorityRepository extends BaseRepository {
     );
 
     if (res.statusCode == 200) {
-      final nonPriority =
-          DeviceSensorSetting.fromJson(res.data['sensor_setting']);
+      final nonPriority = SensorSetting.fromJson(res.data['sensor_setting']);
 
       return BaseResponse(
         statusCode: res.statusCode,

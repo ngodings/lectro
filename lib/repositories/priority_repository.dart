@@ -49,7 +49,8 @@ class PriorityRepository extends BaseRepository {
     );
 
     if (res.statusCode == 200) {
-      final priority = DeviceSensorSetting.fromJson(res.data['sensor_setting']);
+      final priority = SensorSetting.fromJson(res.data['sensor_setting']);
+      print('ini coba');
 
       return BaseResponse(
         statusCode: res.statusCode,
@@ -60,7 +61,7 @@ class PriorityRepository extends BaseRepository {
     return res;
   }
 
-  Future<BaseResponse> updateSettingPriorityR(int relay) async {
+  Future<BaseResponse> updateSettingPriorityR(String relay) async {
     var idDevice = await secureStorage.read(key: clientDeviceId);
     if (kDebugMode) {
       print(idDevice);

@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:lectro/models/sensor/data_sensor.dart';
+import 'package:lectro/models/sensor/sensor_setting.dart';
 import 'package:lectro/repositories/non_priority_repository.dart';
 import 'package:meta/meta.dart';
 
@@ -23,6 +24,16 @@ class NonPriorityCubit extends Cubit<NonPriorityState> {
       }
     } else {
       emit(NonPrioritySuccess(nonPrio));
+    }
+  }
+
+  Future<void> getViewSettingNonPriority(SensorSetting? nonPrio) async {
+    emit(NonPriorityLoading());
+    final res = await _repo.getSettingNonPriorityR();
+    if (res.statusCode == 200) {
+      emit(NonPrioritySuccess(res.data));
+    } else {
+      emit(NonPriorityFailed(res.message ?? ''));
     }
   }
 }

@@ -127,13 +127,13 @@ class Monitor extends HookWidget {
       Timer.periodic(
           const Duration(seconds: 2),
           (Timer t) => [
-                _bCubit.getLastRecordBatteryData(null),
-                _gCubit.getLastRecordGridData(null),
-                _pCubit.getLastRecordPriorityData(null),
-                _npCubit.getLastRecordNonPriority(null),
-                _prCubit.getProfile(null),
-                _dCubit.getDeviceStatus(null),
-                _ppCubit.getkWhPacket(null),
+                // _bCubit.getLastRecordBatteryData(null),
+                // _gCubit.getLastRecordGridData(null),
+                // _pCubit.getLastRecordPriorityData(null),
+                // _npCubit.getLastRecordNonPriority(null),
+                // _prCubit.getProfile(null),
+                // _dCubit.getDeviceStatus(null),
+                // _ppCubit.getkWhPacket(null),
               ]);
 
       return;
