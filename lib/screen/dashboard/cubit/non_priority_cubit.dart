@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:lectro/models/sensor/data_sensor.dart';
 import 'package:lectro/models/sensor/sensor_setting.dart';
 import 'package:lectro/repositories/non_priority_repository.dart';
+import 'package:lectro/utils/alert_toast.dart';
 import 'package:meta/meta.dart';
 
 part 'non_priority_state.dart';
@@ -34,6 +35,22 @@ class NonPriorityCubit extends Cubit<NonPriorityState> {
       emit(NonPrioritySuccess(res.data));
     } else {
       emit(NonPriorityFailed(res.message ?? ''));
+    }
+  }
+
+  Future<bool> getValueSettingNonPriority() async {
+    emit(NonPriorityLoading());
+    final res = await _repo.getValueSettingNonPriorityR();
+
+    if (res.statusCode == 200) {
+      if (res.data['control_relay'] == 1) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      showToastError('Try Again.');
+      return false;
     }
   }
 }

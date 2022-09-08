@@ -50,7 +50,31 @@ class PriorityRepository extends BaseRepository {
 
     if (res.statusCode == 200) {
       final priority = SensorSetting.fromJson(res.data['sensor_setting']);
-      print('ini coba');
+
+      return BaseResponse(
+        statusCode: res.statusCode,
+        data: priority,
+        message: res.message,
+      );
+    }
+    return res;
+  }
+
+  Future<BaseResponse> getValueSettingPriorityR() async {
+    var idDevice = await secureStorage.read(key: clientDeviceId);
+    if (kDebugMode) {
+      print(idDevice);
+    }
+
+    final res = await fetch(
+      viewSettingPriority,
+      queryParams: {
+        'device': idDevice,
+      },
+    );
+
+    if (res.statusCode == 200) {
+      final priority = res.data['sensor_setting'];
 
       return BaseResponse(
         statusCode: res.statusCode,

@@ -397,10 +397,10 @@ class Monitor extends HookWidget {
       Timer.periodic(
           const Duration(seconds: 2),
           (Timer t) => [
-                ppCubit.getkWhPacket(null),
-                energyG,
-                energyP,
-                energyNP,
+                // ppCubit.getkWhPacket(null),
+                // energyG,
+                // energyP,
+                // energyNP,
               ]);
 
       return;

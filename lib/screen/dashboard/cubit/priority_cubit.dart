@@ -41,6 +41,23 @@ class PriorityCubit extends Cubit<PriorityState> {
     }
   }
 
+  Future<bool> getValueSettingPriority() async {
+    emit(PriorityLoading());
+    final res = await _repo.getValueSettingPriorityR();
+
+    if (res.statusCode == 200) {
+      if (res.data['control_relay'] == 1) {
+        // showToastError('masuk relay.');
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      showToastError('Try again.');
+      return false;
+    }
+  }
+
   Future<void> updateSettingPriority(String relay) async {
     emit(PriorityLoading());
     final res = await _repo.updateSettingPriorityR(relay);

@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lectro/screen/components/loading/loading_widget.dart';
+import 'package:lectro/utils/alert_toast.dart';
 import 'package:lectro/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:lectro/utils/custom.dart';
@@ -54,16 +55,28 @@ class _MainLoadDialog extends HookWidget {
 
   dialogContext(BuildContext context) {
     int controlRelay = 0;
+    bool valueP = false;
+    bool valueNP = false;
 
     final pCubit = context.read<PriorityCubit>();
     final npCubit = context.read<NonPriorityCubit>();
+
+    _checkValuePriority() async {
+      valueP = await pCubit.getValueSettingPriority();
+    }
+
+    _checkValueNonPriority() async {
+      valueNP = await npCubit.getValueSettingNonPriority();
+      print('ini Np');
+      print(valueNP);
+    }
 
     useEffect(() {
       Timer.periodic(
           const Duration(seconds: 1),
           (Timer t) => [
-                pCubit.getViewSettingPriority(null),
-                npCubit.getViewSettingNonPriority(null),
+                _checkValueNonPriority(),
+                _checkValuePriority(),
               ]);
 
       return;
@@ -71,6 +84,7 @@ class _MainLoadDialog extends HookWidget {
       pCubit,
       npCubit,
     ]);
+
     return Stack(
       children: <Widget>[
         SingleChildScrollView(
@@ -184,6 +198,17 @@ class _MainLoadDialog extends HookWidget {
                             listener: (context, state) {
                               if (state is SettingPrioritySuccess) {
                                 controlRelay = state.priority.controlRelay!;
+                                if (controlRelay == 1) {
+                                  useEffect(() {
+                                    valueP = true;
+                                    return;
+                                  });
+                                } else {
+                                  useEffect(() {
+                                    valueP = false;
+                                    return;
+                                  });
+                                }
                               }
                               if (state is PriorityFailed) {
                                 const CustomLoadingWidget();
@@ -195,23 +220,14 @@ class _MainLoadDialog extends HookWidget {
                                   thumbColor: CustomColor.tertiary,
                                   activeColor: Colors.white,
                                   trackColor: Colors.grey,
-                                  value: true,
+                                  value: valueP,
                                   onChanged: (value) => {
-                                    CustomAwesomeDialog.showAskedDialog(
-                                        context,
-                                        'Warning!',
-                                        'Are you sure want to turn on/off ?',
-                                        () {
-                                      useEffect(() {
-                                        pCubit.updateSettingPriority('0');
-                                        value = false;
-                                        return;
-                                      });
-                                    }),
                                     useEffect(() {
-                                      value = false;
+                                      print('ini coba juga');
+                                      valueP = false;
+                                      pCubit.updateSettingPriority('0');
                                       return;
-                                    }),
+                                    })
                                   },
                                 );
                               } else {
@@ -219,23 +235,14 @@ class _MainLoadDialog extends HookWidget {
                                   thumbColor: CustomColor.tertiary,
                                   activeColor: Colors.white,
                                   trackColor: Colors.grey,
-                                  value: false,
+                                  value: valueP,
                                   onChanged: (value) => {
-                                    CustomAwesomeDialog.showAskedDialog(
-                                        context,
-                                        'Warning!',
-                                        'Are you sure want to turn on/off ?',
-                                        () {
-                                      useEffect(() {
-                                        pCubit.updateSettingPriority('1');
-                                        value = true;
-                                        return;
-                                      });
-                                    }),
                                     useEffect(() {
-                                      value = true;
+                                      print('ini coba juga');
+                                      valueP = false;
+                                      pCubit.updateSettingPriority('1');
                                       return;
-                                    }),
+                                    })
                                   },
                                 );
                               }
@@ -250,7 +257,7 @@ class _MainLoadDialog extends HookWidget {
                             activeColor: Colors.white,
                             trackColor: Colors.grey,
 
-                            value: true,
+                            value: valueNP,
                             onChanged: (value) => {value: false},
                             // onChanged: (bool value) {
                             //   setState(() {

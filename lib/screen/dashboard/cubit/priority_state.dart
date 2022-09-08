@@ -17,6 +17,11 @@ class SettingPrioritySuccess extends PriorityState {
   SettingPrioritySuccess(this.priority);
 }
 
+class ValuePrioritySuccess extends PriorityState {
+  final bool value;
+  ValuePrioritySuccess(this.value);
+}
+
 class PrioritySuccessMessage extends PriorityState {
   final String errors;
   PrioritySuccessMessage(this.errors);

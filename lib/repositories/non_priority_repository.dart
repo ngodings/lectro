@@ -55,6 +55,31 @@ class NonPriorityRepository extends BaseRepository {
     return res;
   }
 
+  Future<BaseResponse> getValueSettingNonPriorityR() async {
+    var idDevice = await secureStorage.read(key: clientDeviceId);
+    if (kDebugMode) {
+      print(idDevice);
+    }
+
+    final res = await fetch(
+      viewSettingNonPriority,
+      queryParams: {
+        'device': idDevice,
+      },
+    );
+
+    if (res.statusCode == 200) {
+      final nonPriority = res.data['sensor_setting'];
+
+      return BaseResponse(
+        statusCode: res.statusCode,
+        data: nonPriority,
+        message: res.message,
+      );
+    }
+    return res;
+  }
+
   Future<BaseResponse> updateSettingNonPriorityR(int relay) async {
     var idDevice = await secureStorage.read(key: clientDeviceId);
     if (kDebugMode) {
