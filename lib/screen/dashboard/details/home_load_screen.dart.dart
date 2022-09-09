@@ -7,10 +7,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lectro/screen/components/loading/loading_widget.dart';
-import 'package:lectro/utils/alert_toast.dart';
 import 'package:lectro/utils/constant.dart';
 import 'package:flutter/material.dart';
-import 'package:lectro/utils/custom.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:gap/gap.dart';
 

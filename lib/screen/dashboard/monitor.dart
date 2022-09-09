@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -127,13 +128,13 @@ class Monitor extends HookWidget {
       Timer.periodic(
           const Duration(seconds: 2),
           (Timer t) => [
-                // _bCubit.getLastRecordBatteryData(null),
-                // _gCubit.getLastRecordGridData(null),
-                // _pCubit.getLastRecordPriorityData(null),
-                // _npCubit.getLastRecordNonPriority(null),
-                // _prCubit.getProfile(null),
-                // _dCubit.getDeviceStatus(null),
-                // _ppCubit.getkWhPacket(null),
+                _bCubit.getLastRecordBatteryData(null),
+                _gCubit.getLastRecordGridData(null),
+                _pCubit.getLastRecordPriorityData(null),
+                _npCubit.getLastRecordNonPriority(null),
+                _prCubit.getProfile(null),
+                _dCubit.getDeviceStatus(null),
+                _ppCubit.getkWhPacket(null),
               ]);
 
       return;
@@ -318,17 +319,29 @@ class Monitor extends HookWidget {
                       },
                       builder: (context, state) {
                         if (energyBattery == '0.0') {
-                          return CircleMonitorUp(
-                            circleColor: Colors.grey,
-                            numberColor: Colors.white,
-                            img: 'assets/icons/ess.png',
-                            txt: '0.0 kWh',
-                            onTap: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) =>
-                                      const BatteryLoadDialog());
-                            },
+                          return Badge(
+                            elevation: 0,
+                            position: BadgePosition.topEnd(),
+                            padding: EdgeInsetsDirectional.only(
+                                end: 15.sp, top: 8.sp),
+                            badgeContent: Icon(
+                              Icons.error,
+                              size: 25.sp,
+                              color: Colors.yellow,
+                            ),
+                            badgeColor: Colors.transparent,
+                            child: CircleMonitorUp(
+                              circleColor: Colors.grey,
+                              numberColor: Colors.white,
+                              img: 'assets/icons/ess.png',
+                              txt: '0.0 kWh',
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) =>
+                                        const BatteryLoadDialog());
+                              },
+                            ),
                           );
                         } else {
                           return CircleMonitorUp(
