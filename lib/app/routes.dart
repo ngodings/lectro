@@ -7,6 +7,7 @@ import 'package:lectro/screen/auth/register_screen.dart';
 import 'package:lectro/screen/dashboard/monitor.dart';
 import 'package:lectro/screen/profile/edit_profile.dart';
 import 'package:lectro/screen/profile/profil_screen.dart';
+import 'package:lectro/screen/settings/setting_screen.dart';
 
 import '../screen/auth/login_screen.dart';
 import '../screen/auth/register_code_screen.dart';
@@ -116,6 +117,16 @@ void configureRoutes() {
     }),
     transitionType: TransitionType.none,
   );
+
+  router.define(
+    '/setting-screen',
+    handler: Handler(
+      handlerFunc: (BuildContext? context, Map<String, List<String>> params) =>
+          const SettingScreen(),
+    ),
+    transitionType: TransitionType.none,
+  );
+
   router.define(
     '/forget-password',
     handler: Handler(

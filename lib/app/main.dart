@@ -18,22 +18,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // final ColorScheme _colorScheme = const ColorScheme(
-  //   brightness: Brightness.light,
-  //   primary: Color(0xFF008FD7),
-  //   primaryVariant: Color(0xFF0024D7),
-  //   secondary: Color(0xFF001B29),
-  //   secondaryVariant: Color(0xFF8C8CA1),
-  //   surface: Colors.white, //light
-  //   background: Color(0xFFECF1F4),
-  //   error: Color(0xFFD70000),
-  //   onPrimary: Color(0xFFFAFAFA),
-  //   onSecondary: Color(0xFFFAFAFA),
-  //   onSurface: Color(0xFF000000),
-  //   onBackground: Color(0xFF000000),
-  //   onError: Color(0xFFFAFAFA),
-  // );
-
   @override
   void initState() {
     super.initState();
@@ -70,7 +54,6 @@ class _MyAppState extends State<MyApp> {
               borderRadius: BorderRadius.circular(4),
             ),
           ),
-          fontFamily: 'Nunito',
         ),
         darkTheme: ThemeData(
           colorScheme: darkTheme,

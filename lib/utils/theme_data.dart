@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lectro/services/navigation.dart';
 
@@ -110,47 +109,3 @@ class CustomColor {
   static Color shimmerBase = const Color(0xFFEEEEEE);
   static Color shimmerLight = const Color(0xFFEEEEEE).withOpacity(0.05);
 }
-
-enum AppTheme {
-  lightAppTheme,
-  darkAppTheme,
-}
-
-final appThemeData = {
-  AppTheme.darkAppTheme: ThemeData(
-    scaffoldBackgroundColor: darkTheme.background,
-    colorScheme: darkTheme,
-    textTheme: TextTheme(
-      headline1: const TextStyle().copyWith(
-        color: darkTheme.onPrimary,
-        fontSize: 26.w,
-        fontWeight: FontWeight.w800,
-      ),
-      headline2: const TextStyle().copyWith(
-        color: darkTheme.onPrimary,
-        fontSize: 22.w,
-        fontWeight: FontWeight.w700,
-      ),
-      headline3: const TextStyle().copyWith(
-        color: darkTheme.onPrimary,
-        fontSize: 20.w,
-        fontWeight: FontWeight.w600,
-      ),
-      headline4: const TextStyle().copyWith(
-        color: darkTheme.onPrimary,
-        fontSize: 18.w,
-        fontWeight: FontWeight.w500,
-      ),
-      headline5: const TextStyle().copyWith(
-        color: darkTheme.onPrimary,
-        fontSize: 16.w,
-        fontWeight: FontWeight.w500,
-      ),
-      headline6: const TextStyle().copyWith(
-        color: darkTheme.onPrimary,
-        fontSize: 14.w,
-        fontWeight: FontWeight.w500,
-      ),
-    ),
-  )
-};

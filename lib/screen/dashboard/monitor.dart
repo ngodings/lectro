@@ -494,7 +494,10 @@ class Monitor extends HookWidget {
                           ),
                           iconSize: 25.w,
                           color: CustomColor.onPrimary,
-                          onPressed: () {},
+                          onPressed: () {
+                            GetIt.I<NavigationServiceMain>()
+                                .pushNamed('/setting-screen');
+                          },
                         ),
                       ],
                     ),

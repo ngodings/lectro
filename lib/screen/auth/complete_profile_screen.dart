@@ -117,8 +117,6 @@ class _CompleteProfileScreen extends HookWidget {
                           GetIt.I<NavigationServiceMain>().pop();
                           GetIt.I<NavigationServiceMain>()
                               .pushNamed('/scan-barcode');
-                          // GetIt.I<NavigationServiceMain>()
-                          //     .pushNamed('/monitor');
                         }
                       },
                       child: SmallButton(
