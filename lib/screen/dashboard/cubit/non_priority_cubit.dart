@@ -53,4 +53,16 @@ class NonPriorityCubit extends Cubit<NonPriorityState> {
       return false;
     }
   }
+
+  Future<void> updateSettingNonPriority(String relay) async {
+    emit(NonPriorityLoading());
+    final res = await _repo.updateSettingNonPriorityR(relay);
+    if (res.statusCode == 200) {
+      emit(NonPrioSuccessMsg(res.data));
+      showToastSuccess('Success!');
+    } else {
+      emit(NonPriorityFailed(res.message ?? ''));
+      showToastError('Try again.');
+    }
+  }
 }

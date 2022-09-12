@@ -18,8 +18,8 @@ class SettingNonPrioritySuccess extends NonPriorityState {
 }
 
 class NonPrioSuccessMsg extends NonPriorityState {
-  final String errors;
-  NonPrioSuccessMsg(this.errors);
+  final String msg;
+  NonPrioSuccessMsg(this.msg);
 }
 
 class NonPriorityFailed extends NonPriorityState {

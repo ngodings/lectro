@@ -6,13 +6,14 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lectro/screen/components/loading/loading_widget.dart';
+import 'package:lectro/screen/components/button/switch_custom.dart';
 import 'package:lectro/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:gap/gap.dart';
 
 import '../../../services/navigation.dart';
+import '../../../utils/alert_toast.dart';
 import '../../../utils/theme_data.dart';
 import '../cubit/non_priority_cubit.dart';
 import '../cubit/priority_cubit.dart';
@@ -61,12 +62,12 @@ class _MainLoadDialog extends HookWidget {
 
     _checkValuePriority() async {
       valueP = await pCubit.getValueSettingPriority();
+      print('ini P');
+      print(valueP);
     }
 
     _checkValueNonPriority() async {
       valueNP = await npCubit.getValueSettingNonPriority();
-      print('ini Np');
-      print(valueNP);
     }
 
     useEffect(() {
@@ -190,80 +191,101 @@ class _MainLoadDialog extends HookWidget {
                         ),
                       ]),
                       VStack([
-                        Transform.scale(
-                          scale: 0.5.sp,
-                          child: BlocConsumer<PriorityCubit, PriorityState>(
-                            listener: (context, state) {
-                              if (state is SettingPrioritySuccess) {
-                                controlRelay = state.priority.controlRelay!;
-                                if (controlRelay == 1) {
+                        BlocConsumer<PriorityCubit, PriorityState>(
+                          listener: (context, state) {
+                            if (state is SettingPrioritySuccess) {
+                              controlRelay = state.priority.controlRelay!;
+                            }
+                            if (state is PrioritySuccessMessage) {
+                              showToastSuccess('Success.');
+                              Navigator.of(context).pop();
+                            }
+                            if (state is PriorityFailed) {
+                              showToastError('Please Try again.');
+                            }
+                          },
+                          builder: (context, state) {
+                            if (valueP == false) {
+                              return SwitchCustomButton(
+                                value: valueP,
+                                scale: 0.5.sp,
+                                x: 0.0,
+                                y: 0.0,
+                                action: () {
+                                  pCubit.updateSettingPriority('1');
+                                  showToastSuccess('Success.');
+                                  Navigator.of(context).pop();
                                   useEffect(() {
                                     valueP = true;
                                     return;
                                   });
-                                } else {
+                                },
+                              );
+                            } else {
+                              return SwitchCustomButton(
+                                value: valueP,
+                                scale: 0.5.sp,
+                                x: 0.0,
+                                y: 0.0,
+                                action: () {
+                                  pCubit.updateSettingPriority('0');
+                                  showToastSuccess('Success.');
+                                  Navigator.of(context).pop();
                                   useEffect(() {
                                     valueP = false;
                                     return;
                                   });
-                                }
-                              }
-                              if (state is PriorityFailed) {
-                                const CustomLoadingWidget();
-                              }
-                            },
-                            builder: (context, state) {
-                              if (controlRelay == 1) {
-                                return CupertinoSwitch(
-                                  thumbColor: CustomColor.tertiary,
-                                  activeColor: Colors.white,
-                                  trackColor: Colors.grey,
-                                  value: valueP,
-                                  onChanged: (value) => {
-                                    useEffect(() {
-                                      print('ini coba juga');
-                                      valueP = false;
-                                      pCubit.updateSettingPriority('0');
-                                      return;
-                                    })
-                                  },
-                                );
-                              } else {
-                                return CupertinoSwitch(
-                                  thumbColor: CustomColor.tertiary,
-                                  activeColor: Colors.white,
-                                  trackColor: Colors.grey,
-                                  value: valueP,
-                                  onChanged: (value) => {
-                                    useEffect(() {
-                                      print('ini coba juga');
-                                      valueP = false;
-                                      pCubit.updateSettingPriority('1');
-                                      return;
-                                    })
-                                  },
-                                );
-                              }
-                            },
-                          ),
+                                },
+                              );
+                            }
+                          },
                         ),
                         // Gap(4.sp),
-                        Transform.scale(
-                          scale: 0.5.sp,
-                          child: CupertinoSwitch(
-                            thumbColor: CustomColor.tertiary,
-                            activeColor: Colors.white,
-                            trackColor: Colors.grey,
-
-                            value: valueNP,
-                            onChanged: (value) => {value: false},
-                            // onChanged: (bool value) {
-                            //   setState(() {
-                            //     _switchValue = value;
-                            //   });
-
-                            //},
-                          ),
+                        BlocConsumer<NonPriorityCubit, NonPriorityState>(
+                          listener: (context, state) {
+                            if (state is NonPrioSuccessMsg) {
+                              showToastSuccess('Success.');
+                              Navigator.of(context).pop();
+                            }
+                            if (state is NonPriorityFailed) {
+                              showToastError('Please Try again.');
+                            }
+                          },
+                          builder: (context, state) {
+                            if (valueNP == false) {
+                              return SwitchCustomButton(
+                                value: valueNP,
+                                scale: 0.5.sp,
+                                x: 0.0,
+                                y: 0.0,
+                                action: () {
+                                  npCubit.updateSettingNonPriority('1');
+                                  showToastSuccess('Success.');
+                                  Navigator.of(context).pop();
+                                  useEffect(() {
+                                    valueNP = true;
+                                    return;
+                                  });
+                                },
+                              );
+                            } else {
+                              return SwitchCustomButton(
+                                value: valueNP,
+                                scale: 0.5.sp,
+                                x: 0.0,
+                                y: 0.0,
+                                action: () {
+                                  npCubit.updateSettingNonPriority('0');
+                                  showToastSuccess('Success.');
+                                  Navigator.of(context).pop();
+                                  useEffect(() {
+                                    valueNP = false;
+                                    return;
+                                  });
+                                },
+                              );
+                            }
+                          },
                         ),
                       ])
                     ]),

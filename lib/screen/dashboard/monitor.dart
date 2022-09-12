@@ -400,7 +400,6 @@ class Monitor extends HookWidget {
 
     String fullName = '';
     String kWh = '1400';
-    int isOnline = 0;
 
     var energyG = _storage.read(lastEnergyGrid) ?? '0';
     var energyP = _storage.read(lastEnergyPriority) ?? '0';
@@ -487,39 +486,15 @@ class Monitor extends HookWidget {
                           },
                         ),
                         SizedBox(
-                          width: 50.w,
+                          width: 80.w,
                         ),
-                        BlocConsumer<DeviceCubit, DeviceState>(
-                          listener: (context, state) {
-                            if (state is DeviceStatusSuccess) {
-                              isOnline = state.device.isOnline!;
-                            }
-                          },
-                          builder: (context, state) {
-                            if (isOnline == 0) {
-                              return Text(
-                                'offline',
-                                style: GoogleFonts.montserrat(
-                                  textStyle: TextStyle(
-                                    color: CustomColor.onPrimary,
-                                    fontSize: 16.w,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              );
-                            } else {
-                              return Text(
-                                'online',
-                                style: GoogleFonts.montserrat(
-                                  textStyle: TextStyle(
-                                    color: CustomColor.onPrimary,
-                                    fontSize: 16.w,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              );
-                            }
-                          },
+                        IconButton(
+                          icon: const Icon(
+                            Icons.settings,
+                          ),
+                          iconSize: 25.w,
+                          color: CustomColor.onPrimary,
+                          onPressed: () {},
                         ),
                       ],
                     ),

@@ -4,6 +4,7 @@ const String mainUrl = 'https://ems.service.lectro.id';
 const String registerUrl = '/v1/auth/signup';
 const String loginUrl = '/v1/auth/signin';
 const String apiFCMToken = '';
+const String apiRefreshToken = '/v1/auth/refresh-token';
 const String loginGoogle = '/v1/auth/signin-oauth';
 const String signUpSocmed = '/v1/auth/signup-oauth';
 const String signInSocmed = '/v1/auth/signin-oauth';

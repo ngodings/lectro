@@ -62,7 +62,7 @@ class PriorityCubit extends Cubit<PriorityState> {
     emit(PriorityLoading());
     final res = await _repo.updateSettingPriorityR(relay);
     if (res.statusCode == 200) {
-      emit(SettingPrioritySuccess(res.data));
+      emit(PrioritySuccessMessage(res.data));
       showToastSuccess('Success!');
     } else {
       emit(PriorityFailed(res.message ?? ''));

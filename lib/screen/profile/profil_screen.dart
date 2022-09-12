@@ -8,7 +8,6 @@ import 'package:lectro/screen/auth/cubit/profile_cubit.dart';
 import 'package:lectro/screen/components/form/viewable_field.dart';
 import 'package:lectro/utils/custom.dart';
 import 'package:lectro/utils/theme_data.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 import '../../services/navigation.dart';
 import '../components/loading/loading_widget.dart';
@@ -186,8 +185,9 @@ class Profile extends HookWidget {
                                 TextField(
                                   readOnly: true,
                                   keyboardType: TextInputType.multiline,
-                                  maxLines: null,
-                                  expands: true,
+                                  minLines: 1,
+                                  maxLines: 5,
+                                  expands: false,
                                   textAlignVertical: TextAlignVertical.top,
                                   decoration: InputDecoration(
                                     contentPadding: EdgeInsets.symmetric(
@@ -213,7 +213,7 @@ class Profile extends HookWidget {
                                       borderRadius: BorderRadius.circular(12),
                                     ),
                                   ),
-                                ).h(150.h),
+                                ),
                                 SizedBox(
                                   height: 5.h,
                                 ),

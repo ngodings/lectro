@@ -80,7 +80,7 @@ class NonPriorityRepository extends BaseRepository {
     return res;
   }
 
-  Future<BaseResponse> updateSettingNonPriorityR(int relay) async {
+  Future<BaseResponse> updateSettingNonPriorityR(String relay) async {
     var idDevice = await secureStorage.read(key: clientDeviceId);
     if (kDebugMode) {
       print(idDevice);

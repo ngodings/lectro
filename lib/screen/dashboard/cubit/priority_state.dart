@@ -23,8 +23,8 @@ class ValuePrioritySuccess extends PriorityState {
 }
 
 class PrioritySuccessMessage extends PriorityState {
-  final String errors;
-  PrioritySuccessMessage(this.errors);
+  final String msg;
+  PrioritySuccessMessage(this.msg);
 }
 
 class PriorityFailed extends PriorityState {

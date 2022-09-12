@@ -2,8 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
+import 'package:lectro/utils/api.dart';
 import 'package:lectro/utils/constant.dart';
 
 import '../models/base_response.dart';
@@ -148,6 +150,39 @@ class BaseRepository {
     }
   }
 
+  Future<BaseResponse> refreshToken() async {
+    try {
+      final response = await retry(
+        () => dio.post(
+          apiRefreshToken,
+          options: Options(responseType: ResponseType.json),
+        ),
+        retryIf: (e) => e is SocketException || e is TimeoutException,
+      );
+
+      if (response.statusCode == 200) {
+        GetIt.I<FlutterSecureStorage>()
+            .write(key: clientToken, value: response.data['data']['token']);
+        GetIt.I<FlutterSecureStorage>().write(
+            key: clientTokenUserId,
+            value: response.data['data']['user']['id'].toString());
+        return BaseResponse(
+          statusCode: response.statusCode,
+          data: response.data['data'],
+          message: response.data['message'],
+        );
+      } else {
+        return BaseResponse(
+          statusCode: response.statusCode,
+          data: response.data['data'],
+          message: response.data['message'],
+        );
+      }
+    } on DioError catch (e) {
+      return ExceptionHelper(e).catchException();
+    }
+  }
+
   Future<BaseResponse> signup(
     String api, {
     Map<String, dynamic>? data,
@@ -204,16 +239,37 @@ class BaseRepository {
         ),
         retryIf: (e) => e is SocketException || e is TimeoutException,
       );
-      return BaseResponse(
-        statusCode: res.statusCode,
-        data: withHead ? res.data[jsonHead] ?? res.data : res.data,
-        message: res.data['message'],
-        meta: withHead
-            ? res.data['meta'] != null
-                ? Meta.fromJson(res.data['meta'])
-                : null
-            : null,
-      );
+
+      if (res.statusCode == 401) {
+        refreshToken();
+
+        final token = await secureStorage.read(key: clientToken);
+        if (kDebugMode) {
+          print(token);
+        }
+        fetch(api, queryParams: queryParams);
+        return BaseResponse(
+          statusCode: res.statusCode,
+          data: withHead ? res.data[jsonHead] ?? res.data : res.data,
+          message: res.data['message'],
+          meta: withHead
+              ? res.data['meta'] != null
+                  ? Meta.fromJson(res.data['meta'])
+                  : null
+              : null,
+        );
+      } else {
+        return BaseResponse(
+          statusCode: res.statusCode,
+          data: withHead ? res.data[jsonHead] ?? res.data : res.data,
+          message: res.data['message'],
+          meta: withHead
+              ? res.data['meta'] != null
+                  ? Meta.fromJson(res.data['meta'])
+                  : null
+              : null,
+        );
+      }
     } on DioError catch (e) {
       return ExceptionHelper(e).catchException();
     }
