@@ -31,7 +31,7 @@ class DetailBattery extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Detail Monitoring Battery',
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.montserrat(
             textStyle: TextStyle(
               color: Colors.white,
               fontSize: 16.sp,

@@ -40,6 +40,8 @@ class Login extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    var brightness = MediaQuery.of(context).platformBrightness;
+    bool darkModeOn = brightness == Brightness.dark;
     // ignore: no_leading_underscores_for_local_identifiers
     final _showCubit = context.read<ShowPasswordCubit>();
     // ignore: no_leading_underscores_for_local_identifiers
@@ -72,7 +74,9 @@ class Login extends HookWidget {
                       ),
                       child: Center(
                         child: Image.asset(
-                          'assets/icons/matador-lectro.png',
+                          (darkModeOn)
+                              ? 'assets/icons/matador-lectro-white.png'
+                              : 'assets/icons/matador-lectro.png',
                           height: 180.h,
                         ),
                       ),
@@ -374,7 +378,7 @@ class Login extends HookWidget {
                                         .inner // changes position of shadow
                                     ),
                               ],
-                              borderRadius: BorderRadius.circular(6.w),
+                              borderRadius: BorderRadius.circular(12.w),
                               color: CustomColor.primary),
                           child: Center(
                             child: Row(
@@ -475,7 +479,10 @@ class Login extends HookWidget {
                     Center(
                       child: Padding(
                         padding: EdgeInsets.only(top: 30.h),
-                        child: Image.asset('assets/icons/slogan.png',
+                        child: Image.asset(
+                            (darkModeOn)
+                                ? 'assets/icons/slogan-white.png'
+                                : 'assets/icons/slogan.png',
                             height: 100.w),
                       ),
                     )

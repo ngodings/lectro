@@ -37,6 +37,8 @@ class _RegisterScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    var brightness = MediaQuery.of(context).platformBrightness;
+    bool darkModeOn = brightness == Brightness.dark;
     final registerCubit = context.read<RegisterCubit>();
     final showCubit = context.read<ShowPasswordCubit>();
     final fullNameC = TextEditingController();
@@ -69,7 +71,9 @@ class _RegisterScreen extends HookWidget {
                       ),
                       child: Center(
                         child: Image.asset(
-                          'assets/icons/matador-lectro.png',
+                          (darkModeOn)
+                              ? 'assets/icons/matador-lectro-white.png'
+                              : 'assets/icons/matador-lectro.png',
                           height: 180.h,
                         ),
                       ),
@@ -386,7 +390,7 @@ class _RegisterScreen extends HookWidget {
                                     offset: const Offset(2, 4),
                                     blurStyle: BlurStyle.inner),
                               ],
-                              borderRadius: BorderRadius.circular(6.w),
+                              borderRadius: BorderRadius.circular(12.w),
                               color: CustomColor.onPrimary),
                           child: Center(
                             child: Row(
@@ -475,7 +479,10 @@ class _RegisterScreen extends HookWidget {
                     Center(
                       child: Padding(
                         padding: EdgeInsets.only(top: 30.h),
-                        child: Image.asset('assets/icons/slogan.png',
+                        child: Image.asset(
+                            (darkModeOn)
+                                ? 'assets/icons/slogan-white.png'
+                                : 'assets/icons/slogan.png',
                             height: 100.w),
                       ),
                     )

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,7 +13,6 @@ import 'package:gap/gap.dart';
 
 import '../../../services/navigation.dart';
 import '../../../utils/alert_toast.dart';
-import '../../../utils/theme_data.dart';
 import '../cubit/non_priority_cubit.dart';
 import '../cubit/priority_cubit.dart';
 
@@ -53,7 +51,6 @@ class _MainLoadDialog extends HookWidget {
   }
 
   dialogContext(BuildContext context) {
-    int controlRelay = 0;
     bool valueP = false;
     bool valueNP = false;
 
@@ -62,8 +59,6 @@ class _MainLoadDialog extends HookWidget {
 
     _checkValuePriority() async {
       valueP = await pCubit.getValueSettingPriority();
-      print('ini P');
-      print(valueP);
     }
 
     _checkValueNonPriority() async {
@@ -193,9 +188,6 @@ class _MainLoadDialog extends HookWidget {
                       VStack([
                         BlocConsumer<PriorityCubit, PriorityState>(
                           listener: (context, state) {
-                            if (state is SettingPrioritySuccess) {
-                              controlRelay = state.priority.controlRelay!;
-                            }
                             if (state is PrioritySuccessMessage) {
                               showToastSuccess('Success.');
                               Navigator.of(context).pop();
