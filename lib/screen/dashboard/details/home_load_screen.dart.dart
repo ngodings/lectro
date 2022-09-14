@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lectro/screen/components/button/switch_custom.dart';
+import 'package:lectro/screen/components/loading/loading_dialog.dart';
 import 'package:lectro/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';

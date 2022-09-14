@@ -151,11 +151,17 @@ class BaseRepository {
   }
 
   Future<BaseResponse> refreshToken() async {
+    final token = await secureStorage.read(key: clientToken);
     try {
+      final Map<String, dynamic> headers = {};
+      if (token != null) headers['Authorization'] = 'Bearer $token';
       final response = await retry(
         () => dio.post(
           apiRefreshToken,
-          options: Options(responseType: ResponseType.json),
+          options: Options(
+            responseType: ResponseType.json,
+            headers: headers,
+          ),
         ),
         retryIf: (e) => e is SocketException || e is TimeoutException,
       );
@@ -247,9 +253,8 @@ class BaseRepository {
         if (kDebugMode) {
           print(token);
         }
-        fetch(api, queryParams: queryParams);
         return BaseResponse(
-          statusCode: res.statusCode,
+          statusCode: res.data['code'],
           data: withHead ? res.data[jsonHead] ?? res.data : res.data,
           message: res.data['message'],
           meta: withHead

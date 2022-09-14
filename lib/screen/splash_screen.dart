@@ -26,8 +26,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var brightness = MediaQuery.of(context).platformBrightness;
-    bool darkModeOn = brightness == Brightness.dark;
     return Scaffold(
       backgroundColor: colorScheme.background,
       body: SingleChildScrollView(
@@ -48,9 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
                           //height: 200.w,
                         ),
                         Image.asset(
-                          (darkModeOn)
-                              ? 'assets/icons/lectro-white.png'
-                              : 'assets/icons/lectro.png',
+                          'assets/icons/lectro.png',
                           //height: 100.w,
                         ),
                       ],
@@ -59,12 +55,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
               ],
             ),
-            Image.asset(
-              (darkModeOn)
-                  ? 'assets/icons/slogan-white.png'
-                  : 'assets/icons/slogan.png',
-              height: 100.w,
-            )
+            Image.asset('assets/icons/slogan.png', height: 100.w)
           ],
         ),
       ),

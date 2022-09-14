@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lectro/screen/auth/cubit/profile_cubit.dart';
 import 'package:lectro/utils/theme_data.dart';
+
+import '../../utils/config.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({Key? key}) : super(key: key);
@@ -23,12 +26,19 @@ class SettingScreen extends StatelessWidget {
   }
 }
 
-class _SettingScreen extends StatelessWidget {
+class _SettingScreen extends StatefulWidget {
   const _SettingScreen({Key? key}) : super(key: key);
 
   @override
+  State<_SettingScreen> createState() => __SettingScreenState();
+}
+
+class __SettingScreenState extends State<_SettingScreen> {
+  bool value = false;
+  @override
   Widget build(BuildContext context) {
     double gapAxis = 16.0.sp;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -74,8 +84,44 @@ class _SettingScreen extends StatelessWidget {
                         activeColor: CustomColor.primary,
                         trackColor: Colors.grey,
 
-                        value: true,
-                        onChanged: (value) => {value: true},
+                        value: value,
+                        onChanged: (value) => setState(() {
+                          this.value = value;
+                          print(value);
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text('Warning!'),
+                                content: SingleChildScrollView(
+                                  child: ListBody(
+                                    children: const [
+                                      Text('Are you sure want to change mode?'),
+                                    ],
+                                  ),
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      currentTheme.switchTheme();
+
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text('Yes'),
+                                  ),
+                                  TextButton(
+                                    child: const Text('No'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+
+                          return;
+                        }),
                         // onChanged: (bool value) {
                         //   setState(() {
                         //     _switchValue = value;

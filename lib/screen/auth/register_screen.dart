@@ -41,13 +41,13 @@ class _RegisterScreen extends HookWidget {
     bool darkModeOn = brightness == Brightness.dark;
     final registerCubit = context.read<RegisterCubit>();
     final showCubit = context.read<ShowPasswordCubit>();
-    final fullNameC = TextEditingController();
-    final usernameC = TextEditingController();
-    final emailC = TextEditingController();
-    final passwordC = TextEditingController();
-    final rePasswordC = TextEditingController();
-    final addressC = TextEditingController();
-    final phoneC = TextEditingController();
+    final TextEditingController fullNameC = TextEditingController();
+    final TextEditingController usernameC = TextEditingController();
+    final TextEditingController emailC = TextEditingController();
+    final TextEditingController passwordC = TextEditingController();
+    final TextEditingController rePasswordC = TextEditingController();
+    final TextEditingController addressC = TextEditingController();
+    final TextEditingController phoneC = TextEditingController();
 
     bool obscure = true;
     return Scaffold(

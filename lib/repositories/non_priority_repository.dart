@@ -15,7 +15,8 @@ class NonPriorityRepository extends BaseRepository {
 
     final res =
         await fetch(lastNonPriorityData, queryParams: {'device': idDevice});
-
+    print('ini status code dr repo');
+    print(res.statusCode);
     if (res.statusCode == 200) {
       final sensor = DataSensor.fromJson(res.data['records'][0]);
       var energyNonPrio = sensor.energy.toString();

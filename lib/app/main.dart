@@ -40,6 +40,7 @@ class _MyAppState extends State<MyApp> {
         locale: context.locale,
         navigatorKey: serviceLocator<NavigationServiceMain>().navigatorKey,
         onGenerateRoute: serviceLocator<FluroRouter>().generator,
+        //  themeMode: currentTheme.currentTheme(),
         theme: ThemeData(
           colorScheme: lightTheme,
           primaryColor: lightTheme.primary,

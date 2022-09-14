@@ -48,8 +48,8 @@ class Login extends HookWidget {
     final _loginCubit = context.read<LoginCubit>();
     final validCubit = context.read<ValidatorCubit>();
 
-    final usernameC = TextEditingController();
-    final passwordC = TextEditingController();
+    final TextEditingController usernameC = TextEditingController();
+    final TextEditingController passwordC = TextEditingController();
 
     bool isLoginable = false;
     bool obscure = true;
@@ -405,15 +405,15 @@ class Login extends HookWidget {
                         ),
                       ),
                     ),
-                    InkWell(
-                      onTap: () {
-                        GetIt.I<NavigationServiceMain>()
-                            .pushNamed('/setting-screen');
-                      },
-                      child: Image.asset(
-                        'assets/icons/facebook-icon.png',
-                      ),
-                    ),
+                    // InkWell(
+                    //   onTap: () {
+                    //     GetIt.I<NavigationServiceMain>()
+                    //         .pushNamed('/setting-screen');
+                    //   },
+                    //   child: Image.asset(
+                    //     'assets/icons/facebook-icon.png',
+                    //   ),
+                    // ),
 
                     //   crossAxisAlignment: CrossAxisAlignment.center,
                     //   mainAxisAlignment: MainAxisAlignment.center,

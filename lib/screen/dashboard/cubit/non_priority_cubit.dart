@@ -5,6 +5,8 @@ import 'package:lectro/repositories/non_priority_repository.dart';
 import 'package:lectro/utils/alert_toast.dart';
 import 'package:meta/meta.dart';
 
+import '../../../helper/user_device.dart';
+
 part 'non_priority_state.dart';
 
 class NonPriorityCubit extends Cubit<NonPriorityState> {
@@ -20,7 +22,12 @@ class NonPriorityCubit extends Cubit<NonPriorityState> {
 
       if (res.statusCode == 200) {
         emit(NonPrioritySuccess(res.data));
+      } else if (res.statusCode == 401) {
+        await refreshToken();
+        getLastRecordNonPriority(nonPrio);
       } else {
+        print('ini mesg');
+        print(res.message);
         emit(NonPriorityFailed(res.message ?? ''));
       }
     } else {

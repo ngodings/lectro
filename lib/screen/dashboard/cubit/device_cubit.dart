@@ -3,6 +3,8 @@ import 'package:lectro/models/device/is_online.dart';
 import 'package:lectro/repositories/device_repository.dart';
 import 'package:meta/meta.dart';
 
+import '../../../helper/user_device.dart';
+
 part 'device_state.dart';
 
 class DeviceCubit extends Cubit<DeviceState> {
@@ -17,6 +19,10 @@ class DeviceCubit extends Cubit<DeviceState> {
 
       if (res.statusCode == 200) {
         emit(DeviceStatusSuccess(res.data));
+      } else if (res.statusCode == 401) {
+        print('melihat apakah masuk');
+        await refreshToken();
+        getDeviceStatus(device);
       } else {
         emit(DeviceFailed(res.message ?? ''));
       }

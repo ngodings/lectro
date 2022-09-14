@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:lectro/models/sensor/data_sensor.dart';
 import 'package:meta/meta.dart';
 
+import '../../../helper/user_device.dart';
 import '../../../repositories/grid_repository.dart';
 part 'grid_state.dart';
 
@@ -17,6 +18,10 @@ class GridCubit extends Cubit<GridState> {
 
       if (res.statusCode == 200) {
         emit(GridSuccess(res.data));
+      } else if (res.statusCode == 401) {
+        print('melihat apakah masuk');
+        await refreshToken();
+        getLastRecordGridData(grid);
       } else {
         emit(GridFailed(res.message ?? ''));
       }

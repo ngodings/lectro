@@ -23,6 +23,10 @@ class PriorityCubit extends Cubit<PriorityState> {
 
       if (res.statusCode == 200) {
         emit(PrioritySuccess(res.data));
+      } else if (res.statusCode == 401) {
+        print('melihat apakah masuk');
+        await refreshToken();
+        getLastRecordPriorityData(null);
       } else {
         emit(PriorityFailed(res.message ?? ''));
       }

@@ -31,26 +31,26 @@ void showToastSuccess(String message) {
   );
 }
 
-// void showTopFlash(String message) {
-//   final context =
-//       GetIt.I<NavigationServiceMain>().navigatorKey.currentState!.context;
-//   context.showFlashBar(
-//     content: Container(
-//       height: 47,
-//       child: Center(
-//         child: Text(
-//           message,
-//           style: TextStyle(
-//             color: Colors.white,
-//           ),
-//         ),
-//       ),
-//     ),
-//     duration: Duration(milliseconds: 1500),
-//     position: FlashPosition.top,
-//     backgroundColor: Theme.of(context).colorScheme.secondary,
-//   );
-// }
+void showTopFlash(String message) {
+  final context =
+      GetIt.I<NavigationServiceMain>().navigatorKey.currentState!.context;
+  context.showFlashBar(
+    content: SizedBox(
+      height: 47,
+      child: Center(
+        child: Text(
+          message,
+          style: const TextStyle(
+            color: Colors.white,
+          ),
+        ),
+      ),
+    ),
+    duration: const Duration(milliseconds: 1500),
+    position: FlashPosition.top,
+    backgroundColor: Theme.of(context).colorScheme.secondary,
+  );
+}
 
 void showTopError(String message) {
   final context =

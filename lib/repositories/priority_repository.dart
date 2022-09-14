@@ -25,8 +25,6 @@ class PriorityRepository extends BaseRepository {
       final user = DataSensor.fromJson(res.data['records'][0]);
       var energyPrio = user.energy.toString();
       _storage.write(lastEnergyPriority, energyPrio);
-      // GetIt.I<FlutterSecureStorage>()
-      //     .write(key: lastEnergyPriority, value: energyPrio);
       return BaseResponse(
         statusCode: res.statusCode,
         data: user,
