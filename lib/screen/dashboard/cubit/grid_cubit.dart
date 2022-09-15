@@ -20,7 +20,7 @@ class GridCubit extends Cubit<GridState> {
         emit(GridSuccess(res.data));
       } else if (res.statusCode == 401) {
         print('melihat apakah masuk');
-        await refreshToken();
+        //await refreshToken();
         getLastRecordGridData(grid);
       } else {
         emit(GridFailed(res.message ?? ''));

@@ -1,16 +1,16 @@
 import 'dart:async';
 import 'dart:io';
-
+import 'dart:convert';
 import 'package:dio/dio.dart';
+// ignore: depend_on_referenced_packages
+import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:retry/retry.dart';
 
-import '../models/base_response.dart';
 import '../utils/api.dart';
 import '../utils/constant.dart';
-import 'exception.dart';
 
 final Dio dio = GetIt.I<Dio>();
 final FlutterSecureStorage secureStorage = GetIt.I<FlutterSecureStorage>();
@@ -46,41 +46,42 @@ Future<String> getUserDevice() async {
   return 'success';
 }
 
-Future refreshToken() async {
+Future<Map?> getRefreshToken() async {
   final token = await secureStorage.read(key: clientToken);
-  try {
-    final Map<String, dynamic> headers = {};
-    if (token != null) headers['Authorization'] = 'Bearer $token';
-    final response = await retry(
-      () => dio.post(
-        apiRefreshToken,
-        options: Options(
-          responseType: ResponseType.json,
-          headers: headers,
-        ),
-      ),
-      retryIf: (e) => e is SocketException || e is TimeoutException,
-    );
 
-    if (response.statusCode == 200) {
-      GetIt.I<FlutterSecureStorage>()
-          .write(key: clientToken, value: response.data['data']['token']);
-      GetIt.I<FlutterSecureStorage>().write(
-          key: clientTokenUserId,
-          value: response.data['data']['user']['id'].toString());
-      return BaseResponse(
-        statusCode: response.statusCode,
-        data: response.data['data'],
-        message: response.data['message'],
-      );
-    } else {
-      return BaseResponse(
-        statusCode: response.statusCode,
-        data: response.data['data'],
-        message: response.data['message'],
-      );
-    }
-  } on DioError catch (e) {
-    return ExceptionHelper(e).catchException();
+  final Map<String, dynamic> headers = {};
+  if (token != null) headers['Authorization'] = 'Bearer $token';
+  var response =
+      await http.post(Uri.parse(mainUrl + apiRefreshToken), headers: {
+    'Authorization': 'Bearer $token',
+  });
+
+  var responseBody = json.decode(response.body);
+  if (response.statusCode == 200) {
+    GetIt.I<FlutterSecureStorage>()
+        .write(key: clientToken, value: responseBody['data']['token']);
+    GetIt.I<FlutterSecureStorage>().write(
+        key: clientTokenUserId,
+        value: responseBody['data']['user']['id'].toString());
+    return responseBody;
+  } else {
+    return responseBody;
+  }
+}
+
+Future<Map?> getProfiles() async {
+  final token = await secureStorage.read(key: clientToken);
+
+  final Map<String, dynamic> headers = {};
+  if (token != null) headers['Authorization'] = 'Bearer $token';
+  var response = await http.get(Uri.parse(mainUrl + profilUrl), headers: {
+    'Authorization': 'Bearer $token',
+  });
+
+  var responseBody = json.decode(response.body);
+  if (response.statusCode == 200) {
+    return responseBody;
+  } else {
+    return responseBody;
   }
 }

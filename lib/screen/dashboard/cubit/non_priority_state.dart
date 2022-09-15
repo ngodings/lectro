@@ -12,6 +12,16 @@ class NonPrioritySuccess extends NonPriorityState {
   NonPrioritySuccess(this.nonPrio);
 }
 
+class CheckRefreshTokenSuccess extends NonPriorityState {
+  final DataUser user;
+  CheckRefreshTokenSuccess(this.user);
+}
+
+class CheckRefreshTokenFailed extends NonPriorityState {
+  final String msg;
+  CheckRefreshTokenFailed(this.msg);
+}
+
 class SettingNonPrioritySuccess extends NonPriorityState {
   final SensorSetting nonPrio;
   SettingNonPrioritySuccess(this.nonPrio);

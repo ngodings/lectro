@@ -39,6 +39,29 @@ class AuthRepository extends BaseRepository {
     }
   }
 
+  Future<BaseResponse> getRefreshR() async {
+    final res = await post(apiRefreshToken);
+
+    if (res.statusCode == 200) {
+      GetIt.I<FlutterSecureStorage>()
+          .write(key: clientToken, value: res.data['data']['token']);
+      GetIt.I<FlutterSecureStorage>().write(
+          key: clientTokenUserId,
+          value: res.data['data']['user']['id'].toString());
+      return BaseResponse(
+        statusCode: res.statusCode,
+        data: res.data['data'],
+        message: res.data,
+      );
+    } else {
+      return BaseResponse(
+        statusCode: res.statusCode,
+        data: res.data,
+        message: res.data,
+      );
+    }
+  }
+
   Future<BaseResponse> registerBasic(
     String fullname,
     username,

@@ -78,7 +78,8 @@ class __ScanBarcodeScreenState extends State<_ScanBarcodeScreen> {
                   children: [
                     InkWell(
                       onTap: () {
-                        GetIt.I<NavigationServiceMain>().pop();
+                        GetIt.I<NavigationServiceMain>()
+                            .pushReplacementNamed('/monitor');
                       },
                       child: Icon(
                         Icons.arrow_back,

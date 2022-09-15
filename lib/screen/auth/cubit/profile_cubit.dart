@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:lectro/models/user.dart';
 import 'package:lectro/repositories/auth_repository.dart';
 import 'package:lectro/repositories/user_repository.dart';
@@ -6,6 +7,7 @@ import 'package:lectro/utils/alert_toast.dart';
 import 'package:meta/meta.dart';
 
 import '../../../helper/user_device.dart';
+import '../../../services/navigation.dart';
 part 'profile_state.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
@@ -46,8 +48,10 @@ class ProfileCubit extends Cubit<ProfileState> {
     final res = await _user.getAccessGivenR();
 
     if (res.statusCode == 200) {
+      GetIt.I<NavigationServiceMain>().pushReplacementNamed('/monitor');
       emit(AccessGivenProfilSuccess(res.data));
     } else {
+      GetIt.I<NavigationServiceMain>().pushReplacementNamed('/scan-barcode');
       emit(ProfileFailed(res.message ?? ''));
     }
   }

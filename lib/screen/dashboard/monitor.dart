@@ -9,10 +9,12 @@ import 'package:get_it/get_it.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:lectro/screen/components/card/warning_log.dart';
 import 'package:lectro/screen/dashboard/change_device.dart';
 import 'package:lectro/screen/dashboard/cubit/battery_cubit.dart';
 import 'package:lectro/screen/dashboard/cubit/device_cubit.dart';
 import 'package:lectro/screen/dashboard/cubit/price_packet_cubit.dart';
+import 'package:lectro/utils/custom.dart';
 import 'package:lectro/utils/extensions.dart';
 import 'package:lectro/utils/theme_data.dart';
 
@@ -256,6 +258,32 @@ class Monitor extends HookWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      // BlocBuilder<NonPriorityCubit, NonPriorityState>(
+                      //   builder: (context, state) {
+                      //     if (state is CheckRefreshTokenSuccess) {
+                      //       GetIt.I<NavigationServiceMain>()
+                      //           .pushReplacementNamed('/monitor');
+                      //     }
+                      //     if (state is CheckRefreshTokenFailed) {
+                      //       AwesomeDialog(
+                      //               context: context,
+                      //               autoHide: const Duration(seconds: 3),
+                      //               dialogType: DialogType.WARNING,
+                      //               animType: AnimType.RIGHSLIDE,
+                      //               headerAnimationLoop: true,
+                      //               title: 'Please login again.',
+                      //               desc: 'Click OK to go on login page!',
+                      //               btnOkOnPress: () {
+                      //                 GetIt.I<NavigationServiceMain>()
+                      //                     .pushReplacementNamed('/login');
+                      //               },
+                      //               btnOkIcon: Icons.cancel,
+                      //               btnOkColor: Colors.yellow)
+                      //           .show();
+                      //     }
+                      //     return Container();
+                      //   },
+                      // ),
                       BlocConsumer<NonPriorityCubit, NonPriorityState>(
                         listener: (context, state) {
                           if (state is NonPrioritySuccess) {
@@ -336,10 +364,14 @@ class Monitor extends HookWidget {
                               img: 'assets/icons/ess.png',
                               txt: '0.0 kWh',
                               onTap: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (context) =>
-                                        const BatteryLoadDialog());
+                                AwesomeDialog(
+                                        context: context,
+                                        animType: AnimType.SCALE,
+                                        dialogType: DialogType.WARNING,
+                                        keyboardAware: true,
+                                        showCloseIcon: true,
+                                        body: const LogWidget())
+                                    .show();
                               },
                             ),
                           );
@@ -360,25 +392,74 @@ class Monitor extends HookWidget {
                       },
                     ),
                     SizedBox(width: 150.w),
-                    Row(
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.settings),
-                          iconSize: 32.w,
-                          color: Colors.grey,
-                          splashColor: Colors.grey,
-                          onPressed: () {
-                            AwesomeDialog(
-                                    context: context,
-                                    animType: AnimType.SCALE,
-                                    dialogType: DialogType.WARNING,
-                                    keyboardAware: true,
-                                    showCloseIcon: true,
-                                    body: const FormChangeESSDevice())
-                                .show();
-                          },
-                        ),
-                      ],
+                    BlocBuilder<ProfileCubit, ProfileState>(
+                      builder: (context, state) {
+                        if (state is AccessGivenProfilSuccess) {
+                          final totalRoutes = state.user.totalRoutes ?? 1;
+                          if (totalRoutes == 0) {
+                            return Container(
+                                height: 20.sp,
+                                width: 80.sp,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12.sp),
+                                  color: CustomColor.tertiary,
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    'Add device!',
+                                    style: GoogleFonts.poppins(
+                                      textStyle: TextStyle(
+                                        color: CustomColor.onTertiary,
+                                        fontSize: 12.sp,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ),
+                                ));
+                          } else {
+                            return Row(
+                              children: [
+                                IconButton(
+                                  icon: const Icon(Icons.settings),
+                                  iconSize: 32.w,
+                                  color: Colors.grey,
+                                  splashColor: Colors.grey,
+                                  onPressed: () {
+                                    AwesomeDialog(
+                                            context: context,
+                                            animType: AnimType.SCALE,
+                                            dialogType: DialogType.WARNING,
+                                            keyboardAware: true,
+                                            showCloseIcon: true,
+                                            body: const FormChangeESSDevice())
+                                        .show();
+                                  },
+                                ),
+                              ],
+                            );
+                          }
+                        }
+                        return Row(
+                          children: [
+                            IconButton(
+                              icon: const Icon(Icons.settings),
+                              iconSize: 32.w,
+                              color: Colors.grey,
+                              splashColor: Colors.grey,
+                              onPressed: () {
+                                AwesomeDialog(
+                                        context: context,
+                                        animType: AnimType.SCALE,
+                                        dialogType: DialogType.WARNING,
+                                        keyboardAware: true,
+                                        showCloseIcon: true,
+                                        body: const FormChangeESSDevice())
+                                    .show();
+                              },
+                            ),
+                          ],
+                        );
+                      },
                     ),
                   ],
                 ),

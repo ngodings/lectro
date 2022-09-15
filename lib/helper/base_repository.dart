@@ -5,7 +5,6 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
-import 'package:lectro/utils/api.dart';
 import 'package:lectro/utils/constant.dart';
 
 import '../models/base_response.dart';
@@ -34,14 +33,17 @@ class BaseRepository {
         () => dio.post(
           api,
           data: json.encode(data),
-          options: Options(responseType: ResponseType.json, headers: headers),
+          options: Options(
+            responseType: ResponseType.json,
+            headers: headers,
+          ),
         ),
         retryIf: (e) => e is SocketException || e is TimeoutException,
       );
 
       return BaseResponse(
-        statusCode: response.statusCode,
-        data: response.data,
+        statusCode: response.data['code'],
+        data: response.data['data'],
         message: response.data['message'],
       );
     } on DioError catch (e) {
@@ -150,45 +152,6 @@ class BaseRepository {
     }
   }
 
-  Future<BaseResponse> refreshToken() async {
-    final token = await secureStorage.read(key: clientToken);
-    try {
-      final Map<String, dynamic> headers = {};
-      if (token != null) headers['Authorization'] = 'Bearer $token';
-      final response = await retry(
-        () => dio.post(
-          apiRefreshToken,
-          options: Options(
-            responseType: ResponseType.json,
-            headers: headers,
-          ),
-        ),
-        retryIf: (e) => e is SocketException || e is TimeoutException,
-      );
-
-      if (response.statusCode == 200) {
-        GetIt.I<FlutterSecureStorage>()
-            .write(key: clientToken, value: response.data['data']['token']);
-        GetIt.I<FlutterSecureStorage>().write(
-            key: clientTokenUserId,
-            value: response.data['data']['user']['id'].toString());
-        return BaseResponse(
-          statusCode: response.statusCode,
-          data: response.data['data'],
-          message: response.data['message'],
-        );
-      } else {
-        return BaseResponse(
-          statusCode: response.statusCode,
-          data: response.data['data'],
-          message: response.data['message'],
-        );
-      }
-    } on DioError catch (e) {
-      return ExceptionHelper(e).catchException();
-    }
-  }
-
   Future<BaseResponse> signup(
     String api, {
     Map<String, dynamic>? data,
@@ -247,8 +210,6 @@ class BaseRepository {
       );
 
       if (res.statusCode == 401) {
-        refreshToken();
-
         final token = await secureStorage.read(key: clientToken);
         if (kDebugMode) {
           print(token);

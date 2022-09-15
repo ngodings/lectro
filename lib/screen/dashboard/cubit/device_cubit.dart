@@ -21,7 +21,7 @@ class DeviceCubit extends Cubit<DeviceState> {
         emit(DeviceStatusSuccess(res.data));
       } else if (res.statusCode == 401) {
         print('melihat apakah masuk');
-        await refreshToken();
+        // await refreshToken();
         getDeviceStatus(device);
       } else {
         emit(DeviceFailed(res.message ?? ''));
