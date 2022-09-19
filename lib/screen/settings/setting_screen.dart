@@ -86,7 +86,7 @@ class __SettingScreenState extends State<_SettingScreen> {
                         value: value,
                         onChanged: (value) => setState(() {
                           this.value = value;
-                          print(value);
+
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {

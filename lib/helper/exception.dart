@@ -68,6 +68,12 @@ class ExceptionHelper<T> {
           }
         } else {
           message = eResponse.data['message'] ?? eResponse.data['message'];
+          // tak tambahi
+          return BaseResponse(
+            message: message,
+            statusCode: eResponse.data['code'],
+            data: eResponse.data,
+          );
         }
 
         break;

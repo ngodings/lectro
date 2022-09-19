@@ -19,6 +19,18 @@ void showToastError(String message) {
   );
 }
 
+void showToastWarning(String message) {
+  Fluttertoast.showToast(
+    msg: message.capitalize,
+    toastLength: Toast.LENGTH_LONG,
+    gravity: ToastGravity.BOTTOM,
+    timeInSecForIosWeb: 1,
+    backgroundColor: Colors.yellow,
+    textColor: Colors.black,
+    fontSize: 14.0,
+  );
+}
+
 void showToastSuccess(String message) {
   Fluttertoast.showToast(
     msg: message.capitalize,

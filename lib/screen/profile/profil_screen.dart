@@ -371,16 +371,7 @@ class Profile extends HookWidget {
         builder: (BuildContext bc) {
           return Container(
             height: 150.w,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [
-                  const Color(0xFF775FD1).withOpacity(1),
-                  const Color(0xFF1C1B33).withOpacity(1),
-                ],
-              ),
-            ),
+            decoration: BoxDecoration(color: CustomColor.background),
             child: Column(
               children: [
                 SizedBox(

@@ -14,7 +14,6 @@ import 'package:lectro/screen/dashboard/change_device.dart';
 import 'package:lectro/screen/dashboard/cubit/battery_cubit.dart';
 import 'package:lectro/screen/dashboard/cubit/device_cubit.dart';
 import 'package:lectro/screen/dashboard/cubit/price_packet_cubit.dart';
-import 'package:lectro/utils/custom.dart';
 import 'package:lectro/utils/extensions.dart';
 import 'package:lectro/utils/theme_data.dart';
 
@@ -65,37 +64,6 @@ class MonitorScreen extends HookWidget {
   }
 }
 
-// class CheckDevice extends HookWidget {
-//   const CheckDevice({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     // ignore: unused_local_variable
-//     final prCubit = context.read<ProfileCubit>();
-//     useEffect(() {
-//       prCubit.getDetailProfile();
-//       return;
-//     });
-
-//     return BlocBuilder<ProfileCubit, ProfileState>(
-//       builder: (context, state) {
-//         if (state is AccessGivenProfilSuccess) {
-//           final totalRoutes = state.user.totalRoutes ?? 1;
-
-//           if (totalRoutes != 0) {
-//             return const Monitor();
-//           } else {
-//             return const ScanBarcodeScreen();
-//             // GetIt.I<NavigationServiceMain>().pushNamed('/scan-barcode');
-//           }
-//         } else {
-//           return const CustomLoadingWidget();
-//         }
-//       },
-//     );
-//   }
-// }
-
 class Monitor extends HookWidget {
   const Monitor({Key? key}) : super(key: key);
 
@@ -116,13 +84,14 @@ class Monitor extends HookWidget {
     // ignore: no_leading_underscores_for_local_identifiers
     final _ppCubit = context.read<PricePacketCubit>();
 
-    // ignore: unused_local_variable
-    Timer? timer;
+    // ignore: no_leading_underscores_for_local_identifiers
+    final _storage = GetStorage();
 
     String energyPriority = '0.0';
     String energyNonPriority = '0.0';
     String energyGrid = '0.0';
     String energyBattery = '0.0';
+    String kWh = '1400';
 
     useEffect(() {
       _prCubit.getUserDeviceID();
@@ -258,32 +227,32 @@ class Monitor extends HookWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // BlocBuilder<NonPriorityCubit, NonPriorityState>(
-                      //   builder: (context, state) {
-                      //     if (state is CheckRefreshTokenSuccess) {
-                      //       GetIt.I<NavigationServiceMain>()
-                      //           .pushReplacementNamed('/monitor');
-                      //     }
-                      //     if (state is CheckRefreshTokenFailed) {
-                      //       AwesomeDialog(
-                      //               context: context,
-                      //               autoHide: const Duration(seconds: 3),
-                      //               dialogType: DialogType.WARNING,
-                      //               animType: AnimType.RIGHSLIDE,
-                      //               headerAnimationLoop: true,
-                      //               title: 'Please login again.',
-                      //               desc: 'Click OK to go on login page!',
-                      //               btnOkOnPress: () {
-                      //                 GetIt.I<NavigationServiceMain>()
-                      //                     .pushReplacementNamed('/login');
-                      //               },
-                      //               btnOkIcon: Icons.cancel,
-                      //               btnOkColor: Colors.yellow)
-                      //           .show();
-                      //     }
-                      //     return Container();
-                      //   },
-                      // ),
+                      BlocBuilder<NonPriorityCubit, NonPriorityState>(
+                        builder: (context, state) {
+                          if (state is CheckRefreshTokenSuccess) {
+                            GetIt.I<NavigationServiceMain>()
+                                .pushReplacementNamed('/monitor');
+                          }
+                          if (state is CheckRefreshTokenFailed) {
+                            AwesomeDialog(
+                                    context: context,
+                                    autoHide: const Duration(seconds: 3),
+                                    dialogType: DialogType.WARNING,
+                                    animType: AnimType.RIGHSLIDE,
+                                    headerAnimationLoop: true,
+                                    title: 'Please login again.',
+                                    desc: 'Click OK to go on login page!',
+                                    btnOkOnPress: () {
+                                      GetIt.I<NavigationServiceMain>()
+                                          .pushReplacementNamed('/login');
+                                    },
+                                    btnOkIcon: Icons.cancel,
+                                    btnOkColor: Colors.yellow)
+                                .show();
+                          }
+                          return Container();
+                        },
+                      ),
                       BlocConsumer<NonPriorityCubit, NonPriorityState>(
                         listener: (context, state) {
                           if (state is NonPrioritySuccess) {
@@ -469,35 +438,56 @@ class Monitor extends HookWidget {
               ),
             ],
           ),
-          detailMonitoring(context)
+          BlocConsumer<PricePacketCubit, PricePacketState>(
+            listener: (context, state) {
+              final enGrid = _storage.read(lastEnergyGrid) ?? '0';
+              energyGrid = double.parse(enGrid).toStringAsFixed(1);
+
+              energyPriority = _storage.read(lastEnergyPriority) ?? '0';
+              energyNonPriority = _storage.read(lastEnergyNonPriority) ?? '0';
+
+              if (state is PricePacketSuccess) {
+                kWh = state.packet.perKwh ?? '1400';
+              }
+            },
+            builder: (context, state) {
+              double perkWh = double.parse(kWh);
+              double dEnergyG = double.parse(energyGrid);
+              double dEnergyP = double.parse(energyPriority);
+              double dEnergyNP = double.parse(energyNonPriority);
+              double dEnergyPNP = (dEnergyP + dEnergyNP);
+
+              if (dEnergyPNP > dEnergyG) {
+                double mainLoad = (dEnergyPNP) - (dEnergyG);
+
+                double costSaving = (mainLoad * perkWh);
+
+                var idrCostSaving =
+                    CurrencyFormat.convertToUS(costSaving, 0).toString();
+                return detailMonitoring(context, idrCostSaving, dEnergyPNP);
+              } else {
+                double mainLoad = dEnergyG - dEnergyPNP;
+
+                double costSaving = (mainLoad * perkWh);
+                var idrCostSaving =
+                    CurrencyFormat.convertToUS(costSaving, 0).toString();
+                return detailMonitoring(context, idrCostSaving, dEnergyPNP);
+              }
+            },
+          )
         ],
       ),
     );
   }
 
-  Widget detailMonitoring(BuildContext context) {
+  Widget detailMonitoring(
+    BuildContext context,
+    String costSaving,
+    double mainLoad,
+  ) {
     // ignore: no_leading_underscores_for_local_identifiers
-    final _storage = GetStorage();
 
-    String fullName = '';
-    String kWh = '1400';
-
-    var energyG = _storage.read(lastEnergyGrid) ?? '0';
-    var energyP = _storage.read(lastEnergyPriority) ?? '0';
-    var energyNP = _storage.read(lastEnergyNonPriority) ?? '0';
-    final ppCubit = context.read<PricePacketCubit>();
-    useEffect(() {
-      Timer.periodic(
-          const Duration(seconds: 2),
-          (Timer t) => [
-                // ppCubit.getkWhPacket(null),
-                // energyG,
-                // energyP,
-                // energyNP,
-              ]);
-
-      return;
-    }, [ppCubit]);
+    String fullName = 'ESS Device';
 
     return DraggableScrollableSheet(
         initialChildSize: .33.h,
@@ -607,50 +597,15 @@ class Monitor extends HookWidget {
                           spacing: 10.w,
                           runSpacing: 2.w,
                           children: [
-                            const MonitorCard(
+                            MonitorCard(
                               title: 'Total Energy Usage',
-                              value: '155.02',
+                              value: '$mainLoad',
                               txt: 'kWh',
                             ),
-                            BlocConsumer<PricePacketCubit, PricePacketState>(
-                              listener: (context, state) {
-                                if (state is PricePacketSuccess) {
-                                  kWh = state.packet.perKwh ?? '1400';
-                                }
-                              },
-                              builder: (context, state) {
-                                double perkWh = double.parse(kWh);
-                                double dEnergyG = double.parse(energyG);
-                                double dEnergyP = double.parse(energyP);
-                                double dEnergyNP = double.parse(energyNP);
-                                double dEnergyPNP = (dEnergyP + dEnergyNP);
-
-                                if (dEnergyPNP > dEnergyG) {
-                                  double mainLoad = (dEnergyPNP) - (dEnergyG);
-
-                                  double costSaving = (mainLoad * perkWh);
-
-                                  var idrCostSaving =
-                                      CurrencyFormat.convertToUS(costSaving, 0)
-                                          .toString();
-                                  return MonitorCard(
-                                      title: 'Cost Saving',
-                                      value: idrCostSaving,
-                                      txt: 'Rupiah');
-                                } else {
-                                  double mainLoad = dEnergyG - dEnergyPNP;
-
-                                  double costSaving = (mainLoad * perkWh);
-                                  var idrCostSaving =
-                                      CurrencyFormat.convertToUS(costSaving, 0)
-                                          .toString();
-                                  return MonitorCard(
-                                      title: 'Cost Saving',
-                                      value: ' $idrCostSaving',
-                                      txt: 'Rupiah');
-                                }
-                              },
-                            ),
+                            MonitorCard(
+                                title: 'Cost Saving',
+                                value: costSaving,
+                                txt: 'Rupiah'),
                           ],
                         ),
                       ],
