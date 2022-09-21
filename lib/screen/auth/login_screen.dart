@@ -3,13 +3,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:lectro/screen/auth/cubit/login_cubit.dart';
 import 'package:lectro/screen/components/button/default_button.dart';
+import 'package:lectro/screen/components/button/radio_button.dart';
 import 'package:lectro/services/navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lectro/utils/constant.dart';
 import 'package:lectro/utils/custom.dart';
 import 'package:lectro/utils/theme_data.dart';
 
+import 'cubit/radio_button_cubit.dart';
 import 'cubit/show_password_cubit.dart';
 import 'cubit/validator_cubit.dart';
 
@@ -28,7 +32,10 @@ class LoginScreen extends HookWidget {
         ),
         BlocProvider(
           create: (context) => ValidatorCubit(),
-        )
+        ),
+        BlocProvider(
+          create: (context) => RadioButtonCubit(),
+        ),
       ],
       child: const Login(),
     );
@@ -47,12 +54,25 @@ class Login extends HookWidget {
     // ignore: no_leading_underscores_for_local_identifiers
     final _loginCubit = context.read<LoginCubit>();
     final validCubit = context.read<ValidatorCubit>();
+    final rbCubit = context.read<RadioButtonCubit>();
 
     final TextEditingController usernameC = TextEditingController();
     final TextEditingController passwordC = TextEditingController();
 
+    final _storage = GetStorage();
+
     bool isLoginable = false;
     bool obscure = true;
+    bool isRemember = false;
+
+    // ignore: no_leading_underscores_for_local_identifiers
+
+    String username = _storage.read(clientUsername) ?? '';
+    String password = _storage.read(clientPassword) ?? '';
+
+    usernameC.text = username;
+    passwordC.text = password;
+
     return Scaffold(
       body: Container(
         height: 1200,
@@ -216,7 +236,34 @@ class Login extends HookWidget {
                         );
                       },
                     ),
-                    SizedBox(height: 12.h),
+                    SizedBox(height: 8.h),
+                    Padding(
+                      padding: EdgeInsets.only(left: 160.sp),
+                      child: BlocConsumer<RadioButtonCubit, RadioButtonState>(
+                        listener: (context, state) {
+                          if (state is RadioButtonSwitch) {
+                            isRemember = state.switchC;
+                          }
+                        },
+                        builder: (context, state) {
+                          print('ini is remember');
+                          print(isRemember);
+                          if (isRemember == true) {
+                            _storage.write(usernameC.text, clientUsername);
+                            _storage.write(passwordC.text, clientPassword);
+                            print(usernameC.text);
+                          }
+                          return InkWell(
+                            onTap: () {
+                              rbCubit.changeButton(!isRemember);
+                            },
+                            child: RadioButtonWidget(
+                                active: isRemember, text: 'Remember me'),
+                          );
+                        },
+                      ),
+                    ),
+                    SizedBox(height: 8.h),
                     // Padding(
                     //   padding: const EdgeInsets.only(left: 212),
                     //   child: InkWell(
